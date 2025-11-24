@@ -1,0 +1,20 @@
+{
+  "name": "sso-cas-server",
+  "version": "1.0.0",
+  "description": "Mini CAS-like SSO server for MTP demo (fake HCMUT SSO)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cookie-session": "^2.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
