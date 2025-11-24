@@ -9,18 +9,16 @@
 ## 📋 Mục lục
 
 - [Giới thiệu](#-giới-thiệu)
-- [Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)
+- [Kiến trúc hệ thống](#️-kiến-trúc-hệ-thống)
 - [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
 - [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
 - [Cài đặt](#-cài-đặt)
-- [Chạy dự án](#-chạy-dự-án)
+- [Chạy dự án](#️-chạy-dự-án)
 - [API Documentation](#-api-documentation)
-- [Phân quyền người dùng](#-phân-quyền-người-dùng)
+- [Phân quyền người dùng](#️-phân-quyền-người-dùng)
 - [Tài khoản test](#-tài-khoản-test)
 - [Cấu trúc thư mục](#-cấu-trúc-thư-mục)
 - [Troubleshooting](#-troubleshooting)
-- [Đóng góp](#-đóng-góp)
-- [License](#-license)
 
 ---
 
@@ -165,10 +163,9 @@ npm start
 ### Cách 2: Chạy đồng thời (PowerShell - Windows)
 
 ```powershell
-# Tạo file run-all.ps1
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd sso-cas-server; npm start"
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd mtp-backend; npm start"
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd mtp-frontend; npm start"
+# Chạy file run-all.ps1
+
+./run-all.ps1
 ```
 
 ### Truy cập ứng dụng
