@@ -122,6 +122,17 @@ app.get("/api/auth/me", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ loggedIn: false });
   }
+  
+  // Tìm user đầy đủ từ database (users.js) dựa trên username
+  const fullUser = users.find(u => u.username === req.session.user.username);
+  
+  if (fullUser) {
+    // Trả về user với đầy đủ thông tin, không bao gồm password
+    const { password, ...userWithoutPassword } = fullUser;
+    return res.json({ loggedIn: true, user: userWithoutPassword });
+  }
+  
+  // Fallback: trả về session user nếu không tìm thấy
   return res.json({ loggedIn: true, user: req.session.user });
 });
 
