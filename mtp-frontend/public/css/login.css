@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+/* container: chỉ dùng để làm mốc position */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* LEFT: ảnh full màn hình */
+.left-section {
+    width: 100%;
+    height: 100%;
+}
+
+.bg-image {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+}
+
+/* RIGHT: đè lên trên ảnh, dính bên phải */
+.right-section {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+/* phần nội dung bên trong */
+.panel {
+    text-align: center;
+    width: 90%;
+}
+
+/* các style cũ giữ nguyên */
+.title {
+    color: #002B6E;
+    font-size: 22px;
+    line-height: 1.5;
+    font-weight: 900;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 260px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.mtp {
+    font-size: 50px;
+    color: #002B6E;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.sub-title {
+    font-size: 30px;
+    color: #002B6E;
+    font-weight: 900;
+    margin-bottom: 50px;
+}
+
+.login-btn {
+    width: 300px;
+    height: 50px;
+    background: #002B6E;
+    color: white;
+    border: 1px solid white;
+    border-radius: 35px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
