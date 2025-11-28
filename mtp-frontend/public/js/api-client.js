@@ -60,12 +60,19 @@ async function getSessionById(sessionId) {
 }
 
 /**
- * Lấy sessions của student
- * @param {number} studentId 
+ * Lấy sessions của student (các session đã đăng ký)
  * @returns {Promise<{success: boolean, data: Array}>}
  */
-async function getStudentSessions(studentId) {
-  return apiCall(`/students/${studentId}/sessions`);
+async function getStudentSessions() {
+  return apiCall('/student/my-sessions');
+}
+
+/**
+ * Lấy danh sách sessions có thể đăng ký (available sessions)
+ * @returns {Promise<{success: boolean, data: Array}>}
+ */
+async function getAvailableSessions() {
+  return apiCall('/student/sessions');
 }
 
 /**
@@ -74,7 +81,7 @@ async function getStudentSessions(studentId) {
  * @returns {Promise<{success: boolean, message: string, data: Object}>}
  */
 async function registerSession(sessionId) {
-  return apiCall(`/sessions/${sessionId}/register`, {
+  return apiCall(`/student/sessions/${sessionId}/register`, {
     method: 'POST'
   });
 }
@@ -148,6 +155,7 @@ window.MTP_API = {
   getAllSessions,
   getSessionById,
   getStudentSessions,
+  getAvailableSessions,
   registerSession,
   unregisterSession,
   

@@ -36,12 +36,12 @@
    ======================================== */
 .profile-header {
     background: #758BA5;
-    border-radius: 6px 6px 0 0;
+    border: 1px solid #000;
+    border-radius: 2px;
     padding: 20px 40px;
     display: flex;
     align-items: center;
     position: relative;
-    /* min-height: 230px; */
 }
 
 .profile-avatar {
@@ -103,7 +103,6 @@
 .profile-content {
     background: #FFFFFF;
     padding: 20px 40px;
-    border-radius: 0 0 6px 6px;
     margin-bottom: 24px;
 }
 

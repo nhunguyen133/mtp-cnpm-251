@@ -1,53 +1,53 @@
 const users = [
   {
-    username: "nhu.nguyen@hcmut.edu.vn",
+    username: "nhu.nguyen",
     password: "123456",
     displayName: "Nguyễn Quỳnh Như"
   },
   {
-    username: "mai.tran@hcmut.edu.vn",
+    username: "mai.tran",
     password: "123456",
     displayName: "Nguyễn Trần Phương Mai"
   },
   {
-    username: "thu.ngo@hcmut.edu.vn",
+    username: "thu.ngo",
     password: "123456",
     displayName: "Ngô Minh Thư"
   },
   {
-    username: 'ngoc.le@hcmut.edu.vn',
+    username: 'ngoc.le',
     password: '123456',
     name: 'Lê Hồng Ngọc'
   },
   {
-    username: 'nghiem.trinh@hcmut.edu.vn',
+    username: 'nghiem.trinh',
     password: '123456',
     name: 'Trịnh Duy Nghiêm'
   },
   {
-    username: 'quan.truong@hcmut.edu.vn',
+    username: 'quan.truong',
     password: '123456',
     name: 'Trương Đỗ Anh Quân'
   },
   {
-    username: 'huy.banh@hcmut.edu.vn',
+    username: 'huy.banh',
     password: '123456',
     name: ' Bành Huỳnh Minh Huy'
   },
   { 
-    username: 'mdtrung@hcmut.edu.vn',
+    username: 'mdtrung',
     password: '123456',
     name: 'Mai Đức Trung'
   },
 
   {
-    username: 'ldthuan@hcmut.edu.vn',
+    username: 'ldthuan',
     password: '123456',
     name: 'Lê Đình Thuận'
   },
 
   {
-    username: 'ngoc.bui@hcmut.edu.vn',
+    username: 'ngoc.bui',
     password: '123456',
     name: 'Bùi Thế Ngọc'
   }

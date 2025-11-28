@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>M-T-P - Đăng ký lịch học</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    <link rel="stylesheet" href="../css/register-session.css">
+</head>
+<body>
+    <div class="app">
+
+        <!-- SIDEBAR - Loaded dynamically -->
+        <div id="sidebar-container"></div>
+
+        <!-- MAIN AREA -->
+        <div class="main">
+
+            <!-- TOPBAR - Loaded dynamically -->
+            <div id="topbar-container"></div>
+
+            <!-- BREADCRUMB BAR -->
+            <div class="breadcrumb-bar">
+                <span class="material-icons">event_available</span>
+                <span>Đăng ký lịch học</span>
+            </div>
+
+            <!-- CONTENT -->
+            <main class="content">
+                <div class="breadcrumb-back">
+                    <span class="material-icons">arrow_back</span>
+                    <a href="dashboard.html" class="back-link">Trở về trang trước</a>
+                </div>
+
+                <section class="register-container">
+
+                    <!-- Khung tìm kiếm -->
+                    <div class="search-panel">
+                    <h3 class="search-title">Tìm tutor (môn học)</h3>
+
+                    <div class="search-row">
+                        <input
+                        id="subjectInput"
+                        type="text"
+                        class="subject-input"
+                        placeholder="Công nghệ phần mềm"
+                        />
+
+                        <button id="searchBtn" class="btn btn-search">
+                        <span class="material-icons">search</span>
+                        Tìm kiếm
+                        </button>
+
+                        <button id="smartMatchBtn" class="btn btn-smart">
+                        <span class="material-icons">psychology</span>
+                        Ghép tutor thông minh
+                        </button>
+                    </div>
+                    </div>
+
+                    <!-- Danh sách tutor -->
+                    <div class="tutor-list-container">
+                    <h3 class="tutor-title">Danh sách tutor</h3>
+
+                    <table class="tutor-table">
+                        <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Môn</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tutorTableBody">
+                        <!-- JS render -->
+                        </tbody>
+                    </table>
+                    </div>
+                </section>
+            </main>
+            
+        </div>
+        
+    </div>
+    
+    <!-- Load Component Loader -->
+    <script src="../js/components-loader.js"></script>
+    <!-- Load API Client -->
+    <script src="../js/api-client.js"></script>
+    <!-- Load Register Session Logic -->
+    <script src="../js/register-session.js"></script>
+    
+</body>
+</html>

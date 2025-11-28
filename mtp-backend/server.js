@@ -4,7 +4,9 @@ const xml2js = require("xml2js");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
 
-const { users } = require("./data/users");
+// Import data từ data layer (đã refactor)
+const { users } = require("./data");
+
 const {
   requireAuth,
   requireRole,
@@ -79,26 +81,26 @@ app.get("/api/auth/callback", async (req, res) => {
       }
 
       const casUser = success[0]["cas:user"][0];
-      console.log("🔍 Username from CAS:", casUser);
+      console.log("Username from CAS:", casUser);
 
       const user = users.find((u) => u.username === casUser);
 
       if (!user) {
-        console.log("❌ User not found:", casUser);
+        console.log("User not found:", casUser);
         return res
           .status(404)
           .send("Không tìm thấy người dùng trong hệ thống.");
       }
 
-      console.log("✅ User found:", user.username, "-", user.role);
+      console.log("User found:", user.username, "-", user.role);
 
       // Lưu thông tin user vào session
       req.session.user = {
-        id: user.id,
         username: user.username,
         role: user.role,
         name: user.name,
-        mssv: user.mssv,
+        mssv: user.mssv || null,      // Chỉ có nếu là student
+        mscb: user.mscb || null,      // Chỉ có nếu là tutor
         faculty: user.faculty,
         major: user.major,
         email: user.email,
@@ -160,21 +162,41 @@ app.get("/api/profile", requireAuth, (req, res) => {
 
 // ===== API CHỈ CHO STUDENT =====
 
-// Student xem danh sách sessions (các buổi tutor)
+// Student xem danh sách sessions có thể đăng ký (available sessions)
 app.get("/api/student/sessions", requireRole("student"), (req, res) => {
-  // TODO: Lấy từ database
+  const { sessions, registrations } = require("./data");
+  const studentMSSV = req.session.user.mssv;
+
+  // Lọc sessions đang open và chưa đăng ký
+  const registeredSessionIds = registrations
+    .filter(r => r.mssv === studentMSSV && r.status === 'confirmed')
+    .map(r => r.sessionId);
+
+  // Tính toán currentStudents thực tế từ registrations
+  const sessionsWithCount = sessions.map(session => {
+    const actualCount = registrations.filter(
+      r => r.sessionId === session.id && r.status === 'confirmed'
+    ).length;
+    
+    return {
+      ...session,
+      currentStudents: actualCount
+    };
+  });
+
+  const availableSessions = sessionsWithCount.filter(session => {
+    // Chỉ hiển thị sessions:
+    // 1. Đang open
+    // 2. Chưa đăng ký
+    // 3. Còn chỗ (currentStudents < maxStudents)
+    return session.status === 'open' 
+      && !registeredSessionIds.includes(session.id)
+      && session.currentStudents < session.maxStudents;
+  });
+
   res.json({
     success: true,
-    data: [
-      {
-        id: 1,
-        tutorName: "Lê Đình Thuận",
-        subject: "Công nghệ phần mềm",
-        date: "2025-11-25",
-        time: "13:00 - 15:00",
-        status: "available",
-      },
-    ],
+    data: availableSessions
   });
 });
 
@@ -183,15 +205,74 @@ app.post(
   "/api/student/sessions/:sessionId/register",
   requireRole("student"),
   (req, res) => {
-    const { sessionId } = req.params;
-    const studentId = req.session.user.id;
+    const { sessions, registrations } = require("./data");
+    const sessionId = parseInt(req.params.sessionId);
+    const studentMSSV = req.session.user.mssv;
 
-    console.log(`Student ${studentId} đăng ký session ${sessionId}`);
+    // Kiểm tra session tồn tại
+    const session = sessions.find(s => s.id === sessionId);
+    if (!session) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy buổi học"
+      });
+    }
+
+    // Kiểm tra session còn mở không
+    if (session.status !== 'open') {
+      return res.status(400).json({
+        success: false,
+        message: "Buổi học đã đóng đăng ký"
+      });
+    }
+
+    // Kiểm tra còn chỗ không (tính động từ registrations)
+    const actualCount = registrations.filter(
+      r => r.sessionId === sessionId && r.status === 'confirmed'
+    ).length;
+    
+    if (actualCount >= session.maxStudents) {
+      return res.status(400).json({
+        success: false,
+        message: "Buổi học đã đầy"
+      });
+    }
+
+    // Kiểm tra đã đăng ký chưa
+    const existingRegistration = registrations.find(
+      r => r.sessionId === sessionId && r.mssv === studentMSSV
+    );
+
+    if (existingRegistration) {
+      return res.status(400).json({
+        success: false,
+        message: "Bạn đã đăng ký buổi học này rồi"
+      });
+    }
+
+    // Tạo registration mới
+    const newRegistration = {
+      id: registrations.length + 1,
+      sessionId: sessionId,
+      mssv: studentMSSV,
+      status: 'confirmed',
+      registeredAt: new Date().toISOString()
+    };
+
+    registrations.push(newRegistration);
+
+    console.log(`Student ${studentMSSV} đăng ký session ${sessionId}`);
 
     res.json({
       success: true,
-      message: "Đăng ký session thành công",
-      data: { sessionId, studentId },
+      message: "Đăng ký buổi học thành công!",
+      data: {
+        registration: newRegistration,
+        session: {
+          ...session,
+          currentStudents: actualCount + 1
+        }
+      }
     });
   }
 );
@@ -215,21 +296,46 @@ app.delete(
 
 // Student xem các session đã đăng ký của mình
 app.get("/api/student/my-sessions", requireRole("student"), (req, res) => {
-  const studentId = req.session.user.id;
+  const { sessions, registrations } = require("./data");
+  const studentMSSV = req.session.user.mssv;
 
-  // TODO: Lấy từ database
+  // Lấy danh sách session mà student đã đăng ký
+  const studentRegistrations = registrations.filter(
+    reg => reg.mssv === studentMSSV && reg.status === 'confirmed'
+  );
+
+  // Lấy thông tin chi tiết của các session
+  const studentSessions = studentRegistrations.map(reg => {
+    const session = sessions.find(s => s.id === reg.sessionId);
+    if (session) {
+      // Tính currentStudents thực tế
+      const actualCount = registrations.filter(
+        r => r.sessionId === session.id && r.status === 'confirmed'
+      ).length;
+      
+      return {
+        id: session.id,
+        tutorName: session.tutorName,
+        subject: session.subject,
+        title: session.title,
+        description: session.description,
+        date: session.date,
+        startTime: session.startTime,
+        endTime: session.endTime,
+        location: session.location,
+        type: session.type,
+        maxStudents: session.maxStudents,
+        currentStudents: actualCount,
+        status: reg.status,
+        registeredAt: reg.registeredAt
+      };
+    }
+    return null;
+  }).filter(s => s !== null);
+
   res.json({
     success: true,
-    data: [
-      {
-        id: 1,
-        tutorName: "Lê Đình Thuận",
-        subject: "Công nghệ phần mềm",
-        date: "2025-11-25",
-        time: "13:00 - 15:00",
-        status: "registered",
-      },
-    ],
+    data: studentSessions
   });
 });
 

@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
         await loadComponent('sidebar-container', '../components/sidebar.html');
-        setActiveNavItem(); // Set active state sau khi load
+        setActiveNavItem();    // Set active state sau khi load
+        initSidebarToggle();   // Khởi tạo nút ẩn/hiện sidebar
     }
 
     // Load topbar
@@ -115,6 +116,18 @@ async function loadUserInfo() {
     } catch (error) {
         console.error('Error loading user info:', error);
     }
+}
+
+function initSidebarToggle() {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.querySelector('.sidebar-toggle');
+    if (!sidebar || !toggleBtn) return;
+
+    toggleBtn.addEventListener('click', () => {
+        const isCollapsed = sidebar.classList.toggle('collapsed');
+        // đổi ký tự mũi tên
+        toggleBtn.innerHTML = isCollapsed ? '&rsaquo;' : '&lsaquo;';
+    });
 }
 
 // Export functions để có thể sử dụng ở nơi khác

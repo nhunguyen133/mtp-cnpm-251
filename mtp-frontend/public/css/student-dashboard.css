@@ -16,16 +16,20 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-    width: 104%;
+    width: 230px;
     height: 100vh;
     background: #264574;
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
     padding: 8px 0;
+    position: relative;
+    transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: visible;
 }
 .sidebar-header {
     padding: 16px 24px;
+    overflow: hidden;
 }
 
 .sidebar-logo-card {
@@ -35,6 +39,8 @@ body {
     background: rgba(243, 243, 243, 0.26);
     border-radius: 17px;
     padding: 10px 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: hidden;
 }
 
 .logo-circle {
@@ -44,11 +50,16 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 900;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .sidebar-logo-text {
     font-size: 24px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .sidebar-nav {
@@ -56,10 +67,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    overflow: hidden;
 }
 
 .nav-item {
-    font-weight: 500;
+    font-weight: 400;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -69,6 +81,14 @@ body {
     font-size: 16px;
     position: relative;
     opacity: 0.64;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.nav-label {
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-item.active {
@@ -93,6 +113,7 @@ body {
     opacity: 0.7;
     margin: 16px 0;
     margin-left: 8%;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 
@@ -100,10 +121,11 @@ body {
     margin-top: auto;
     padding: 16px 30px;
     opacity: 0.64;
+    overflow: hidden;
 }
 
 .logout-btn {
-    font-weight: 600;
+    font-weight: 400;
     width: 100%;
     border: none;
     background: transparent;
@@ -113,6 +135,13 @@ body {
     gap: 10px;
     font-size: 16px;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.logout-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* MAIN AREA */
@@ -120,7 +149,8 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-left: 9px;
+    margin-left: 0px;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 /* TOPBAR */
@@ -224,9 +254,17 @@ body {
     font-size: 16px;
 }
 
-/* SESSION CARD */
+/* SESSION LIST */
+.session-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 8px;
+}
+
 .session-card {
-    margin-top: 16px;
+    margin-top: 0;
+    flex: 0 0 380px;
     width: 380px;
     background: #B9D5FF;
     border-radius: 34px;
@@ -317,4 +355,90 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.session-empty-state {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #8d8d8d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+}
+
+/* TRẠNG THÁI THU GỌN */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .sidebar-header {
+    padding: 16px 0;
+}
+
+.sidebar.collapsed .nav-label {
+    display: none;
+    opacity: 0.64;
+}
+
+.sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar.collapsed .sidebar-logo-card {
+    justify-content: center;
+    background: none;
+    padding: 0;
+}
+
+.sidebar.collapsed .sidebar-logo-card .logo-circle {
+    margin-right: 0;
+}
+
+.sidebar.collapsed .logout-btn {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    padding: 16px 0 !important;
+}
+
+.sidebar.collapsed .divider {
+    width: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* NÚT TOGGLE */
+.sidebar-toggle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #264574;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.sidebar-toggle:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.sidebar.collapsed .sidebar-toggle {
+    right: -15px;
 }
