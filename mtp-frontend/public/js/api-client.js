@@ -118,11 +118,27 @@ async function getTutorById(tutorId) {
 
 /**
  * Lấy lịch rảnh của tutor
- * @param {number} tutorId 
+ * @param {string} mscb - Mã số cán bộ
  * @returns {Promise<{success: boolean, data: Array}>}
  */
-async function getTutorAvailability(tutorId) {
-  return apiCall(`/tutors/${tutorId}/availability`);
+async function getTutorAvailability(mscb) {
+  return apiCall(`/tutors/${mscb}/availability`);
+}
+
+/**
+ * Gửi yêu cầu đặt lịch mới
+ * @param {number} availabilityId - ID của slot lịch rảnh
+ * @param {string} subject - Môn học muốn học
+ * @param {string} location - Địa điểm học
+ * @param {string} type - Loại buổi học (offline/online/hybrid)
+ * @param {string} note - Ghi chú thêm
+ * @returns {Promise<{success: boolean, message: string, data: Object}>}
+ */
+async function createBookingRequest(availabilityId, subject, location, type, note = '') {
+  return apiCall('/student/booking-request', {
+    method: 'POST',
+    body: JSON.stringify({ availabilityId, subject, location, type, note })
+  });
 }
 
 // ========== NOTIFICATION APIs ==========
@@ -163,6 +179,7 @@ window.MTP_API = {
   getAllTutors,
   getTutorById,
   getTutorAvailability,
+  createBookingRequest,
   
   // Notifications
   getNotifications,

@@ -6,7 +6,7 @@ const sessions = [
     {
         id: 1,
         mscb: 'CB001',
-        tutorName: 'Nguyễn Đình Thuận',
+        tutorName: 'Lê Đình Thuận',
         title: 'Công nghệ phần mềm - L01',
         subject: 'Công nghệ phần mềm',
         description: 'Ôn lại quy trình phát triển phần mềm và UML cơ bản',

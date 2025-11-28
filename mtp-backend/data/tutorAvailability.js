@@ -1,6 +1,7 @@
 // ================== TUTOR AVAILABILITY ==================
-// Lịch rảnh/có thể dạy của các tutors
+// Lịch rảnh của các tutors (CHỈ THỜI GIAN RẢNH)
 // Tham chiếu tutor bằng mscb
+// Student sẽ nhập môn học, địa điểm, loại buổi học, ghi chú khi đặt lịch
 
 const tutorAvailability = [
     // Tutor CB002: Mai Đức Trung
@@ -9,108 +10,124 @@ const tutorAvailability = [
         mscb: 'CB002',
         tutorName: 'Mai Đức Trung',
         dayOfWeek: 'Monday',
-        date: '2025-11-24',
+        date: '2025-12-02',
         startTime: '14:00',
         endTime: '16:00',
-        location: 'H1-201',
-        type: 'offline',
-        status: 'available',
-        note: 'Có thể dạy Lập trình C/C++ cơ bản'
+        status: 'available'
     },
     {
         id: 2,
         mscb: 'CB002',
         tutorName: 'Mai Đức Trung',
         dayOfWeek: 'Wednesday',
-        date: '2025-11-26',
+        date: '2025-12-04',
         startTime: '09:00',
         endTime: '11:00',
-        location: 'H1-201',
-        type: 'offline',
-        status: 'available',
-        note: 'Ưu tiên lớp ôn tập giữa kỳ'
+        status: 'available'
     },
     {
         id: 3,
         mscb: 'CB002',
         tutorName: 'Mai Đức Trung',
         dayOfWeek: 'Friday',
-        date: '2025-11-28',
+        date: '2025-12-06',
         startTime: '14:00',
         endTime: '17:00',
-        location: 'Online - Google Meet',
-        type: 'online',
-        status: 'available',
-        note: 'Buổi học online qua Google Meet'
+        status: 'available'
+    },
+    {
+        id: 4,
+        mscb: 'CB002',
+        tutorName: 'Mai Đức Trung',
+        dayOfWeek: 'Saturday',
+        date: '2025-12-07',
+        startTime: '08:00',
+        endTime: '12:00',
+        status: 'available'
     },
 
     // Tutor CB003: Bùi Công Tuấn
     {
-        id: 4,
-        mscb: 'CB003',
-        tutorName: 'Bùi Công Tuấn',
-        dayOfWeek: 'Tuesday',
-        date: '2025-11-25',
-        startTime: '13:00',
-        endTime: '15:00',
-        location: 'H2-305',
-        type: 'offline',
-        status: 'available',
-        note: 'Chuyên về Java cơ bản và OOP'
-    },
-    {
         id: 5,
         mscb: 'CB003',
         tutorName: 'Bùi Công Tuấn',
-        dayOfWeek: 'Thursday',
-        date: '2025-11-27',
-        startTime: '10:00',
-        endTime: '12:00',
-        location: 'H2-305',
-        type: 'offline',
-        status: 'available',
-        note: 'Lớp luyện tập bài tập lớn'
+        dayOfWeek: 'Tuesday',
+        date: '2025-12-03',
+        startTime: '13:00',
+        endTime: '15:00',
+        status: 'available'
     },
     {
         id: 6,
         mscb: 'CB003',
         tutorName: 'Bùi Công Tuấn',
-        dayOfWeek: 'Saturday',
-        date: '2025-11-29',
-        startTime: '08:00',
-        endTime: '11:00',
-        location: 'Online - Zoom',
-        type: 'online',
-        status: 'available',
-        note: 'Buổi review cuối tuần - Online'
+        dayOfWeek: 'Thursday',
+        date: '2025-12-05',
+        startTime: '10:00',
+        endTime: '12:00',
+        status: 'available'
     },
-
-    // Tutor CB001: Nguyễn Đình Thuận
     {
         id: 7,
-        mscb: 'CB001',
-        tutorName: 'Nguyễn Đình Thuận',
-        dayOfWeek: 'Monday',
-        date: '2025-10-20',
-        startTime: '14:00',
-        endTime: '16:00',
-        location: 'H3-102',
-        type: 'offline',
-        status: 'booked',
-        note: 'Lớp Công nghệ phần mềm - L01'
+        mscb: 'CB003',
+        tutorName: 'Bùi Công Tuấn',
+        dayOfWeek: 'Saturday',
+        date: '2025-12-07',
+        startTime: '08:00',
+        endTime: '11:00',
+        status: 'available'
     },
     {
         id: 8,
-        mscb: 'CB001',
-        tutorName: 'Nguyễn Đình Thuận',
-        dayOfWeek: 'Wednesday',
-        date: '2025-10-22',
-        startTime: '15:00',
+        mscb: 'CB003',
+        tutorName: 'Bùi Công Tuấn',
+        dayOfWeek: 'Sunday',
+        date: '2025-12-08',
+        startTime: '14:00',
         endTime: '17:00',
-        location: 'H3-102',
-        type: 'offline',
-        status: 'available',
-        note: 'Ôn tập đồ án môn học'
+        status: 'available'
+    },
+
+    // Tutor CB001: Lê Đình Thuận
+    {
+        id: 9,
+        mscb: 'CB001',
+        tutorName: 'Lê Đình Thuận',
+        dayOfWeek: 'Monday',
+        date: '2025-12-02',
+        startTime: '14:00',
+        endTime: '16:00',
+        status: 'available'
+    },
+    {
+        id: 10,
+        mscb: 'CB001',
+        tutorName: 'Lê Đình Thuận',
+        dayOfWeek: 'Wednesday',
+        date: '2025-12-04',
+        startTime: '16:00',
+        endTime: '18:00',
+        status: 'available'
+    },
+    {
+        id: 11,
+        mscb: 'CB001',
+        tutorName: 'Lê Đình Thuận',
+        dayOfWeek: 'Friday',
+        date: '2025-12-06',
+        startTime: '09:00',
+        endTime: '12:00',
+        status: 'available'
+    },
+    {
+        id: 12,
+        mscb: 'CB001',
+        tutorName: 'Lê Đình Thuận',
+        dayOfWeek: 'Saturday',
+        date: '2025-12-07',
+        startTime: '15:00',
+        endTime: '18:00',
+        status: 'available'
     }
 ];
 

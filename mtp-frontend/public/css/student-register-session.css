@@ -51,11 +51,17 @@
 
 .btn-smart {
   background: #dfedd6;
+  margin-left: auto;
 }
 
 /* danh sách tutor */
 .tutor-list-container {
   margin-top: 24px;
+  padding: 24px 40px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: white;
+  min-height: 320px;
 }
 
 .tutor-title {
@@ -82,8 +88,12 @@
   font-weight: 600;
 }
 
-.tutor-table tbody tr:nth-child(every) {
-  background: #fff;
+#tutorTableBody {
+  background: #ffffff;
+}
+
+.tutor-table tbody tr:nth-child(even) {
+  background: #ffffff;
 }
 
 .tutor-table .btn-choose {
@@ -94,5 +104,43 @@
   border: 1px solid #232323;
   border-radius: 15px;
   font-size: 16px;
+  font-weight: 600;
+}
+
+/* Hướng dẫn tìm kiếm */
+.search-instruction {
+  margin-top: 24px;
+  padding: 60px 40px;
+  background: white;
+  border-radius: 12px;
+  border: 2px dashed #ccc;
+  text-align: center;
+}
+
+.instruction-icon {
+  margin-bottom: 20px;
+}
+
+.instruction-icon .material-icons {
+  font-size: 64px;
+  color: #758ba5;
+}
+
+.search-instruction h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #264574;
+  margin-bottom: 16px;
+}
+
+.search-instruction p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.search-instruction strong {
+  color: #264574;
   font-weight: 600;
 }

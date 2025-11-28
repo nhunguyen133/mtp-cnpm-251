@@ -12,7 +12,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/student-dashboard.css">
     <link rel="stylesheet" href="../css/transitions.css">
-    <link rel="stylesheet" href="../css/register-session.css">
+    <link rel="stylesheet" href="../css/student-register-session.css">
 </head>
 <body>
     <div class="app">
@@ -66,21 +66,31 @@
                     </div>
 
                     <!-- Danh sách tutor -->
-                    <div class="tutor-list-container">
-                    <h3 class="tutor-title">Danh sách tutor</h3>
+                    <div class="tutor-list-container" id="tutorListContainer" style="display: none;">
+                        <h3 class="tutor-title">Danh sách tutor</h3>
 
-                    <table class="tutor-table">
-                        <thead>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Môn</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="tutorTableBody">
-                        <!-- JS render -->
-                        </tbody>
-                    </table>
+                        <table class="tutor-table">
+                            <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Môn</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="tutorTableBody">
+                            <!-- JS render -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Hướng dẫn ban đầu -->
+                    <div class="search-instruction" id="searchInstruction">
+                        <div class="instruction-icon">
+                            <span class="material-icons">info</span>
+                        </div>
+                        <h3>Tìm kiếm tutor</h3>
+                        <p>Vui lòng nhập môn học bạn muốn tìm và nhấn <strong>"Tìm kiếm"</strong></p>
+                        <p>Hoặc sử dụng <strong>"Ghép tutor thông minh"</strong> để hệ thống tự động gợi ý tutor phù hợp</p>
                     </div>
                 </section>
             </main>
@@ -94,7 +104,7 @@
     <!-- Load API Client -->
     <script src="../js/api-client.js"></script>
     <!-- Load Register Session Logic -->
-    <script src="../js/register-session.js"></script>
+    <script src="../js/student-register-session.js"></script>
     
 </body>
 </html>
