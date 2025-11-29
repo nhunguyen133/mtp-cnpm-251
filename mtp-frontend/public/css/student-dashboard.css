@@ -17,7 +17,8 @@ body {
 /* SIDEBAR */
 .sidebar {
     width: 230px;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background: #264574;
     color: #FFFFFF;
     display: flex;
@@ -239,7 +240,7 @@ body {
     padding: 15px 40px;
 }
 
-.breadcrumb-back {
+.breadcrumb {
     color: #616161;
     display: flex;
     align-items: center;
@@ -294,6 +295,11 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 24px;
+}
+
+.session-icon-box .material-icons {
+    font-size: 36px;
+    color: #000000;
 }
 
 .session-main-info {
@@ -442,118 +448,30 @@ body {
 .sidebar.collapsed .sidebar-toggle {
     right: -15px;
 }
-/* --- CSS CHO TRANG HỦY LỊCH (CANCEL SCHEDULE) --- */
-.cancel-container {
-    max-width: 900px;
-    margin: 0 auto;
-}
 
-/* Card bao quanh mỗi Tutor */
-.tutor-schedule-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    margin-bottom: 24px;
-    overflow: hidden;
-}
-
-/* Header xanh nhạt chứa info Tutor */
-.tutor-header-bg {
-    background-color: #badcf5; /* Màu xanh giống ảnh */
-    padding: 20px;
+.breadcrumb-back {
     display: flex;
     align-items: center;
-    gap: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.tutor-avatar-large {
-    width: 80px;
-    height: 80px;
-    background: #444;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 32px;
-    border: 3px solid #fff;
-}
-
-.tutor-info-main h3 {
-    font-size: 20px;
-    color: #000;
-    margin-bottom: 5px;
-    font-weight: 700;
-}
-
-.link-detail {
-    color: #0056b3;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-/* Phần body chứa thông tin thêm và bảng */
-.tutor-body {
-    padding: 20px;
-    background: #f9f9f9;
-}
-
-.info-row {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 20px;
-}
-
-.info-group label {
-    font-weight: 700;
-    font-size: 14px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.info-box {
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    border-radius: 6px;
-    min-width: 250px;
-    font-size: 14px;
-}
-
-/* Bảng lịch học bên trong card */
-.schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-}
-
-.schedule-table th {
-    background: #2f5d8c;
-    color: #fff;
-    padding: 10px;
-    text-align: left;
-    font-size: 14px;
-}
-
-.schedule-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    font-size: 14px;
-}
-
-.btn-cancel-red {
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    padding: 6px 20px;
-    border-radius: 20px;
-    font-weight: 700;
+    gap: 4px;
+    margin-bottom: 16px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-.btn-cancel-red:hover { background-color: #b71c1c; }
+
+.breadcrumb-back a {
+    color: #616161;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.breadcrumb-back .material-icons {
+    font-size: 20px;
+    color: #616161;
+}
+
+.breadcrumb-back:hover a {
+    text-decoration: underline;
+}
 
 
 /* --- CSS CHO TRANG TÀI LIỆU (DOCUMENTS) --- */

@@ -6,22 +6,26 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/student-dashboard.css"> <!-- Tái sử dụng CSS -->
+    <link rel="stylesheet" href="../css/tutor-dashboard.css"> <!-- CSS riêng cho tutor -->
 </head>
 <body>
     <div class="app">
         <div id="sidebar-container"></div>
         <main class="main">
             <div id="topbar-container"></div>
-            <div class="breadcrumb-bar"><span>Dashboard Giảng viên</span></div>
+            <div class="breadcrumb-bar">
+                <span class="material-icons">home</span>
+                <span>Home</span>
+            </div>
             <div class="content">
                 <!-- Thống kê -->
-                <div style="display:flex; gap:20px; margin-bottom:20px;">
-                    <div class="session-card" style="background:#fff; border:1px solid #ccc; width:auto; padding:20px;">
-                        <h2 id="total-sessions" style="color:#264574; font-size:36px;">0</h2>
+                <div class="manage-tutor-dashboard">
+                    <div class="cal-card">
+                        <h2 id="total-sessions">0</h2>
                         <p>Lớp đang quản lý</p>
                     </div>
                 </div>
-                <h3>Danh sách lớp học</h3>
+                <h2>Danh sách lớp học</h2>
                 <div class="session-list" id="tutor-session-list">Loading...</div>
             </div>
         </main>

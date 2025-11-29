@@ -102,17 +102,29 @@
     </style>
 </head>
 <body>
-    <div class="app">
+    <div class="app" style="height: 100%;">
         <!-- Sidebar -->
         <div id="sidebar-container"></div>
 
         <main class="main">
             <!-- Topbar -->
             <div id="topbar-container"></div>
+
+            <div class="breadcrumb-bar">
+                <span class="material-icons">edit_calendar</span>
+                <span>Thiết lập lịch rảnh</span>
+            </div>
             
             <div class="content">
-                <div style="margin-bottom:15px; cursor:pointer;" onclick="history.back()"> 
-                    <span class="material-icons" style="vertical-align:bottom; font-size:20px">reply</span> Trở về trang trước
+                <div class="breadcrumb-back" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: -15px;">
+                        <span class="material-icons">reply</span>
+                        <a href="dashboard.html">Trở về trang trước</a>
+                    </div>
+                    <button onclick="openAddScheduleModal()" style="background: #4A7FA7; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <span class="material-icons" style="font-size: 20px; color: white;">add_circle</span>
+                        Thêm lịch rảnh
+                    </button>
                 </div>
 
                 <!-- CALENDAR UI -->
@@ -160,7 +172,7 @@
     <script src="../js/api-client.js"></script>
     <script src="../js/components-loader.js"></script>
     <script src="../js/tutor-availability.js"></script>
-    <div class="modal-overlay" id="openSessionModal">
+    <!-- <div class="modal-overlay" id="openSessionModal">
         <div class="modal-form-content">
             <div class="modal-title">MỞ BUỔI HỌC HOẶC TƯ VẤN</div>
             
@@ -206,29 +218,29 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
-<div class="modal-form-content">
+<!-- <div class="modal-form-content">
             <div class="modal-title">MỞ BUỔI HỌC HOẶC TƯ VẤN</div>
-            <form id="sessionForm">
+            <form id="sessionForm"> -->
                 <!-- ... các input cũ ... -->
-                <div class="form-row">
+                <!-- <div class="form-row">
                     <label>Tên buổi học/tư vấn</label>
                     <input type="text" class="form-input" id="sessionName" placeholder="Tên">
                 </div>
                 <div class="form-row">
                     <label>Thời gian</label>
                     <input type="text" class="form-input" id="sessionTime" placeholder="Thời gian">
-                </div>
+                </div> -->
                 <!-- ... -->
-                <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                <!-- <div style="display:flex; justify-content:space-between; margin-top:30px;">
                     <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
                     <button type="button" onclick="confirmOpenSession()" class="btn-open-session">
                         <span class="material-icons">open_in_new</span> Mở buổi học
                     </button>
                 </div>
             </form>
-        </div>
+        </div> -->
     </div>
 
     <!-- 2. MODAL NHẬP GIỜ (CHO LỊCH RẢNH - MÀU XANH) -->
@@ -258,6 +270,61 @@
                 <button onclick="closeModals()" class="btn-cancel-gray">Hủy</button>
                 <button onclick="confirmDelete()" class="btn-confirm-red">Xóa</button>
             </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL THÊM LỊCH RẢNH MỚI -->
+    <div class="modal-overlay" id="addScheduleModal">
+        <div class="modal-form-content" style="width: 500px;">
+            <div class="modal-title">THÊM LỊCH RẢNH</div>
+            
+            <form id="addScheduleForm">
+                <div class="form-row">
+                    <label>Chọn ngày</label>
+                    <input type="date" class="form-input" id="newScheduleDate" required>
+                </div>
+                
+                <div class="form-row">
+                    <label>Thời gian bắt đầu</label>
+                    <input type="time" class="form-input" id="newScheduleStartTime" required>
+                </div>
+                
+                <div class="form-row">
+                    <label>Thời gian kết thúc</label>
+                    <input type="time" class="form-input" id="newScheduleEndTime" required>
+                </div>
+                
+                <div class="form-row">
+                    <label>Địa điểm (tùy chọn)</label>
+                    <input type="text" class="form-input" id="newScheduleLocation" placeholder="VD: H1-101 hoặc Google Meet">
+                </div>
+                
+                <div class="form-row">
+                    <label>Loại</label>
+                    <div class="checkbox-group" style="margin-top:5px;">
+                        <label style="display:flex; align-items:center; font-weight:normal; margin-right:30px;">
+                            <input type="radio" name="scheduleType" value="offline" checked> Offline
+                        </label>
+                        <label style="display:flex; align-items:center; font-weight:normal;">
+                            <input type="radio" name="scheduleType" value="online"> Online
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label>Ghi chú (tùy chọn)</label>
+                    <textarea class="form-input" id="newScheduleNote" style="height:80px; resize:none;" placeholder="Ghi chú thêm về lịch rảnh này..."></textarea>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                    <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
+                    
+                    <button type="button" onclick="submitNewSchedule()" style="padding:10px 30px; border:none; background:#4A7FA7; color:white; cursor:pointer; font-weight:600; border-radius:4px; display:flex; align-items:center; gap:8px;">
+                        <span class="material-icons" style="font-size:20px;">check_circle</span>
+                        Xác nhận
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

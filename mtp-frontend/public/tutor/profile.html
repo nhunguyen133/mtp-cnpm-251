@@ -8,43 +8,8 @@
     
     <!-- Tái sử dụng CSS của Student -->
     <link rel="stylesheet" href="../css/student-dashboard.css">
-    <link rel="stylesheet" href="../css/personal-info.css">
+    <link rel="stylesheet" href="../css/student-personal-info.css">
 
-    <style>
-        /* Tùy chỉnh Layout Grid riêng cho trang này để giống ảnh */
-        .form-grid-tutor {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px 40px;
-        }
-        
-        /* Hàng cuối (Khoa, Email) sẽ span rộng ra */
-        .span-half {
-            grid-column: span 1; /* Mặc định */
-        }
-
-        /* Responsive: Dưới row 3, chỉnh thành 2 cột */
-        .row-wide {
-            grid-column: span 3; /* Chiếm hết dòng để chia lại */
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-        
-        /* Badge Tutor màu xám xanh như ảnh */
-        .role-badge-tutor {
-            background-color: #758BA5; 
-            color: white;
-            padding: 5px 25px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            display: inline-block;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            text-transform: capitalize;
-        }
-    </style>
 </head>
 <body>
     <div class="app">
@@ -56,13 +21,15 @@
             <div id="topbar-container"></div>
             
             <!-- Breadcrumb -->
-            <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
-                <span class="material-icons">person</span> Thông tin cá nhân
+            <div class="breadcrumb-bar">
+                <span class="material-icons">person</span>
+                <span>Thông tin cá nhân</span>
             </div>
 
             <div class="content">
-                <div style="margin-bottom:15px; font-weight:600; cursor:pointer;" onclick="history.back()">
-                    <span class="material-icons" style="vertical-align:bottom; font-size:20px">reply</span> Trở về trang trước
+                <div class="breadcrumb-back">
+                    <span class="material-icons">reply</span>
+                    <a href="dashboard.html">Trở về trang trước</a>
                 </div>
 
                 <!-- PROFILE HEADER -->
@@ -74,18 +41,16 @@
                     
                     <div class="profile-icons">
                         <span class="material-icons">chat</span>
-                        <span class="material-icons">groups</span>
+                        <span class="material-icons">group</span>
                     </div>
                 </div>
-
-                <!-- ROLE BADGE -->
-                <div class="role-badge-tutor">Tutor</div>
-
+                
                 <!-- FORM CONTENT -->
-                <div class="profile-content" style="border:none; padding:0;">
-                    <div class="form-grid-tutor">
+                <div class="profile-content">
+                    <div class="role-box">Tutor</div>
+
+                    <div class="form-grid">
                         
-                        <!-- Row 1 -->
                         <div class="form-group">
                             <label>Mã số cán bộ</label>
                             <input type="text" id="mscb" readonly>
@@ -113,16 +78,13 @@
                             <input type="text" id="major" readonly>
                         </div>
 
-                        <!-- Row 3 (Wide) -->
-                        <div class="row-wide">
-                            <div class="form-group">
-                                <label>Khoa</label>
-                                <input type="text" id="faculty" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Email học vụ</label>
-                                <input type="text" id="email" readonly>
-                            </div>
+                        <div class="form-group">
+                            <label>Khoa</label>
+                            <input type="text" id="faculty" readonly>
+                        </div>
+                        <div class="form-group full">
+                            <label>Email học vụ</label>
+                            <input type="text" id="email" readonly>
                         </div>
 
                     </div>

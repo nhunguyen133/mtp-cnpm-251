@@ -68,6 +68,8 @@ async function createNewMeeting(data) {
 async function getTutorClasses() { return apiCall('/tutor/classes'); }
 async function sendClassNotification(classIds) { 
     return apiCall('/tutor/send-notifications', { method: 'POST', body: JSON.stringify({ classIds }) }); 
+}
+
 /**
  * Lấy lịch rảnh của tutor
  * @param {string} mscb - Mã số cán bộ
@@ -92,6 +94,7 @@ async function createBookingRequest(availabilityId, subject, location, type, not
     body: JSON.stringify({ availabilityId, subject, location, type, note })
   });
 }
+
 // Student info
 async function getClassStudents(classId) {
     return apiCall(`/tutor/classes/${classId}/students`);
@@ -107,6 +110,8 @@ window.MTP_API = {
   // Availability
   getTutorSchedules,
   updateTutorSchedule,
+  getTutorAvailability,
+  createBookingRequest,
   // Sessions
   getAllSessions,
   getSessionById,
@@ -131,4 +136,4 @@ window.MTP_API = {
   getStudentInfoByMSSV
 };
 
-console.log('✅ MTP API Client loaded successfully');
+console.log('MTP API Client loaded successfully');
