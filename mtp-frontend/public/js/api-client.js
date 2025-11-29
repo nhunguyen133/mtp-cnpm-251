@@ -69,6 +69,14 @@ async function getTutorClasses() { return apiCall('/tutor/classes'); }
 async function sendClassNotification(classIds) { 
     return apiCall('/tutor/send-notifications', { method: 'POST', body: JSON.stringify({ classIds }) }); 
 }
+// Student info
+async function getClassStudents(classId) {
+    return apiCall(`/tutor/classes/${classId}/students`);
+}
+
+async function getStudentInfoByMSSV(mssv) {
+    return apiCall(`/student-info/${mssv}`);
+}
 
 // EXPORT GLOBAL
 window.MTP_API = {
@@ -95,7 +103,9 @@ window.MTP_API = {
   updateMeetingStatus,
   createNewMeeting,
   getTutorClasses,
-  sendClassNotification
+  sendClassNotification,
+  getClassStudents,
+  getStudentInfoByMSSV
 };
 
 console.log('✅ MTP API Client loaded successfully');

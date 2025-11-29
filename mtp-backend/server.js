@@ -642,6 +642,64 @@ app.post("/api/tutor/send-notifications", requireRole("tutor"), (req, res) => {
 
     res.json({ success: true, message: `Đã gửi thông báo cho ${count} sinh viên.` });
 });
+
+// ===== API TIẾN ĐỘ SINH VIÊN =====
+
+// 1. Lấy danh sách lớp của Tutor (để hiển thị bảng 1)
+// (Đã có API /api/tutor/classes ở bước trước, có thể tái sử dụng)
+
+// 2. Lấy danh sách chi tiết sinh viên của một lớp
+app.get("/api/tutor/classes/:classId/students", requireRole("tutor"), (req, res) => {
+    const classId = parseInt(req.params.classId);
+    
+    // Tìm lớp học
+    const targetClass = require("./data/class").find(c => c.id === classId);
+    
+    if (!targetClass) {
+        return res.status(404).json({ success: false, message: "Class not found" });
+    }
+
+    // Map từ mảng MSSV ['231...', '...'] sang object User đầy đủ
+    const studentList = targetClass.students.map(mssv => {
+        const user = users.find(u => u.mssv === mssv);
+        if (user) {
+            // Chỉ trả về info cần thiết, bỏ password
+            return {
+                mssv: user.mssv,
+                name: user.name,
+                email: user.email,
+                faculty: user.faculty,
+                major: user.major
+                // Có thể thêm avatar nếu có
+            };
+        }
+        return null;
+    }).filter(u => u !== null);
+
+    res.json({ success: true, data: studentList, classTitle: targetClass.title });
+});
+
+// 3. Lấy thông tin chi tiết 1 sinh viên (theo MSSV)
+app.get("/api/student-info/:mssv", requireRole("tutor"), (req, res) => {
+    const mssv = req.params.mssv;
+    const user = users.find(u => u.mssv === mssv);
+    
+    if (!user) {
+        return res.status(404).json({ success: false, message: "Student not found" });
+    }
+
+    res.json({ 
+        success: true, 
+        data: {
+            name: user.name,
+            mssv: user.mssv,
+            email: user.email,
+            faculty: user.faculty,
+            major: user.major,
+            status: "Đang học" // Mock trạng thái
+        }
+    });
+});
 app.listen(PORT, () => {
   console.log(`   MTP Backend API running at http://localhost:${PORT}`);
   console.log(`   Frontend at http://localhost:3002`);

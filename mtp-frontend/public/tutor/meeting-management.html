@@ -14,7 +14,7 @@
         <main class="main">
             <div id="topbar-container"></div>
             
-            <!-- Header Bar (Ảnh 1) -->
+            <!-- Header Bar -->
             <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
                 <span class="material-icons">calendar_month</span> Quản lý buổi gặp
             </div>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <!-- Main Table (Ảnh 1) -->
+                <!-- Main Table -->
                 <div style="background:white; padding:20px; border-radius:8px;">
                     <h3 style="margin-bottom:15px;">Danh sách các buổi gặp hiện tại</h3>
                     <table class="custom-table" style="width:100%; border-collapse:collapse;">
@@ -60,7 +60,7 @@
         </main>
     </div>
 
-    <!-- MODAL 1: CHI TIẾT BUỔI GẶP (Ảnh 2 & 4) -->
+    <!-- MODAL 1: CHI TIẾT BUỔI GẶP -->
     <div class="modal-overlay" id="detailModal">
         <div class="form-modal" style="width:500px;">
             <div style="text-align:right;"><span onclick="closeModals()" style="cursor:pointer; font-size:24px;">&times;</span></div>
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <!-- MODAL 2: LÝ DO HỦY (Ảnh 3) -->
+    <!-- MODAL 2: LÝ DO HỦY -->
     <div class="modal-overlay" id="cancelReasonModal">
         <div class="form-modal" style="width:450px; text-align:center;">
             <div style="text-align:right;"><span onclick="closeModals()" style="cursor:pointer; font-size:24px;">&times;</span></div>
@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    <!-- MODAL 3: MỞ BUỔI GẶP MỚI (Ảnh 5) -->
+    <!-- MODAL 3: MỞ BUỔI GẶP MỚI -->
      <div class="modal-overlay" id="newMeetingModal">
         <div class="form-modal" style="width:500px;">
             <h2>MỞ BUỔI GẶP</h2>
@@ -140,10 +140,9 @@
         </div>
     </div>
 
-    <!-- MODAL 4: GỬI THÔNG BÁO (Ảnh 6) -->
     <div class="modal-overlay" id="notifyModal">
-        <div class="form-modal" style="width:650px;">
-            <h3 style="text-align:center; margin-bottom:20px;">CHỌN LỚP NHẬN THÔNG BÁO</h3>
+        <div class="form-modal" style="width:700px;">
+            <h3 style="text-align:center; margin-bottom:20px; text-transform:uppercase;">Chọn lớp nhận thông báo</h3>
             
             <table class="class-select-table">
                 <thead>
@@ -155,8 +154,48 @@
             </table>
 
             <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+                <!-- Hủy: Đóng modal về trang chủ -->
                 <button onclick="closeModals()" style="padding:10px 30px; border:1px solid #999; background:#eee; cursor:pointer; font-weight:bold;">Hủy</button>
-                <button onclick="submitNotification()" style="padding:10px 30px; border:none; background:#224070; color:white; cursor:pointer; font-weight:bold;">Tạo thông báo</button>
+                <!-- Tạo thông báo: Chuyển sang Bước 2 -->
+                <button onclick="moveToCompose()" style="padding:10px 30px; border:none; background:#224070; color:white; cursor:pointer; font-weight:bold;">Tạo thông báo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: BƯỚC 2 - SOẠN THÔNG BÁO (Ảnh 2) -->
+    <div class="modal-overlay" id="composeModal">
+        <div class="form-modal" style="width:500px;">
+            <h3 style="text-align:center; margin-bottom:20px; text-transform:uppercase;">Soạn thông báo</h3>
+            
+            <label class="notify-label">Tiêu đề thông báo</label>
+            <input type="text" id="notiTitle" class="notify-input" placeholder="Tiêu đề">
+
+            <label class="notify-label">Nội dung thông báo</label>
+            <textarea id="notiContent" class="notify-textarea" placeholder="Nội dung"></textarea>
+
+            <label class="notify-label">Link đính kèm (tùy chọn)</label>
+            <input type="text" id="notiLink" class="notify-input" placeholder="Link">
+
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:25px;">
+                <!-- Hủy: Đóng modal về trang chủ -->
+                <button onclick="closeModals()" style="padding:8px 30px; border:1px solid #999; background:#eee; cursor:pointer; font-weight:bold;">Hủy</button>
+                <!-- Gửi: Chuyển sang Bước 3 (Xác nhận) -->
+                <button onclick="moveToConfirm()" style="padding:8px 30px; border:none; background:#0f62ac; color:white; cursor:pointer; font-weight:bold;">Gửi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: BƯỚC 3 - XÁC NHẬN GỬI (Ảnh 3) -->
+    <div class="modal-overlay" id="confirmNotifyModal">
+        <div class="modal-small-content">
+            <div class="modal-small-title" style="color:#000;">XÁC NHẬN GỬI</div>
+            <p class="modal-msg">Xác nhận gửi thông báo này đến các lớp đã chọn?</p>
+            
+            <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                <!-- Quay lại: Về bước 2 -->
+                <button onclick="backToCompose()" class="btn-cancel-gray">Quay lại</button>
+                <!-- Xác nhận: Gửi thật -->
+                <button onclick="finalSendNotification()" class="btn-confirm-blue">Xác nhận</button>
             </div>
         </div>
     </div>

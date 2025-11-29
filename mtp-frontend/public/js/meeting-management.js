@@ -177,53 +177,110 @@ async function submitNewMeeting() {
 }
 
 
-// --- MODAL GỬI THÔNG BÁO ---
+let selectedClassIds = [];
+
+// --- BƯỚC 1: MỞ DANH SÁCH LỚP ---
 async function openNotifyModal() {
     const res = await MTP_API.getTutorClasses();
     const tbody = document.getElementById('class-tbody');
     
     if (res.success) {
         tbody.innerHTML = res.data.map(c => {
-            // XỬ LÝ CHUỖI NGÀY GIỜ THÔNG MINH HƠN
-            // Chuỗi gốc ví dụ: "Chủ Nhật 14:00 - 16:00" hoặc "Thứ Hai 14:00 - 16:00"
-            const parts = c.schedule.trim().split(' '); 
-            
-            // Giả định 3 phần tử cuối luôn là giờ (VD: "14:00", "-", "16:00")
-            const timeStr = parts.slice(-3).join(' '); 
-            
-            // Tất cả các phần tử trước đó là Ngày (VD: "Chủ", "Nhật")
-            const dayStr = parts.slice(0, -3).join(' ');
+            // Fix lỗi ngày hiển thị "Nhật - Tư"
+            const parts = c.schedule.trim().split(' ');
+            const timeStr = parts.slice(-3).join(' '); // 3 phần tử cuối là giờ
+            const dayStr = parts.slice(0, -3).join(' '); // Phần còn lại là Thứ
 
             return `
                 <tr>
                     <td>${c.subject}</td>
                     <td>${c.title.split('-')[1] || 'L01'}</td>
-                    <td>${dayStr}</td> <!-- Hiển thị đầy đủ: Chủ Nhật -->
-                    <td>${timeStr}</td> <!-- Hiển thị giờ: 14:00 - 16:00 -->
+                    <td>${dayStr}</td>
+                    <td>${timeStr}</td>
                     <td>${c.students.length}/20</td>
                     <td align="center"><input type="checkbox" class="class-check" value="${c.id}"></td>
                 </tr>
             `;
         }).join('');
     }
+    // Mở Modal 1
     document.getElementById('notifyModal').classList.add('active');
 }
-async function submitNotification() {
+
+// --- CHUYỂN TỪ BƯỚC 1 SANG BƯỚC 2 ---
+function moveToCompose() {
     const checkboxes = document.querySelectorAll('.class-check:checked');
     if (checkboxes.length === 0) {
         alert("Vui lòng chọn ít nhất một lớp!");
         return;
     }
+    
+    // Lưu tạm các ID lớp đã chọn
+    selectedClassIds = Array.from(checkboxes).map(cb => cb.value);
 
-    const ids = Array.from(checkboxes).map(cb => cb.value);
-    
-    // Gọi API gửi noti
-    const res = await MTP_API.sendClassNotification(ids);
-    
-    closeModals();
-    alert(res.message || "Đã gửi thông báo thành công!");
+    // Ẩn Modal 1, Hiện Modal 2
+    document.getElementById('notifyModal').classList.remove('active');
+    document.getElementById('composeModal').classList.add('active');
 }
 
+// --- CHUYỂN TỪ BƯỚC 2 SANG BƯỚC 3 ---
+function moveToConfirm() {
+    const title = document.getElementById('notiTitle').value;
+    const content = document.getElementById('notiContent').value;
+
+    if (!title || !content) {
+        alert("Vui lòng nhập tiêu đề và nội dung!");
+        return;
+    }
+
+    // Ẩn Modal 2, Hiện Modal 3
+    document.getElementById('composeModal').classList.remove('active');
+    document.getElementById('confirmNotifyModal').classList.add('active');
+}
+
+// --- QUAY LẠI TỪ BƯỚC 3 VỀ BƯỚC 2 ---
+function backToCompose() {
+    document.getElementById('confirmNotifyModal').classList.remove('active');
+    document.getElementById('composeModal').classList.add('active');
+}
+
+// --- BƯỚC CUỐI: GỬI API ---
+async function finalSendNotification() {
+    const title = document.getElementById('notiTitle').value;
+    const content = document.getElementById('notiContent').value;
+    const link = document.getElementById('notiLink').value;
+
+    try {
+        // Gọi API gửi thông báo (Backend cần update để nhận thêm title, content, link)
+        // Hiện tại dùng hàm cũ sendClassNotification chỉ gửi ID
+        // Bạn có thể update api-client.js nếu cần gửi full data
+        
+        // Giả lập gửi kèm data
+        console.log("Sending...", { ids: selectedClassIds, title, content, link });
+        
+        const res = await MTP_API.sendClassNotification(selectedClassIds);
+        
+        if(res.success) {
+            alert("Gửi thông báo thành công!");
+            
+            // Reset và đóng hết
+            closeModals();
+            document.getElementById('notiTitle').value = '';
+            document.getElementById('notiContent').value = '';
+            document.getElementById('notiLink').value = '';
+            selectedClassIds = [];
+        } else {
+            alert("Lỗi: " + res.message);
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Lỗi kết nối server");
+    }
+}
+
+// Hàm đóng tất cả modal (Dùng cho nút Hủy)
 function closeModals() {
     document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+    // Reset biến tạm
+    selectedClassIds = [];
 }
