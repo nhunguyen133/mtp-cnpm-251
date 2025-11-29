@@ -112,6 +112,19 @@ const users = [
         major: 'Lập trình Java',
         email: 'bctuan@hcmut.edu.vn',
         phone: '0902000003'
+    },
+    //ADMIN
+    {
+        username: 'admin',
+        password: '123456',
+        role: 'admin',
+        name: 'Nguyễn Văn Admin',
+        mscb: 'AD001',
+        sex: 'Nam',
+        faculty: 'Phòng Quản trị hệ thống',
+        major: 'Quản trị mạng',
+        email: 'admin@hcmut.edu.vn',
+        phone: '0902000004'
     }
 ];
 

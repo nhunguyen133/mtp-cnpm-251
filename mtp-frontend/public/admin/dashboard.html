@@ -1,0 +1,62 @@
+<!-- public/admin/dashboard.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <main class="main">
+            <!-- Topbar Container -->
+            <div id="topbar-container"></div>
+
+            <div class="admin-content-wrapper">
+                <!-- Nội dung Dashboard Admin (giữ nguyên như code trước đã gửi) -->
+                
+                <!-- FILTER -->
+                <div class="filter-box">
+                    <div class="filter-header">
+                        <i class="fa-solid fa-clipboard-check"></i> BÁO CÁO & THỐNG KÊ TỔNG QUAN
+                    </div>
+                    <!-- ... -->
+                    <button class="btn-search" id="btn-view-report">Xem báo cáo</button>
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-num" id="stat-students">0</div>
+                        <div class="stat-label">Sinh viên tham gia</div>
+                    </div>
+                    <!-- ... các stat card khác -->
+                </div>
+
+                <!-- TABLE -->
+                <div class="report-section">
+                    <table class="admin-table">
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPTS QUAN TRỌNG: PHẢI LÀ ADMIN JS -->
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    
+    <!-- SỬA DÒNG DƯỚI ĐÂY: KHÔNG DÙNG student-dashboard.js -->
+    <script src="../js/admin-dashboard.js"></script> 
+</body>
+</html>

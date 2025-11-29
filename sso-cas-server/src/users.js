@@ -50,6 +50,18 @@ const users = [
     username: 'ngoc.bui',
     password: '123456',
     name: 'Bùi Thế Ngọc'
+  },
+
+  {
+    username: 'cong.tuan',
+    password: '123456', 
+    name: 'Công Tuấn'
+  },
+
+  {
+    username: 'admin',
+    password: '123456',
+    name: 'Nguyễn Văn Admin'
   }
 ];
 
