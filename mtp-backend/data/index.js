@@ -7,7 +7,7 @@ const users = require('./users');
 const sessions = require('./sessions');
 const registrations = require('./registrations');
 const notifications = require('./notifications');
-const evaluations = require('./evaluations');
+// const evaluations = require('./evaluations');
 const tutorAvailability = require('./tutorAvailability');
 
 // Export all data modules
@@ -17,6 +17,6 @@ module.exports = {
     registrations,
     registeredSessions: registrations, // Alias cho backward compatibility
     notifications,
-    evaluations,
+    // evaluations,
     tutorAvailability
 };

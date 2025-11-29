@@ -478,6 +478,36 @@ app.get("/api/admin/users", requireRole("admin"), (req, res) => {
   res.json({ success: true, data: users });
 });
 
+// 1. Lấy số liệu thống kê tổng quan (Mock data theo hình ảnh)
+app.get("/api/admin/stats", requireRole("admin"), (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      totalStudents: 850,
+      activeTutors: 120,
+      completedSessions: 2250,
+      avgRating: 4.7
+    }
+  });
+});
+
+// 2. Lấy dữ liệu báo cáo chất lượng (Table data)
+app.get("/api/admin/reports", requireRole("admin"), (req, res) => {
+  // Giả lập filter từ query params (req.query)
+  // Thực tế sẽ query DB dựa trên môn học/học kỳ
+  const mockData = [
+    { id: 1, name: "Mai Đức Trung", faculty: "Khoa học và Kỹ thuật Máy tính", subject: "Công nghệ phần mềm", students: 45, rating: 4.9 },
+    { id: 2, name: "Lê Hồng Trang", faculty: "Khoa học và Kỹ thuật Máy tính", subject: "Cấu trúc rời rạc", students: 55, rating: 4.5 },
+    { id: 3, name: "Lê Đình Thuận", faculty: "Khoa học và Kỹ thuật Máy tính", subject: "Lập trình nâng cao", students: 36, rating: 4.7 },
+    { id: 4, name: "Nguyễn Văn An", faculty: "Điện - Điện tử", subject: "Mạch điện", students: 28, rating: 4.2 },
+    { id: 5, name: "Trần Thị B", faculty: "Kỹ thuật Hóa học", subject: "Hóa đại cương", students: 60, rating: 4.8 }
+  ];
+
+  res.json({
+    success: true,
+    data: mockData
+  });
+});
 // =======================
 
 app.listen(PORT, () => {

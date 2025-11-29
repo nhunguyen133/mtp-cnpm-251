@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiến độ sinh viên</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <style>
+        .blue-header-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .blue-header-table thead th { background-color: #224070; color: white; padding: 12px; text-align: left; }
+        .blue-header-table tbody td { border-bottom: 1px solid #ddd; padding: 10px; background: white; }
+        .btn-view { background: #0f62ac; color: white; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div style="background:#4A7FA7; color:white; padding:10px 40px; margin-bottom:20px;">
+                <span class="material-icons" style="vertical-align:middle">bar_chart</span> Tiến độ sinh viên
+            </div>
+            
+            <div class="content">
+                <div style="margin-bottom:15px; font-weight:600; cursor:pointer;" onclick="history.back()">
+                    <span class="material-icons" style="vertical-align:bottom; font-size:20px">reply</span> Trở về trang trước
+                </div>
+
+                <!-- BẢNG 1: Danh sách buổi gặp -->
+                <div style="background:#cceeff; padding:20px; border-radius:8px; margin-bottom:30px;">
+                    <h3 style="margin-bottom:15px;">Danh sách các buổi gặp</h3>
+                    <table class="blue-header-table">
+                        <thead>
+                            <tr><th>Môn</th><th>Lớp</th><th>Ngày</th><th>Giờ</th><th>Sĩ số</th><th>Danh sách sinh viên</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Công nghệ phần mềm</td><td>L01</td><td>18/10/2025</td><td>15:00 - 17:00</td><td>16/16</td>
+                                <td><button class="btn-view" onclick="showStudentList('L01')">Xem</button></td>
+                            </tr>
+                            <tr>
+                                <td>Mạng máy tính</td><td>L01</td><td>24/10/2025</td><td>14:00 - 16:00</td><td>14/16</td>
+                                <td><button class="btn-view" onclick="showStudentList('L01')">Xem</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- BẢNG 2: Danh sách sinh viên (Mặc định ẩn, hiện khi bấm Xem) -->
+                <div id="student-list-section" style="display:none;">
+                    <h3 style="margin-bottom:15px;">Danh sách sinh viên lớp L01 - Công nghệ phần mềm</h3>
+                    <table class="blue-header-table">
+                        <thead>
+                            <tr><th>STT</th><th>Họ</th><th>Tên</th><th>MSSV</th><th>Email</th><th>Xem tiến độ</th></tr>
+                        </thead>
+                        <tbody id="student-tbody">
+                            <!-- JS Render -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script>
+        function showStudentList(className) {
+            document.getElementById('student-list-section').style.display = 'block';
+            // Mock data
+            const students = [
+                {id:1, ho:'Nguyễn Quỳnh', ten:'Như', mssv:'2312535', email:'nhu.nguyen@hcmut.edu.vn'},
+                {id:2, ho:'Nguyễn Trần Phương', ten:'Mai', mssv:'2312022', email:'mai.nguyen@hcmut.edu.vn'}
+            ];
+            const tbody = document.getElementById('student-tbody');
+            tbody.innerHTML = students.map((s, index) => `
+                <tr>
+                    <td>${index+1}</td><td>${s.ho}</td><td>${s.ten}</td><td>${s.mssv}</td><td>${s.email}</td>
+                    <td><button class="btn-view" onclick="window.location.href='student-detail.html'">Chọn</button></td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

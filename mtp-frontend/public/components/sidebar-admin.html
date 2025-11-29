@@ -1,0 +1,28 @@
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo-card">
+            <img src="../assets/images/logoBK.png" alt="logoBK" class="logo-circle">
+            <span class="sidebar-logo-text nav-label">M-T-P (Admin)</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <!-- Active class mặc định cho Dashboard -->
+        <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+            <span class="material-icons">home</span>
+            <span class="nav-label">Home</span>
+        </a>
+        
+        <!-- Các mục khác nếu có -->
+        <!-- <a href="#" class="nav-item"><span class="material-icons">people</span><span class="nav-label">Quản lý User</span></a> -->
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="logout-btn" onclick="location.href='http://localhost:3001/api/auth/logout'">
+            <span class="material-icons">logout</span>
+            <span class="nav-label">Đăng xuất</span>
+        </button>
+    </div>
+
+    <button class="sidebar-toggle" type="button">&lsaquo;</button>
+</aside>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sinh viên</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div style="background:#4A7FA7; color:white; padding:10px 40px;">
+                <span class="material-icons">bar_chart</span> Tiến độ sinh viên
+            </div>
+            
+            <div class="content">
+                <div style="margin-bottom:15px; font-weight:600; cursor:pointer;" onclick="history.back()">
+                    <span class="material-icons" style="vertical-align:bottom; font-size:20px">reply</span> Trở về trang trước
+                </div>
+
+                <!-- Header Info -->
+                <div class="student-detail-header">
+                    <div class="student-info-card">
+                        <div class="student-avatar"><span class="material-icons" style="font-size:50px">person</span></div>
+                        <div>
+                            <h3 style="color:#0f62ac; margin-bottom:5px;">Nguyễn Ngọc Quỳnh Anh</h3>
+                            <p><strong>MSSV:</strong> 2310078</p>
+                            <p><strong>Ngành:</strong> Khoa học Máy tính</p>
+                            <p><strong>Trạng thái:</strong> Đang học</p>
+                            <p><strong>Email:</strong> anh.quynh@hcmut.edu.vn</p>
+                        </div>
+                    </div>
+                    <div class="student-stats-card">
+                        <div class="stats-score">3.0</div>
+                        <div>Điểm trung bình tích lũy</div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="detail-grid" style="margin-bottom:20px;">
+                    <div class="detail-box" style="text-align:center;">
+                        <div style="font-size:24px; font-weight:bold; color:#0f62ac">8</div>
+                        <div>Buổi đã hoàn</div>
+                    </div>
+                    <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#0f62ac">1</div>
+                         <div>Buổi đã hủy</div>
+                    </div>
+                     <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#f1c40f">4.5 / 5 <span class="material-icons" style="font-size:20px">star</span></div>
+                         <div>Đánh giá chung</div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="detail-grid" style="grid-template-columns: 1fr 1fr;">
+                    
+                    <!-- Lịch sử -->
+                    <div class="detail-box">
+                        <div class="detail-box-title"><span class="material-icons">calendar_today</span> Lịch sử Buổi gặp</div>
+                        <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                            <thead style="background:#eee;">
+                                <tr><th style="padding:5px">Môn</th><th>Ngày</th><th>Trạng thái</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td style="padding:8px">Công nghệ phần mềm</td><td>28/10/2025</td><td><span style="background:#d4edda; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hoàn thành</span></td></tr>
+                                <tr><td style="padding:8px">Lập trình nâng cao</td><td>21/10/2025</td><td><span style="background:#d4edda; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hoàn thành</span></td></tr>
+                                <tr><td style="padding:8px">Công nghệ phần mềm</td><td>15/10/2025</td><td><span style="background:#f8d7da; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hủy (bởi SV)</span></td></tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top:10px; text-align:center;">
+                            <button style="background:#224070; color:white; border:none; padding:5px 10px;">1</button>
+                            <button style="background:#eee; border:none; padding:5px 10px;">2</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Subjects & Feedback -->
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        
+                        <!-- Subjects -->
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">book</span> Các môn học liên quan</div>
+                            <ul style="padding-left:20px; font-size:14px; line-height:1.6;">
+                                <li>Cấu trúc Dữ liệu & Giải thuật (Điểm giữa kỳ: <span style="color:blue">6.5</span>)</li>
+                                <li>Lập trình Hướng đối tượng (Điểm giữa kỳ: <span style="color:blue">7.5</span>)</li>
+                                <li>Hệ điều hành (Điểm giữa kỳ: <span style="color:blue">7.0</span>)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Feedback -->
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">chat</span> Phản hồi từ sinh viên</div>
+                            <div style="font-size:13px; margin-bottom:10px;">
+                                <strong>Buổi ngày 28/10 (5/5 <span class="material-icons" style="font-size:12px; color:#f1c40f">star</span>)</strong>
+                                <p style="font-style:italic; color:#555; margin-top:2px;">"Tutor giải thích dễ hiểu, tài liệu rất hữu ích."</p>
+                            </div>
+                            <div style="font-size:13px;">
+                                <strong>Buổi ngày 21/10 (4.5/5 <span class="material-icons" style="font-size:12px; color:#f1c40f">star</span>)</strong>
+                                <p style="font-style:italic; color:#555; margin-top:2px;">"Buổi học tốt, nhưng đôi khi nói hơi nhanh."</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+</body>
+</html>

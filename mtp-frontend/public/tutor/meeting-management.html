@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý buổi gặp</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            
+            <div class="content">
+                <div style="margin-bottom:15px; font-weight:600; cursor:pointer;" onclick="history.back()">
+                    <span class="material-icons" style="vertical-align:bottom; font-size:20px">reply</span> Trở về trang trước
+                </div>
+
+                <div class="meeting-table-container">
+                    <div class="meeting-header">
+                        <h3>Danh sách các buổi học/tư vấn hiện tại</h3>
+                        <select class="search-select">
+                            <option>Tìm kiếm buổi học/tư vấn</option>
+                        </select>
+                    </div>
+
+                    <table class="custom-table" style="width:100%; border-collapse:collapse;">
+                        <thead style="background:#ccc; font-weight:bold;">
+                            <tr>
+                                <th style="padding:10px; text-align:left;">Lớp</th>
+                                <th style="padding:10px; text-align:left;">Chủ đề</th>
+                                <th style="padding:10px; text-align:left;">Phòng</th>
+                                <th style="padding:10px; text-align:left;">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td style="padding:10px;">L02</td>
+                                <td>Mạng máy tính</td>
+                                <td>H6-202</td>
+                                <td style="font-weight:bold;">Đã mở</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td style="padding:10px;">L03</td>
+                                <td>Hệ điều hành</td>
+                                <td>Online</td>
+                                <td style="font-weight:bold;">Chờ xác nhận</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MOCK MODAL (như ảnh 9) -->
+    <div class="modal-overlay" id="confirmModal">
+        <div style="background:white; padding:30px; border-radius:8px; text-align:center; width:350px;">
+            <h3 style="margin-top:0;">XÁC NHẬN BUỔI GẶP</h3>
+            <p>Xác nhận mở buổi học đã chọn?</p>
+            <div style="margin-top:20px; display:flex; justify-content:center; gap:10px;">
+                <button onclick="document.getElementById('confirmModal').style.display='none'" style="padding:8px 20px;">Hủy</button>
+                <button onclick="document.getElementById('confirmModal').style.display='none'" style="padding:8px 20px;">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+</body>
+</html>

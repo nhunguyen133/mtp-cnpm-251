@@ -146,29 +146,76 @@ async function getSessionEvaluations(sessionId) {
   return apiCall(`/evaluations/${sessionId}`);
 }
 
-// Export tất cả functions
+// ========== TUTOR SPECIFIC APIs (BỔ SUNG) ==========
+
+/**
+ * Lấy danh sách session do Tutor tạo
+ * API: GET /api/tutor/sessions
+ */
+async function getTutorCreatedSessions() {
+  return apiCall('/tutor/sessions');
+}
+
+/**
+ * Tạo session mới
+ * API: POST /api/tutor/sessions
+ */
+async function createTutorSession(data) {
+  return apiCall('/tutor/sessions', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
+}
+
+/**
+ * Lấy danh sách sinh viên trong lớp
+ * API: GET /api/tutor/sessions/:id/students
+ */
+async function getSessionStudents(sessionId) {
+  return apiCall(`/tutor/sessions/${sessionId}/students`);
+}
+
+/**
+ * Xóa session
+ * API: DELETE /api/tutor/sessions/:id
+ */
+async function deleteTutorSession(sessionId) {
+  return apiCall(`/tutor/sessions/${sessionId}`, {
+    method: 'DELETE'
+  });
+}
+// ========== ADMIN SPECIFIC APIs (DỰ PHÒNG) ==========
+async function getAdminStats() {
+  return apiCall('/admin/stats');
+}
+
+async function getAdminReports(filters = {}) {
+  // Có thể truyền params filters nếu cần
+  return apiCall('/admin/reports');
+}
+
+// Cập nhật export
 window.MTP_API = {
-  // Auth
+  // ... (Giữ nguyên các export cũ)
   getCurrentUser,
-  
-  // Sessions
   getAllSessions,
   getSessionById,
   getStudentSessions,
   getAvailableSessions,
   registerSession,
   unregisterSession,
-  
-  // Tutors
   getAllTutors,
   getTutorById,
   getTutorAvailability,
-  
-  // Notifications
   getNotifications,
+  getSessionEvaluations,
   
-  // Evaluations
-  getSessionEvaluations
+  // Mới thêm
+  getTutorCreatedSessions,
+  createTutorSession,
+  getSessionStudents,
+  deleteTutorSession,
+  getAdminStats,
+  getAdminReports
 };
-
-console.log('✅ MTP API Client loaded');
+console.log('✅ MTP API Client loaded (Tutor Updated)');
