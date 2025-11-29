@@ -89,10 +89,15 @@ function renderSessions() {
         container.innerHTML = `
             <div class="empty-state">
                 <p style="font-size: 18px; color: #666;">Chưa có buổi học nào</p>
-                <p>Tutor này hiện chưa mở buổi học nào. Vui lòng chọn tutor khác.</p>
+                <p>Tutor này hiện chưa mở buổi học nào.</p>
                 <br>
+                <button class="btn-new-schedule" onclick="showNewScheduleOption()">
+                    <span class="material-icons">add_circle_outline</span>
+                    Đặt lịch mới với tutor
+                </button>
+                <br><br>
                 <a href="register-session.html" style="color: #264574; text-decoration: underline;">
-                    ← Quay lại chọn tutor
+                    ← Hoặc quay lại chọn tutor khác
                 </a>
             </div>
         `;
@@ -275,9 +280,8 @@ function showError(message) {
  * Hiển thị tùy chọn đặt lịch mới (chuyển sang trang lịch rảnh)
  */
 function showNewScheduleOption() {
-    alert('Tính năng đặt lịch mới với tutor. Sẽ hiển thị lịch rảnh của tutor để học viên chọn giờ phù hợp.');
-    // TODO: Implement availability schedule page
-    // window.location.href = "tutor-availability.html?tutorId=" + tutorId;
+    // Chuyển sang trang đặt lịch mới với tutor hiện tại
+    window.location.href = `book-new-schedule.html?tutorMSCB=${tutorMSCB}&tutorName=${encodeURIComponent(tutorName)}`;
 }
 
 // Make functions global
@@ -286,4 +290,4 @@ window.closeModal = closeModal;
 window.confirmRegistration = confirmRegistration;
 window.showNewScheduleOption = showNewScheduleOption;
 
-console.log('✅ Choose Session JS loaded');
+console.log('Choose Session JS loaded');

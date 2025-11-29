@@ -341,6 +341,86 @@ app.get("/api/student/my-sessions", requireRole("student"), (req, res) => {
   });
 });
 
+// ===== API CHUNG (COMMON) =====
+
+// Lấy lịch rảnh của tutor theo mscb
+app.get("/api/tutors/:mscb/availability", requireAuth, (req, res) => {
+  const { tutorAvailability } = require("./data");
+  const { mscb } = req.params;
+
+  console.log(`Fetching availability for tutor ${mscb}`);
+
+  // Lọc lịch rảnh theo mscb và status = 'available'
+  const availableSlots = tutorAvailability.filter(
+    slot => slot.mscb === mscb && slot.status === 'available'
+  );
+
+  res.json({
+    success: true,
+    data: availableSlots
+  });
+});
+
+// Student gửi yêu cầu đặt lịch mới (booking request)
+app.post("/api/student/booking-request", requireRole("student"), (req, res) => {
+  const { tutorAvailability } = require("./data");
+  const studentMSSV = req.session.user.mssv;
+  const { availabilityId, subject, location, type, note } = req.body;
+
+  console.log(`Student ${studentMSSV} đặt lịch mới:`, { availabilityId, subject, location, type, note });
+
+  // Kiểm tra slot có tồn tại và available
+  const slot = tutorAvailability.find(s => s.id === availabilityId);
+  
+  if (!slot) {
+    return res.status(404).json({
+      success: false,
+      error: "Không tìm thấy lịch rảnh này"
+    });
+  }
+
+  if (slot.status !== 'available') {
+    return res.status(400).json({
+      success: false,
+      error: "Lịch này đã được đặt"
+    });
+  }
+
+  // CHỈ BẮT BUỘC MÔN HỌC (location, type, note là optional)
+  if (!subject) {
+    return res.status(400).json({
+      success: false,
+      error: "Vui lòng nhập môn học"
+    });
+  }
+
+  // TODO: Tạo booking request trong database
+  // TODO: Gửi notification cho tutor
+  // Tạm thời return success với đầy đủ thông tin
+  
+  res.json({
+    success: true,
+    message: "Gửi yêu cầu đặt lịch thành công! Tutor sẽ xác nhận trong thời gian sớm nhất.",
+    data: {
+      bookingId: Date.now(),
+      availabilityId,
+      studentMSSV,
+      tutorMSCB: slot.mscb,
+      tutorName: slot.tutorName,
+      date: slot.date,
+      dayOfWeek: slot.dayOfWeek,
+      startTime: slot.startTime,
+      endTime: slot.endTime,
+      subject,
+      location: location || '',
+      type: type || '',
+      note: note || '',
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    }
+  });
+});
+
 // ===== API CHỈ CHO TUTOR =====
 
 // Tutor xem danh sách students đã đăng ký

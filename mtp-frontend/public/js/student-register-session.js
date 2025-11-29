@@ -54,7 +54,8 @@ async function loadTutorsAndSessions() {
         });
 
         allTutors = Array.from(tutorMap.values());
-        renderTutors(allTutors);
+        console.log('Loaded tutors:', allTutors);
+        // Không render ngay - chỉ render khi search
 
     } catch (error) {
         console.error('Error loading tutors:', error);
@@ -66,8 +67,22 @@ async function loadTutorsAndSessions() {
  * Render danh sách tutors
  */
 function renderTutors(list) {
+  console.log('Rendering tutors:', list);
+  
   const tbody = document.getElementById("tutorTableBody");
-  if (!tbody) return;
+  const container = document.getElementById("tutorListContainer");
+  const instruction = document.getElementById("searchInstruction");
+  
+  console.log('Elements:', { tbody, container, instruction });
+  
+  if (!tbody) {
+    console.error('tbody not found!');
+    return;
+  }
+
+  // Hiển thị danh sách, ẩn hướng dẫn
+  if (container) container.style.display = 'block';
+  if (instruction) instruction.style.display = 'none';
 
   if (!list || list.length === 0) {
     tbody.innerHTML = `
@@ -77,6 +92,7 @@ function renderTutors(list) {
         </td>
       </tr>
     `;
+    console.log('No tutors to display');
     return;
   }
 
@@ -94,6 +110,8 @@ function renderTutors(list) {
     `;
     tbody.appendChild(tr);
   });
+  
+  console.log('Render complete - displayed', list.length, 'tutors');
 }
 
 
@@ -102,16 +120,26 @@ function renderTutors(list) {
  */
 function handleSearch() {
   const input = document.getElementById("subjectInput");
-  const keyword = input.value.trim().toLowerCase();
+  const keyword = input?.value.trim().toLowerCase();
 
+  console.log('Search clicked. Keyword:', keyword);
+  console.log('All tutors:', allTutors);
+
+  // Nếu không nhập gì, yêu cầu nhập keyword
   if (!keyword) {
-    renderTutors(allTutors);
+    alert("Vui lòng nhập môn học bạn muốn tìm");
     return;
   }
 
+  // LƯU MÔN HỌC đã tìm kiếm để dùng sau
+  localStorage.setItem("searchedSubject", input.value.trim());
+
+  // Lọc theo keyword
   const filtered = allTutors.filter((t) =>
     t.subject.toLowerCase().includes(keyword)
   );
+  
+  console.log('Filtered tutors:', filtered);
   renderTutors(filtered);
 }
 
@@ -125,6 +153,9 @@ function handleSmartMatch() {
   let candidates = allTutors;
 
   if (keyword) {
+    // LƯU MÔN HỌC nếu có
+    localStorage.setItem("searchedSubject", input.value.trim());
+    
     candidates = allTutors.filter((t) =>
       t.subject.toLowerCase().includes(keyword)
     );
@@ -168,5 +199,4 @@ function handleChooseClick(e) {
   window.location.href = "choose-session.html?tutorMSCB=" + tutorMSCB;
 }
 
-console.log('✅ Register Session JS loaded');
-
+console.log('Register Session JS loaded');
