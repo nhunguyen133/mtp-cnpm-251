@@ -68,6 +68,29 @@ async function createNewMeeting(data) {
 async function getTutorClasses() { return apiCall('/tutor/classes'); }
 async function sendClassNotification(classIds) { 
     return apiCall('/tutor/send-notifications', { method: 'POST', body: JSON.stringify({ classIds }) }); 
+/**
+ * Lấy lịch rảnh của tutor
+ * @param {string} mscb - Mã số cán bộ
+ * @returns {Promise<{success: boolean, data: Array}>}
+ */
+async function getTutorAvailability(mscb) {
+  return apiCall(`/tutors/${mscb}/availability`);
+}
+
+/**
+ * Gửi yêu cầu đặt lịch mới
+ * @param {number} availabilityId - ID của slot lịch rảnh
+ * @param {string} subject - Môn học muốn học
+ * @param {string} location - Địa điểm học
+ * @param {string} type - Loại buổi học (offline/online/hybrid)
+ * @param {string} note - Ghi chú thêm
+ * @returns {Promise<{success: boolean, message: string, data: Object}>}
+ */
+async function createBookingRequest(availabilityId, subject, location, type, note = '') {
+  return apiCall('/student/booking-request', {
+    method: 'POST',
+    body: JSON.stringify({ availabilityId, subject, location, type, note })
+  });
 }
 // Student info
 async function getClassStudents(classId) {
@@ -97,6 +120,14 @@ window.MTP_API = {
   getSessionStudents,
   deleteTutorSession,
   // Other
+  
+  // Tutors
+  getAllTutors,
+  getTutorById,
+  getTutorAvailability,
+  createBookingRequest,
+  
+  // Notifications
   getNotifications,
   getTutorMeetings,
   getMeetingDetail,
