@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý buổi gặp</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            
+            <!-- Header Bar -->
+            <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
+                <span class="material-icons">calendar_month</span> Quản lý buổi gặp
+            </div>
+
+            <div class="content">
+                <!-- Toolbar Row -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <div style="cursor:pointer; font-weight:500;" onclick="history.back()">
+                        <span class="material-icons" style="vertical-align:bottom; font-size:18px">reply</span> Trở về trang trước
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button onclick="openNewMeetingModal()" style="background:#4A7FA7; color:white; border:none; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">Mở buổi gặp mới</button>
+                        <button onclick="openNotifyModal()" style="background:#4A7FA7; color:white; border:none; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">Gửi thông báo</button>
+                    </div>
+                </div>
+
+                <!-- Main Table -->
+                <div style="background:white; padding:20px; border-radius:8px;">
+                    <h3 style="margin-bottom:15px;">Danh sách các buổi gặp hiện tại</h3>
+                    <table class="custom-table" style="width:100%; border-collapse:collapse;">
+                        <thead style="background:#224070; color:white;">
+                            <tr>
+                                <th style="padding:10px; text-align:left;">Môn</th>
+                                <th style="padding:10px; text-align:left;">Lớp</th>
+                                <th style="padding:10px; text-align:left;">Ngày</th>
+                                <th style="padding:10px; text-align:left;">Giờ</th>
+                                <th style="padding:10px; text-align:left;">Sĩ số</th>
+                                <th style="padding:10px; text-align:left;">Trạng thái</th>
+                                <th style="padding:10px; text-align:center;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="meeting-tbody">
+                            <!-- JS Render -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <div style="display:flex; justify-content:center; gap:5px; margin-top:20px;">
+                        <button style="background:#224070; color:white; border:none; width:30px; height:30px;">1</button>
+                        <button style="background:#eee; border:none; width:30px; height:30px;">...</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL 1: CHI TIẾT BUỔI GẶP -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="form-modal" style="width:500px;">
+            <div style="text-align:right;"><span onclick="closeModals()" style="cursor:pointer; font-size:24px;">&times;</span></div>
+            <h2 id="detail-title">CHI TIẾT BUỔI GẶP</h2>
+            
+            <div class="detail-grid-box" id="detail-content">
+                <!-- JS Render info here -->
+            </div>
+
+            <div id="detail-actions" style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+                <!-- Buttons will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: LÝ DO HỦY -->
+    <div class="modal-overlay" id="cancelReasonModal">
+        <div class="form-modal" style="width:450px; text-align:center;">
+            <div style="text-align:right;"><span onclick="closeModals()" style="cursor:pointer; font-size:24px;">&times;</span></div>
+            <h3>LÝ DO HỦY BUỔI GẶP</h3>
+            <textarea id="cancelReasonInput" class="reason-box" placeholder="Nhập lý do"></textarea>
+            <div style="display:flex; justify-content:center; gap:20px;">
+                <button onclick="backToDetail()" style="background:#4A7FA7; color:white; border:none; padding:8px 20px; border-radius:4px; font-weight:bold; cursor:pointer;">Quay lại</button>
+                <button onclick="confirmCancelSubmit()" style="background:#d32f2f; color:white; border:none; padding:8px 20px; border-radius:4px; font-weight:bold; cursor:pointer;">Xác nhận hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: MỞ BUỔI GẶP MỚI -->
+     <div class="modal-overlay" id="newMeetingModal">
+        <div class="form-modal" style="width:500px;">
+            <h2>MỞ BUỔI GẶP</h2>
+            
+            <div class="form-row">
+                <label>Môn học</label>
+                <input type="text" id="newSubject" class="form-input" placeholder="VD: Công nghệ phần mềm">
+            </div>
+
+            <!-- MỚI THÊM: Dòng nhập Tên lớp -->
+            <div class="form-row">
+                <label>Lớp</label>
+                <input type="text" id="newClassName" class="form-input" placeholder="VD: L01">
+            </div>
+            
+            <!-- Bảng chọn lịch rảnh -->
+            <label style="font-weight:bold; font-size:14px;">Chọn lịch (Từ thiết lập lịch rảnh):</label>
+            <div style="border:1px solid #ccc; max-height:150px; overflow-y:auto; margin-bottom:15px; margin-top:5px;">
+                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                    <thead style="background:#224070; color:white;">
+                        <tr><th>Ngày</th><th>Giờ</th><th>Chọn</th></tr>
+                    </thead>
+                    <tbody id="avail-tbody">
+                        <!-- JS Load availability -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-row">
+                <label>Hình thức</label>
+                <div class="checkbox-group">
+                    <label style="font-weight:normal"><input type="checkbox" name="format" value="Offline" checked> Offline</label>
+                    <label style="font-weight:normal"><input type="checkbox" name="format" value="Online"> Online</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Mô tả buổi học</label>
+                <textarea id="newDesc" class="form-input" style="height:60px;" placeholder="Mô tả"></textarea>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button onclick="closeModals()" style="padding:8px 30px; border:1px solid #999; background:#eee; cursor:pointer; font-weight:bold;">Hủy</button>
+                <button onclick="submitNewMeeting()" style="padding:8px 30px; border:none; background:#4A7FA7; color:white; cursor:pointer; display:flex; align-items:center; gap:5px; font-weight:bold;">
+                    <span class="material-icons" style="font-size:18px;">open_in_new</span> Mở buổi học
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="notifyModal">
+        <div class="form-modal" style="width:700px;">
+            <h3 style="text-align:center; margin-bottom:20px; text-transform:uppercase;">Chọn lớp nhận thông báo</h3>
+            
+            <table class="class-select-table">
+                <thead>
+                    <tr><th>Môn</th><th>Lớp</th><th>Ngày</th><th>Giờ</th><th>Sĩ số</th><th>Chọn lớp</th></tr>
+                </thead>
+                <tbody id="class-tbody">
+                    <!-- JS Render -->
+                </tbody>
+            </table>
+
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+                <!-- Hủy: Đóng modal về trang chủ -->
+                <button onclick="closeModals()" style="padding:10px 30px; border:1px solid #999; background:#eee; cursor:pointer; font-weight:bold;">Hủy</button>
+                <!-- Tạo thông báo: Chuyển sang Bước 2 -->
+                <button onclick="moveToCompose()" style="padding:10px 30px; border:none; background:#224070; color:white; cursor:pointer; font-weight:bold;">Tạo thông báo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: BƯỚC 2 - SOẠN THÔNG BÁO (Ảnh 2) -->
+    <div class="modal-overlay" id="composeModal">
+        <div class="form-modal" style="width:500px;">
+            <h3 style="text-align:center; margin-bottom:20px; text-transform:uppercase;">Soạn thông báo</h3>
+            
+            <label class="notify-label">Tiêu đề thông báo</label>
+            <input type="text" id="notiTitle" class="notify-input" placeholder="Tiêu đề">
+
+            <label class="notify-label">Nội dung thông báo</label>
+            <textarea id="notiContent" class="notify-textarea" placeholder="Nội dung"></textarea>
+
+            <label class="notify-label">Link đính kèm (tùy chọn)</label>
+            <input type="text" id="notiLink" class="notify-input" placeholder="Link">
+
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:25px;">
+                <!-- Hủy: Đóng modal về trang chủ -->
+                <button onclick="closeModals()" style="padding:8px 30px; border:1px solid #999; background:#eee; cursor:pointer; font-weight:bold;">Hủy</button>
+                <!-- Gửi: Chuyển sang Bước 3 (Xác nhận) -->
+                <button onclick="moveToConfirm()" style="padding:8px 30px; border:none; background:#0f62ac; color:white; cursor:pointer; font-weight:bold;">Gửi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: BƯỚC 3 - XÁC NHẬN GỬI (Ảnh 3) -->
+    <div class="modal-overlay" id="confirmNotifyModal">
+        <div class="modal-small-content">
+            <div class="modal-small-title" style="color:#000;">XÁC NHẬN GỬI</div>
+            <p class="modal-msg">Xác nhận gửi thông báo này đến các lớp đã chọn?</p>
+            
+            <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                <!-- Quay lại: Về bước 2 -->
+                <button onclick="backToCompose()" class="btn-cancel-gray">Quay lại</button>
+                <!-- Xác nhận: Gửi thật -->
+                <button onclick="finalSendNotification()" class="btn-confirm-blue">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/meeting-management.js"></script>
+</body>
+</html>

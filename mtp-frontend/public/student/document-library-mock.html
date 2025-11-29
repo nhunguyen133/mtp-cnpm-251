@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Thư viện Trung tâm ĐHQG-HCM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; background-color: #f4f4f4; height: 100vh; display: flex; flex-direction: column; }
+
+        /* --- BROWSER MOCKUP (Thanh trình duyệt giả) --- */
+        .browser-bar {
+            background: #e0e0e0;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+        .browser-controls { display: flex; gap: 15px; color: #555; }
+        .browser-controls i { cursor: pointer; font-size: 18px; }
+        .url-input {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 6px 15px;
+            font-size: 13px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- WEB CONTENT CONTAINER --- */
+        .web-container {
+            flex: 1;
+            background: #fff;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 1. HEADER */
+        .header {
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+        }
+        
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        /* Logo Mockup using CSS */
+        .vn-logo { 
+            width: 50px; height: 40px; 
+            border-left: 5px solid #0056b3;
+            border-bottom: 5px solid #0056b3;
+            position: relative;
+        }
+        .vn-logo::after {
+            content: ''; position: absolute;
+            width: 30px; height: 5px; background: #0056b3;
+            top: 10px; left: 5px;
+        }
+        .logo-text h2 { margin: 0; color: #003399; font-size: 16px; font-weight: 700; text-transform: uppercase; }
+        .logo-text h3 { margin: 0; color: #0056b3; font-size: 15px; font-weight: 500; }
+
+        .nav-menu { display: flex; gap: 30px; font-size: 14px; color: #0056b3; font-weight: 600; }
+        .nav-item { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+        /* 2. HERO BANNER */
+        .hero-banner {
+            background: linear-gradient(to right, #e0f2f1, #b2dfdb);
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #ddd;
+        }
+        /* Decorative elements to mimic the graphic */
+        .hero-banner::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 150px;
+            background: #1b5e20; border-top-right-radius: 100px; border-bottom-right-radius: 100px; opacity: 0.9;
+        }
+        .hero-banner::after {
+            content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 100px;
+            background: #1b5e20; border-top-left-radius: 100px; border-bottom-left-radius: 100px; opacity: 0.9;
+        }
+
+        .hero-title {
+            color: #00695c;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            position: relative; z-index: 2;
+        }
+
+        .search-container {
+            width: 700px;
+            margin: 0 auto;
+            display: flex;
+            background: #1b5e20; /* Dark green border effect */
+            padding: 5px;
+            border-radius: 4px;
+            position: relative; z-index: 2;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        .search-select {
+            background: #fff;
+            border: none;
+            border-left: 1px solid #eee;
+            padding: 0 15px;
+            color: #666;
+            outline: none;
+            cursor: pointer;
+        }
+        .search-btn {
+            background: #fbc02d;
+            border: none;
+            width: 50px;
+            cursor: pointer;
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* 3. MAIN CONTENT */
+        .main-section {
+            padding: 40px 50px;
+            background: #fff;
+        }
+        .section-header { text-align: center; margin-bottom: 30px; }
+        .section-header h2 { font-size: 24px; color: #333; margin-bottom: 20px; }
+
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .tab-btn.active {
+            background: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+
+        /* CARD GRID */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: #f9f9f9;
+            display: flex;
+            border: 1px solid #eee;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        /* Thumbnail Mockup */
+        .doc-thumb {
+            width: 100px;
+            height: 140px;
+            background: #b0bec5;
+            position: relative;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            color: #546e7a; font-size: 10px; font-weight: bold;
+        }
+        .doc-thumb::before {
+            content: ''; position: absolute; top: 0; left: 10px;
+            width: 20px; height: 30px; background: #01579b;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+        }
+        .doc-thumb::after { content: 'TÀI LIỆU'; }
+
+        .doc-info { flex: 1; }
+        .badge {
+            background: #2e7d32; color: white;
+            font-size: 10px; padding: 2px 6px; border-radius: 2px;
+            display: inline-block; margin-bottom: 8px;
+        }
+        .doc-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin: 0 0 5px 0;
+            line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .doc-meta { font-size: 12px; color: #0277bd; margin-bottom: 8px; }
+        .doc-desc {
+            font-size: 12px; color: #666;
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- WEB CONTENT -->
+    <div class="web-container">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-area">
+                <div class="vn-logo"></div>
+                <div class="logo-text">
+                    <h2>ĐẠI HỌC QUỐC GIA TP.HCM</h2>
+                    <h3>THƯ VIỆN TRUNG TÂM</h3>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item">Bộ sưu tập</div>
+                <div class="nav-item">Thực thể ▾</div>
+                <div class="nav-item">Duyệt theo ▾</div>
+                <div class="nav-item">Trợ giúp</div>
+                <div class="nav-item">Liên hệ</div>
+            </nav>
+        </header>
+
+        <!-- HERO BANNER -->
+        <section class="hero-banner">
+            <!-- Icon decorations mockups -->
+            <i class="material-icons" style="position:absolute; left:50px; top:40px; font-size:40px; color:#fff; opacity:0.5;">menu_book</i>
+            <i class="material-icons" style="position:absolute; right:80px; bottom:30px; font-size:50px; color:#fff; opacity:0.5;">settings</i>
+
+            <h1 class="hero-title">BỘ SƯU TẬP SỐ</h1>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Nhập từ khoá cần tìm kiếm">
+                <select class="search-select">
+                    <option>Chọn</option>
+                    <option>Tác giả</option>
+                    <option>Nhan đề</option>
+                </select>
+                <button class="search-btn">
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT -->
+        <section class="main-section">
+            <div class="section-header">
+                <h2>Tài liệu nổi bật</h2>
+                <div class="tabs">
+                    <button class="tab-btn active">Bổ sung gần đây</button>
+                    <button class="tab-btn">Xem nhiều nhất</button>
+                    <button class="tab-btn">Tải xuống nhiều nhất</button>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                
+                <!-- Card 1 -->
+                <div class="doc-card" style="cursor:pointer;" onclick="window.location.href='document-detail-view.html'">
+                    <div class="doc-thumb"></div>
+                    <div class="doc-info">
+                        <span class="badge">Ấn phẩm</span>
+                        <h3 class="doc-title">Tìm hiểu về sản phẩm cho vay tiêu dùng có tài sản đảm bảo tại...</h3>
+                        <div class="doc-meta">(2025) Bùi, Thị Kiều Diễm; Đặng...</div>
+                        <div class="doc-desc">Đề tài tìm hiểu sản phẩm cho vay tiêu dùng có tài sản đảm bảo tại Ngân hàng TMCP...</div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="doc-card">
+                    <div class="doc-thumb"></div>
+                    <div class="doc-info">
+                        <span class="badge">Ấn phẩm</span>
+                        <h3 class="doc-title">Tìm hiểu sản phẩm cấp tín dụng dành cho khách hàng trẻ "Y-Ris...</h3>
+                        <div class="doc-meta">(2025) Bùi, Lê Tín; Đặng, Thị Hồn...</div>
+                        <div class="doc-desc">Đề tài giới thiệu sản phẩm tín dụng "Y-Rise" dành cho khách hàng trẻ tại Ngân hàng...</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="doc-card">
+                    <div class="doc-thumb"></div>
+                    <div class="doc-info">
+                        <span class="badge">Ấn phẩm</span>
+                        <h3 class="doc-title">Tìm hiểu tình hình huy động vốn tại Ngân hàng Thương mại Cổ...</h3>
+                        <div class="doc-meta">(2025) Nguyễn, Tâm Đoan;...</div>
+                        <div class="doc-desc">Đề tài tìm hiểu thực trạng hoạt động huy động vốn tại Ngân hàng Thương mại Cổ phần...</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

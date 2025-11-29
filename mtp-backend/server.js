@@ -16,7 +16,9 @@ const {
 
 const app = express();
 const PORT = 3001;
-
+let meetings = require("./data/meeting");
+let classes = require("./data/class"); // Giả sử bạn đã có file này như mô tả
+let notifications = require("./data/notifications");
 // ==== middlewares ====
 app.use(
   cors({
@@ -560,6 +562,224 @@ app.get("/api/admin/users", requireRole("admin"), (req, res) => {
 
 // =======================
 
+let tutorAvailability = require("./data/tutorAvailability");
+app.get("/api/tutor/availability", requireRole("tutor"), (req, res) => {
+    const userMscb = req.session.user.mscb; // Lấy MSCB của user đang login
+
+    // Lọc ra các lịch của tutor này
+    const mySchedules = tutorAvailability.filter(item => item.mscb === userMscb);
+
+    res.json({
+        success: true,
+        data: mySchedules
+    });
+});
+
+// 2. API Cập nhật/Thêm/Xóa lịch
+app.post("/api/tutor/availability", requireRole("tutor"), (req, res) => {
+    const userMscb = req.session.user.mscb;
+    const userName = req.session.user.name;
+    const { date, status, startTime, endTime, location, note, type } = req.body;
+
+    // Tìm xem ngày đó đã có lịch chưa
+    const index = tutorAvailability.findIndex(
+        item => item.mscb === userMscb && item.date === date
+    );
+
+    if (status === null) {
+        // --- DELETE ---
+        if (index !== -1) {
+            tutorAvailability.splice(index, 1);
+        }
+    } else {
+        // Mapping status frontend sang backend status
+        // Frontend: 'free' (xanh), 'opened' (vàng), 'busy' (đen)
+        // Backend: 'available', 'class_opened', 'busy'
+        let dbStatus = 'available';
+        if (status === 'opened') dbStatus = 'class_opened';
+        if (status === 'busy') dbStatus = 'busy';
+
+        const newItem = {
+            id: index !== -1 ? tutorAvailability[index].id : Date.now(), // Giữ ID cũ hoặc tạo mới
+            mscb: userMscb,
+            tutorName: userName,
+            dayOfWeek: new Date(date).toLocaleDateString('en-US', { weekday: 'long' }),
+            date: date,
+            startTime: startTime || "",
+            endTime: endTime || "",
+            location: location || "",
+            type: type || "offline",
+            status: dbStatus,
+            note: note || ""
+        };
+
+        if (index !== -1) {
+            // --- UPDATE ---
+            tutorAvailability[index] = newItem;
+        } else {
+            // --- CREATE ---
+            tutorAvailability.push(newItem);
+        }
+    }
+
+    // Trả về danh sách mới nhất của user đó
+    const updatedSchedules = tutorAvailability.filter(item => item.mscb === userMscb);
+    res.json({ success: true, message: "Cập nhật thành công", data: updatedSchedules });
+});
+// ===== API QUẢN LÝ BUỔI GẶP (MEETINGS) =====
+
+// 1. Lấy danh sách buổi gặp
+app.get("/api/tutor/meetings", requireRole("tutor"), (req, res) => {
+    const userMscb = req.session.user.mscb;
+    const myMeetings = meetings.filter(m => m.mscb === userMscb);
+    res.json({ success: true, data: myMeetings });
+});
+
+// 2. Lấy chi tiết buổi gặp
+app.get("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
+    const id = parseInt(req.params.id);
+    const meeting = meetings.find(m => m.id === id);
+    if(meeting) res.json({ success: true, data: meeting });
+    else res.status(404).json({ success: false, message: "Not found" });
+});
+
+// 3. Cập nhật trạng thái buổi gặp (Xác nhận / Hủy)
+app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
+    const id = parseInt(req.params.id);
+    const { status, reason } = req.body;
+    
+    const idx = meetings.findIndex(m => m.id === id);
+    if (idx !== -1) {
+        // Nếu là hủy -> Có thể xóa hoặc đổi status. Ở đây ta xóa cho đơn giản hoặc đổi status
+        if (status === 'Đã hủy') {
+            meetings.splice(idx, 1); // Xóa khỏi danh sách
+        } else {
+            meetings[idx].status = status; // Cập nhật (VD: Chờ xác nhận -> Đã mở)
+        }
+        res.json({ success: true, message: "Cập nhật thành công" });
+    } else {
+        res.status(404).json({ success: false, message: "Not found" });
+    }
+});
+
+// 4. Tạo buổi gặp mới
+app.post("/api/tutor/meetings", requireRole("tutor"), (req, res) => {
+    const user = req.session.user;
+    // Nhận thêm className từ body
+    const { subject, className, date, time, format, link, description } = req.body;
+
+    const newMeeting = {
+        id: Date.now(),
+        mscb: user.mscb,
+        subject: subject,
+        class: className || "Tư vấn", // Lưu tên lớp (VD: L01)
+        time: time,
+        date: date,
+        count: '0/20',
+        status: 'Chờ xác nhận',
+        format: format,
+        room: link || 'Chưa cập nhật'
+    };
+    
+    meetings.push(newMeeting);
+    res.json({ success: true, message: "Tạo thành công" });
+});
+
+// ===== API THÔNG BÁO & LỚP HỌC =====
+
+// 5. Lấy danh sách lớp của Tutor (để hiện modal gửi thông báo)
+app.get("/api/tutor/classes", requireRole("tutor"), (req, res) => {
+    const userMscb = req.session.user.mscb;
+    const myClasses = classes.filter(c => c.mscb === userMscb);
+    res.json({ success: true, data: myClasses });
+});
+
+// 6. Gửi thông báo (Cập nhật vào data/notifications.js)
+app.post("/api/tutor/send-notifications", requireRole("tutor"), (req, res) => {
+    const { classIds } = req.body; // Mảng id của các lớp được chọn
+    
+    let count = 0;
+    
+    // Duyệt qua các lớp được chọn
+    classIds.forEach(clsId => {
+        const cls = classes.find(c => c.id === parseInt(clsId));
+        if (cls && cls.students) {
+            // Duyệt qua từng sinh viên trong lớp
+            cls.students.forEach(mssv => {
+                notifications.push({
+                    id: Date.now() + Math.random(),
+                    mssv: mssv,
+                    title: `Thông báo từ lớp ${cls.subject}`,
+                    message: `Giảng viên ${cls.tutorName} đã gửi một thông báo mới cho lớp ${cls.title}.`,
+                    type: 'info',
+                    isRead: false,
+                    createdAt: new Date().toISOString()
+                });
+                count++;
+            });
+        }
+    });
+
+    res.json({ success: true, message: `Đã gửi thông báo cho ${count} sinh viên.` });
+});
+
+// ===== API TIẾN ĐỘ SINH VIÊN =====
+
+// 1. Lấy danh sách lớp của Tutor (để hiển thị bảng 1)
+// (Đã có API /api/tutor/classes ở bước trước, có thể tái sử dụng)
+
+// 2. Lấy danh sách chi tiết sinh viên của một lớp
+app.get("/api/tutor/classes/:classId/students", requireRole("tutor"), (req, res) => {
+    const classId = parseInt(req.params.classId);
+    
+    // Tìm lớp học
+    const targetClass = require("./data/class").find(c => c.id === classId);
+    
+    if (!targetClass) {
+        return res.status(404).json({ success: false, message: "Class not found" });
+    }
+
+    // Map từ mảng MSSV ['231...', '...'] sang object User đầy đủ
+    const studentList = targetClass.students.map(mssv => {
+        const user = users.find(u => u.mssv === mssv);
+        if (user) {
+            // Chỉ trả về info cần thiết, bỏ password
+            return {
+                mssv: user.mssv,
+                name: user.name,
+                email: user.email,
+                faculty: user.faculty,
+                major: user.major
+                // Có thể thêm avatar nếu có
+            };
+        }
+        return null;
+    }).filter(u => u !== null);
+
+    res.json({ success: true, data: studentList, classTitle: targetClass.title });
+});
+
+// 3. Lấy thông tin chi tiết 1 sinh viên (theo MSSV)
+app.get("/api/student-info/:mssv", requireRole("tutor"), (req, res) => {
+    const mssv = req.params.mssv;
+    const user = users.find(u => u.mssv === mssv);
+    
+    if (!user) {
+        return res.status(404).json({ success: false, message: "Student not found" });
+    }
+
+    res.json({ 
+        success: true, 
+        data: {
+            name: user.name,
+            mssv: user.mssv,
+            email: user.email,
+            faculty: user.faculty,
+            major: user.major,
+            status: "Đang học" // Mock trạng thái
+        }
+    });
+});
 app.listen(PORT, () => {
   console.log(`   MTP Backend API running at http://localhost:${PORT}`);
   console.log(`   Frontend at http://localhost:3002`);

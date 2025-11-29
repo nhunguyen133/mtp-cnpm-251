@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chia sẻ tài liệu - Tutor</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+    <style>
+        /* Style riêng cho trang này theo Ảnh 2 */
+        .share-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0f62ac;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .doc-info-box {
+            background-color: #e9ecef; /* Màu xám nhạt */
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #333;
+        }
+        .doc-info-box strong { color: #0056b3; }
+        .doc-link { color: #0056b3; text-decoration: underline; word-break: break-all; }
+
+        .section-sub-title {
+            font-weight: 700; font-size: 16px; margin-bottom: 5px;
+        }
+        .section-desc {
+            font-size: 13px; color: #555; margin-bottom: 15px;
+        }
+
+        /* Checkbox to trong bảng */
+        .big-checkbox {
+            width: 18px; height: 18px; cursor: pointer;
+        }
+
+        /* Footer buttons */
+        .form-actions {
+            display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px;
+        }
+        .btn-cancel {
+            background: #ccc; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; cursor: pointer;
+        }
+        .btn-send {
+            background: #0f62ac; color: white; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Tutor -->
+        <div id="sidebar-container"></div>
+        
+        <main class="main">
+            <div id="topbar-container"></div>
+            
+            <!-- Breadcrumb / Header bar -->
+            <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
+                <span class="material-icons">description</span> Tài liệu
+            </div>
+
+            <div class="content">
+                <div style="margin-bottom:20px; cursor:pointer;" onclick="history.back()"> 
+                    <span class="material-icons" style="vertical-align:bottom; font-size:18px;">reply</span> Trở về trang trước
+                </div>
+
+                <!-- MAIN CONTENT CARD -->
+                <div style="background:white; padding:30px; border-radius:8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    
+                    <!-- Title -->
+                    <div class="share-header">
+                        <span class="material-icons">share</span> Chia sẻ tài liệu
+                    </div>
+
+                    <!-- Info Box (Xám) -->
+                    <div class="doc-info-box">
+                        <div style="margin-bottom:8px;">
+                            <strong>Tài liệu:</strong> Giáo trình hệ điều hành Linux
+                        </div>
+                        <div>
+                            <strong>Link:</strong> <a href="#" class="doc-link">https://ir.vnulib.edu.vn/entities/publication/543f5204-641c-43b6-822a-ad877dc1eda8</a>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #ddd; margin-bottom:20px;">
+
+                    <!-- List Classes -->
+                    <div class="section-sub-title">Danh sách các tài liệu được chia sẻ (Chọn lớp)</div>
+                    <div class="section-desc">Chọn một hoặc nhiều lớp</div>
+
+                    <table class="custom-table" style="width:100%; border-collapse:collapse;">
+                        <thead style="background:#eee; font-weight:bold;">
+                            <tr>
+                                <th style="width: 50px;"></th>
+                                <th style="padding:12px; text-align:left;">MÔN</th>
+                                <th style="padding:12px; text-align:left;">LỚP</th>
+                                <th style="padding:12px; text-align:left;">SĨ SỐ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td align="center"><input type="checkbox" class="big-checkbox"></td>
+                                <td style="padding:12px;">Công nghệ phần mềm</td>
+                                <td>L02</td>
+                                <td><b>5</b>/16</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td align="center"><input type="checkbox" class="big-checkbox" checked></td>
+                                <td style="padding:12px;">Hệ điều hành</td>
+                                <td>L03</td>
+                                <td><b>10</b>/16</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Buttons -->
+                    <div class="form-actions">
+                        <button class="btn-cancel" onclick="history.back()">Hủy</button>
+                        <button class="btn-send" onclick="submitShare()">
+                            <span class="material-icons" style="font-size:18px;">send</span> Gửi
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script>
+        // Xử lý gửi
+        function submitShare() {
+            // Giả lập gửi API
+            const checkboxes = document.querySelectorAll('.big-checkbox:checked');
+            if(checkboxes.length === 0) {
+                alert("Vui lòng chọn ít nhất một lớp để chia sẻ!");
+                return;
+            }
+            
+            alert("Đã chia sẻ tài liệu thành công tới " + checkboxes.length + " lớp!");
+            window.location.href = 'documents.html'; // Quay về trang danh sách tài liệu
+        }
+    </script>
+</body>
+</html>

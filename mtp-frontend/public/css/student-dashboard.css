@@ -442,3 +442,232 @@ body {
 .sidebar.collapsed .sidebar-toggle {
     right: -15px;
 }
+/* --- CSS CHO TRANG HỦY LỊCH (CANCEL SCHEDULE) --- */
+.cancel-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Card bao quanh mỗi Tutor */
+.tutor-schedule-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* Header xanh nhạt chứa info Tutor */
+.tutor-header-bg {
+    background-color: #badcf5; /* Màu xanh giống ảnh */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tutor-avatar-large {
+    width: 80px;
+    height: 80px;
+    background: #444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 32px;
+    border: 3px solid #fff;
+}
+
+.tutor-info-main h3 {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.link-detail {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Phần body chứa thông tin thêm và bảng */
+.tutor-body {
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.info-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.info-group label {
+    font-weight: 700;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info-box {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 250px;
+    font-size: 14px;
+}
+
+/* Bảng lịch học bên trong card */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.schedule-table th {
+    background: #2f5d8c;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.schedule-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.btn-cancel-red {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.btn-cancel-red:hover { background-color: #b71c1c; }
+
+
+/* --- CSS CHO TRANG TÀI LIỆU (DOCUMENTS) --- */
+
+/* Màn hình chọn (2 thẻ to) */
+.doc-selection-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.doc-option-card {
+    background: #fff;
+    border: 1px solid #cceeff;
+    border-radius: 8px;
+    width: 350px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.doc-option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #264574;
+}
+
+.doc-icon {
+    font-size: 40px;
+    color: #264574;
+    margin-bottom: 15px;
+}
+
+.doc-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f62ac;
+}
+
+/* Màn hình danh sách tài liệu */
+.doc-list-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.search-bar-doc {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doc-table th {
+    background: #eee;
+    padding: 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.doc-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.btn-view-doc {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* --- MODAL CONFIRM (Dùng chung) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

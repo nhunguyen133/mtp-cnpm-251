@@ -1,121 +1,73 @@
 /**
- * MTP API Client
- * Module để gọi các API từ Backend
+ * MTP API Client - FULL VERSION
  */
 
 const API_BASE_URL = 'http://localhost:3001/api';
 
-// Helper function để gọi API
 async function apiCall(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
-      credentials: 'include', // Quan trọng: gửi cookies (session)
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers
       }
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || 'API call failed');
-    }
-
-    return data;
+    return await response.json();
   } catch (error) {
     console.error(`API Error [${endpoint}]:`, error);
     throw error;
   }
 }
 
-// ========== AUTH APIs ==========
+// ========== AUTH ==========
+async function getCurrentUser() { return apiCall('/auth/me'); }
 
-/**
- * Lấy thông tin user hiện tại
- * @returns {Promise<{loggedIn: boolean, user?: Object}>}
- */
-async function getCurrentUser() {
-  return apiCall('/auth/me');
+// ========== TUTOR SCHEDULES (LỊCH TRÌNH) ==========
+// Hàm này bị thiếu gây ra lỗi TypeError của bạn
+async function getTutorSchedules() {
+    return apiCall('/tutor/availability');
 }
 
-// ========== SESSION APIs ==========
-
-/**
- * Lấy danh sách tất cả sessions
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getAllSessions() {
-  return apiCall('/sessions');
+async function updateTutorSchedule(data) {
+    return apiCall('/tutor/availability', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
 }
 
-/**
- * Lấy chi tiết một session
- * @param {number} sessionId 
- * @returns {Promise<{success: boolean, data: Object}>}
- */
-async function getSessionById(sessionId) {
-  return apiCall(`/sessions/${sessionId}`);
+// ========== SESSION (CÁC API KHÁC) ==========
+async function getAllSessions() { return apiCall('/sessions'); }
+async function getSessionById(id) { return apiCall(`/sessions/${id}`); }
+async function getStudentSessions() { return apiCall('/student/my-sessions'); }
+async function getAvailableSessions() { return apiCall('/student/sessions'); }
+async function registerSession(id) { return apiCall(`/student/sessions/${id}/register`, { method: 'POST' }); }
+async function unregisterSession(id) { return apiCall(`/sessions/${id}/register`, { method: 'DELETE' }); }
+
+// ========== TUTOR MANAGEMENT ==========
+async function getTutorCreatedSessions() { return apiCall('/tutor/sessions'); }
+async function createTutorSession(data) { return apiCall('/tutor/sessions', { method: 'POST', body: JSON.stringify(data) }); }
+async function getSessionStudents(id) { return apiCall(`/tutor/sessions/${id}/students`); }
+async function deleteTutorSession(id) { return apiCall(`/tutor/sessions/${id}`, { method: 'DELETE' }); }
+
+// ========== NOTIFICATIONS & OTHERS ==========
+async function getNotifications() { return apiCall('/notifications'); }
+
+// MEETING MANAGEMENT
+async function getTutorMeetings() { return apiCall('/tutor/meetings'); }
+async function getMeetingDetail(id) { return apiCall(`/tutor/meetings/${id}`); }
+async function updateMeetingStatus(id, status, reason="") { 
+    return apiCall(`/tutor/meetings/${id}`, { method: 'PUT', body: JSON.stringify({ status, reason }) }); 
+}
+async function createNewMeeting(data) { 
+    return apiCall('/tutor/meetings', { method: 'POST', body: JSON.stringify(data) }); 
 }
 
-/**
- * Lấy sessions của student (các session đã đăng ký)
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getStudentSessions() {
-  return apiCall('/student/my-sessions');
-}
-
-/**
- * Lấy danh sách sessions có thể đăng ký (available sessions)
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getAvailableSessions() {
-  return apiCall('/student/sessions');
-}
-
-/**
- * Đăng ký session
- * @param {number} sessionId 
- * @returns {Promise<{success: boolean, message: string, data: Object}>}
- */
-async function registerSession(sessionId) {
-  return apiCall(`/student/sessions/${sessionId}/register`, {
-    method: 'POST'
-  });
-}
-
-/**
- * Hủy đăng ký session
- * @param {number} sessionId 
- * @returns {Promise<{success: boolean, message: string}>}
- */
-async function unregisterSession(sessionId) {
-  return apiCall(`/sessions/${sessionId}/register`, {
-    method: 'DELETE'
-  });
-}
-
-// ========== TUTOR APIs ==========
-
-/**
- * Lấy danh sách tutors
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getAllTutors() {
-  return apiCall('/tutors');
-}
-
-/**
- * Lấy thông tin chi tiết tutor
- * @param {number} tutorId 
- * @returns {Promise<{success: boolean, data: Object}>}
- */
-async function getTutorById(tutorId) {
-  return apiCall(`/tutors/${tutorId}`);
-}
-
+// NOTIFICATION SENDING
+async function getTutorClasses() { return apiCall('/tutor/classes'); }
+async function sendClassNotification(classIds) { 
+    return apiCall('/tutor/send-notifications', { method: 'POST', body: JSON.stringify({ classIds }) }); 
 /**
  * Lấy lịch rảnh của tutor
  * @param {string} mscb - Mã số cán bộ
@@ -140,33 +92,21 @@ async function createBookingRequest(availabilityId, subject, location, type, not
     body: JSON.stringify({ availabilityId, subject, location, type, note })
   });
 }
-
-// ========== NOTIFICATION APIs ==========
-
-/**
- * Lấy thông báo của user hiện tại
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getNotifications() {
-  return apiCall('/notifications');
+// Student info
+async function getClassStudents(classId) {
+    return apiCall(`/tutor/classes/${classId}/students`);
 }
 
-// ========== EVALUATION APIs ==========
-
-/**
- * Lấy đánh giá của session
- * @param {number} sessionId 
- * @returns {Promise<{success: boolean, data: Array}>}
- */
-async function getSessionEvaluations(sessionId) {
-  return apiCall(`/evaluations/${sessionId}`);
+async function getStudentInfoByMSSV(mssv) {
+    return apiCall(`/student-info/${mssv}`);
 }
 
-// Export tất cả functions
+// EXPORT GLOBAL
 window.MTP_API = {
-  // Auth
   getCurrentUser,
-  
+  // Availability
+  getTutorSchedules,
+  updateTutorSchedule,
   // Sessions
   getAllSessions,
   getSessionById,
@@ -174,18 +114,21 @@ window.MTP_API = {
   getAvailableSessions,
   registerSession,
   unregisterSession,
-  
-  // Tutors
-  getAllTutors,
-  getTutorById,
-  getTutorAvailability,
-  createBookingRequest,
-  
-  // Notifications
+  // Tutor Ops
+  getTutorCreatedSessions,
+  createTutorSession,
+  getSessionStudents,
+  deleteTutorSession,
+  // Other
   getNotifications,
-  
-  // Evaluations
-  getSessionEvaluations
+  getTutorMeetings,
+  getMeetingDetail,
+  updateMeetingStatus,
+  createNewMeeting,
+  getTutorClasses,
+  sendClassNotification,
+  getClassStudents,
+  getStudentInfoByMSSV
 };
 
-console.log('✅ MTP API Client loaded');
+console.log('✅ MTP API Client loaded successfully');

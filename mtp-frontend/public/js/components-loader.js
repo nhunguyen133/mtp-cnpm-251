@@ -23,13 +23,26 @@ async function loadComponent(elementId, componentPath) {
 // Load tất cả components khi DOM ready
 document.addEventListener('DOMContentLoaded', async function() {
     // Load sidebar
+    
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
-        await loadComponent('sidebar-container', '../components/sidebar.html');
-        setActiveNavItem();    // Set active state sau khi load
-        initSidebarToggle();   // Khởi tạo nút ẩn/hiện sidebar
-    }
+        let sidebarPath = '../components/sidebar.html'; // Mặc định là Student
+        
+        // Kiểm tra đường dẫn URL hiện tại
+        const path = window.location.pathname;
 
+        if (path.includes('/tutor/')) {
+            sidebarPath = '../components/sidebar-tutor.html';
+        } else if (path.includes('/admin/')) { 
+            // QUAN TRỌNG: Phải có dòng này để load sidebar Admin
+            sidebarPath = '../components/sidebar-admin.html';
+        }
+
+        await loadComponent('sidebar-container', sidebarPath);
+        setActiveNavItem();    
+        initSidebarToggle();   
+    }
+    
     // Load topbar
     const topbarContainer = document.getElementById('topbar-container');
     if (topbarContainer) {
