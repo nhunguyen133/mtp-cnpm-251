@@ -203,6 +203,66 @@
         document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
     }
 
+    window.openAddScheduleModal = function() {
+        document.getElementById('addScheduleModal').classList.add('active');
+    }
+
+    window.submitNewSchedule = async function() {
+        
+        const date = document.getElementById('newScheduleDate').value;
+        const startTime = document.getElementById('newScheduleStartTime').value;
+        const endTime = document.getElementById('newScheduleEndTime').value;
+        const location = document.getElementById('newScheduleLocation').value;
+        const type = document.querySelector('input[name="scheduleType"]:checked')?.value;
+        const note = document.getElementById('newScheduleNote').value;
+
+        // Validate required fields
+        if (!date || !startTime || !endTime || !type) {
+            alert('Vui lòng điền đầy đủ thông tin: Ngày, Giờ bắt đầu, Giờ kết thúc, và Hình thức');
+            return;
+        }
+
+        // Validate time range
+        if (startTime >= endTime) {
+            alert('Giờ bắt đầu phải trước giờ kết thúc');
+            return;
+        }
+
+        const payload = {
+            date: date,
+            status: 'available',
+            startTime: startTime,
+            endTime: endTime,
+            location: location || '',
+            type: type,
+            note: note || ''
+        };
+
+        try {
+            const res = await MTP_API.updateTutorSchedule(payload);
+            
+            if (res.success) {
+                // Clear form
+                document.getElementById('newScheduleDate').value = '';
+                document.getElementById('newScheduleStartTime').value = '';
+                document.getElementById('newScheduleEndTime').value = '';
+                document.getElementById('newScheduleLocation').value = '';
+                document.getElementById('newScheduleNote').value = '';
+                document.querySelectorAll('input[name="scheduleType"]').forEach(el => el.checked = false);
+                
+                // Close modal and refresh calendar
+                window.closeModals();
+                await fetchAndRenderSchedules();
+                alert('Đã thêm lịch rảnh thành công!');
+            } else {
+                alert("Lỗi: " + res.message);
+            }
+        } catch (error) {
+            console.error("Lỗi kết nối:", error);
+            alert("Không thể thêm lịch rảnh. Vui lòng thử lại.");
+        }
+    }
+
     async function saveToServer(payload) {
         try {
             const res = await MTP_API.updateTutorSchedule(payload);

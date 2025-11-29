@@ -4,6 +4,7 @@
 
 let tutorMSCB = '';
 let tutorName = '';
+let tutorEmail = '';
 let availabilitySlots = [];
 let selectedSlot = null;
 
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         tutorMSCB = urlParams.get('tutorMSCB') || localStorage.getItem('selectedTutorMSCB');
         tutorName = urlParams.get('tutorName') || localStorage.getItem('selectedTutorName');
+        tutorEmail = urlParams.get('tutorEmail') || localStorage.getItem('selectedTutorEmail');
 
         if (!tutorMSCB) {
             alert('Không tìm thấy thông tin tutor. Vui lòng chọn lại.');
@@ -43,10 +45,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /**
  * Update thông tin tutor ở header
+ * Bao gồm tên và email
  */
 function updateTutorInfo() {
     document.getElementById('tutorName').textContent = tutorName || 'Tutor';
-    document.getElementById('tutorMSCB').textContent = `Mã CB: ${tutorMSCB}`;
+    document.getElementById('tutorEmail').textContent = `Email: ${tutorEmail}` || 'Email không có';
 }
 
 /**

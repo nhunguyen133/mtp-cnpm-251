@@ -15,15 +15,17 @@
             <div id="topbar-container"></div>
             
             <!-- Header Bar -->
-            <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
-                <span class="material-icons">calendar_month</span> Quản lý buổi gặp
+            <div class="breadcrumb-bar">
+                <span class="material-icons">calendar_month</span>
+                <span>Quản lý buổi gặp</span>
             </div>
 
             <div class="content">
                 <!-- Toolbar Row -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <div style="cursor:pointer; font-weight:500;" onclick="history.back()">
-                        <span class="material-icons" style="vertical-align:bottom; font-size:18px">reply</span> Trở về trang trước
+                    <div class="breadcrumb-back">
+                        <span class="material-icons">reply</span>
+                        <a href="dashboard.html">Trở về trang trước</a>
                     </div>
                     <div style="display:flex; gap:10px;">
                         <button onclick="openNewMeetingModal()" style="background:#4A7FA7; color:white; border:none; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">Mở buổi gặp mới</button>

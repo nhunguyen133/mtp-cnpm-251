@@ -5,7 +5,7 @@ const users = [
     displayName: "Nguyễn Quỳnh Như"
   },
   {
-    username: "mai.tran",
+    username: "mai.nguyen",
     password: "123456",
     displayName: "Nguyễn Trần Phương Mai"
   },

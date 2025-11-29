@@ -45,6 +45,7 @@ async function loadTutorsAndSessions() {
                 tutorMap.set(session.mscb, {
                     mscb: session.mscb,
                     name: session.tutorName,
+                    email: session.tutorEmail || '',
                     subject: session.subject,
                     sessionsCount: 1
                 });
@@ -178,6 +179,7 @@ function handleSmartMatch() {
   // Lưu tutor và chuyển trang
   localStorage.setItem("selectedTutorMSCB", best.mscb);
   localStorage.setItem("selectedTutorName", best.name);
+  localStorage.setItem("selectedTutorEmail", best.email || '');
   window.location.href = "choose-session.html?tutorMSCB=" + best.mscb;
 }
 
@@ -193,9 +195,10 @@ function handleChooseClick(e) {
   const tutor = allTutors.find((t) => t.mscb === tutorMSCB);
   if (!tutor) return;
 
-  // Lưu tutorMSCB và chuyển sang trang chọn lịch
+  // Lưu tutorMSCB, tutorName và tutorEmail vào localStorage
   localStorage.setItem("selectedTutorMSCB", tutorMSCB);
   localStorage.setItem("selectedTutorName", tutorName);
+  localStorage.setItem("selectedTutorEmail", tutor.email || '');
   window.location.href = "choose-session.html?tutorMSCB=" + tutorMSCB;
 }
 

@@ -180,9 +180,14 @@ app.get("/api/student/sessions", requireRole("student"), (req, res) => {
       r => r.sessionId === session.id && r.status === 'confirmed'
     ).length;
     
+    // Tìm email của tutor từ users
+    const tutor = users.find(u => u.mscb === session.mscb);
+    const tutorEmail = tutor ? tutor.email : '';
+    
     return {
       ...session,
-      currentStudents: actualCount
+      currentStudents: actualCount,
+      tutorEmail: tutorEmail
     };
   });
 
@@ -425,21 +430,42 @@ app.post("/api/student/booking-request", requireRole("student"), (req, res) => {
 
 // Tutor xem danh sách students đã đăng ký
 app.get("/api/tutor/sessions", requireRole("tutor"), (req, res) => {
-  const tutorId = req.session.user.id;
+  const { sessions, registrations } = require("./data");
+  const tutorMSCB = req.session.user.mscb;
 
-  // TODO: Lấy từ database
+  console.log(`[API] Tutor ${tutorMSCB} requesting sessions`);
+
+  // Lọc sessions của tutor này
+  const tutorSessions = sessions.filter(s => s.mscb === tutorMSCB);
+
+  // Thêm thông tin số lượng students đã đăng ký
+  const sessionsWithCount = tutorSessions.map(session => {
+    const registeredCount = registrations.filter(
+      r => r.sessionId === session.id && r.status === 'confirmed'
+    ).length;
+
+    return {
+      id: session.id,
+      subject: session.subject,
+      title: session.title,
+      date: session.date,
+      time: `${session.startTime} - ${session.endTime}`,
+      startTime: session.startTime,
+      endTime: session.endTime,
+      location: session.location,
+      type: session.type,
+      registeredStudents: registeredCount,
+      currentStudents: registeredCount,
+      maxStudents: session.maxStudents,
+      status: session.status
+    };
+  });
+
+  console.log(`[API] Returning ${sessionsWithCount.length} sessions`);
+
   res.json({
     success: true,
-    data: [
-      {
-        id: 1,
-        subject: "Công nghệ phần mềm",
-        date: "2025-11-25",
-        time: "13:00 - 15:00",
-        registeredStudents: 5,
-        maxStudents: 20,
-      },
-    ],
+    data: sessionsWithCount
   });
 });
 

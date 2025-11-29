@@ -123,7 +123,7 @@ function createTutorCard(tutorData) {
             </div>
         </div>
         
-        <hr class="divider">
+        <hr class="divider-can">
         
         <div class="sessions-style">
             <table class="sessions-table">

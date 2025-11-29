@@ -1,0 +1,118 @@
+/* ==================== TUTOR DASHBOARD STYLES ==================== */
+
+/* Session Card Container */
+.tutor-session-card {
+    width: 380px;
+    min-height: 200px;
+    background: #B9D5FF;
+    border-radius: 34px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Icon Container */
+.session-icon-box {
+    width: 60px;
+    height: 50px;
+    padding: 8px;
+    background: #EBEBEB;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.session-icon-box .material-icons {
+    font-size: 36px;
+    color: #000000;
+}
+
+/* Title Row */
+.session-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.session-title {
+    flex: 1;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.3;
+    text-align: left;
+}
+
+/* Info Rows - Hiển thị theo hàng ngang */
+.session-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 8px;
+}
+
+.session-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.session-info-item .material-icons {
+    font-size: 24px;
+    color: #000000;
+}
+
+.session-info-text {
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: left;
+}
+
+.session-detail-text {
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Session List Container */
+.tutor-session-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 8px;
+}
+
+.session-divider {
+    /* margin: 16px 0; */
+    border: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.7);
+    width: 100%;
+}
+
+.manage-tutor-dashboard {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.cal-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    width: auto;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.cal-card h2 {
+    color: #264574;
+    font-size: 36px;
+    margin: 0;
+}
