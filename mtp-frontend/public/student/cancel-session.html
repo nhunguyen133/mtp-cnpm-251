@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>M-T-P - Hủy lịch</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    <link rel="stylesheet" href="../css/student-cancel-session.css">
+</head>
+<body>
+    <div class="app">
+
+        <!-- SIDEBAR - Loaded dynamically -->
+        <div id="sidebar-container"></div>
+
+        <!-- MAIN AREA -->
+        <div class="main">
+
+            <!-- TOPBAR - Loaded dynamically -->
+            <div id="topbar-container"></div>
+
+            <!-- BREADCRUMB BAR -->
+            <div class="breadcrumb-bar">
+                <span class="material-icons">event_busy</span>
+                <span>Hủy lịch</span>
+            </div>
+
+            <!-- CONTENT -->
+            <main class="content">
+                <div class="breadcrumb-back">
+                    <span class="material-icons">arrow_back</span>
+                    <a href="dashboard.html" class="back-link">Trở về trang trước</a>
+                </div>
+
+                <div class="cancel-container">
+                    <h2 class="page-title">Danh sách tutor</h2>
+
+                    <!-- Tutor List Container -->
+                    <div id="tutorListContainer">
+                        <!-- JS sẽ render danh sách tutors ở đây -->
+                    </div>
+                </div>
+            </main>
+            
+        </div>
+        
+    </div>
+
+    <!-- Cancel Confirmation Modal -->
+    <div id="cancelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Hủy lịch đã chọn?</h3>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-back" onclick="closeCancelModal()">Quay lại</button>
+                <button class="btn btn-confirm-cancel" onclick="confirmCancel()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Load Component Loader -->
+    <script src="../js/components-loader.js"></script>
+    <!-- Load API Client -->
+    <script src="../js/api-client.js"></script>
+    <!-- Load Cancel Session Logic -->
+    <script src="../js/student-cancel-session.js"></script>
+    
+</body>
+</html>

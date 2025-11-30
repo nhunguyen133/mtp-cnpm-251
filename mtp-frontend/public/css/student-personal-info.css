@@ -59,7 +59,7 @@
 }
 
 .profile-avatar.has-initial {
-    background: linear-gradient(135deg, #264574, #4a6fa5);
+    background: #4a6fa5;
 }
 
 .profile-avatar .avatar-text {
