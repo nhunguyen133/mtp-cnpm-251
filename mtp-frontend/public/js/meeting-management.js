@@ -360,10 +360,6 @@ async function finalSendNotification() {
     const link = document.getElementById('notiLink').value;
 
     try {
-        // Gọi API gửi thông báo (Backend cần update để nhận thêm title, content, link)
-        // Hiện tại dùng hàm cũ sendClassNotification chỉ gửi ID
-        // Bạn có thể update api-client.js nếu cần gửi full data
-        
         // Giả lập gửi kèm data
         console.log("Sending...", { ids: selectedClassIds, title, content, link });
         

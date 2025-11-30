@@ -2,7 +2,7 @@ const meetings = [
     {
         id: 1,
         mscb: 'CB002', // Gắn với Mai Đức Trung
-        subject: 'Công nghệ phần mềm', // Sửa lại cho khớp ảnh 1
+        subject: 'Công nghệ phần mềm',
         class: 'L02',
         time: '13:00 - 15:00',
         date: '28/10/2025',

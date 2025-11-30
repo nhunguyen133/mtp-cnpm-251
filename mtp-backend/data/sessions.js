@@ -18,7 +18,7 @@ const sessions = [
         maxStudents: 16,
         currentStudents: 1,
         status: 'open',
-        students: ['2313384']        // Ngô Minh Thư (màn hình dashboard)
+        students: ['2313384']
     },
     {
         id: 2,

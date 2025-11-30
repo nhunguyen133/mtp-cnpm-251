@@ -589,3 +589,19 @@ body {
     justify-content: center;
     gap: 15px;
 }
+
+.app {
+    min-height: 100vh;
+    height: auto !important;
+}
+
+#sidebar-container {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+}
+
+#sidebar-container .sidebar {
+    min-height: 100vh;
+    height: 100%;
+}

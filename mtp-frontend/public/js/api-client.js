@@ -25,7 +25,6 @@ async function apiCall(endpoint, options = {}) {
 async function getCurrentUser() { return apiCall('/auth/me'); }
 
 // ========== TUTOR SCHEDULES (LỊCH TRÌNH) ==========
-// Hàm này bị thiếu gây ra lỗi TypeError của bạn
 async function getTutorSchedules() {
     return apiCall('/tutor/availability');
 }

@@ -100,7 +100,7 @@
                 else if (data.status === 'busy') statusClass = 'status-busy';
 
                 const timeStr = (data.startTime && data.endTime) ? `${data.startTime} - ${data.endTime}` : (data.startTime || "");
-                tooltipText = `📝 ${data.note || 'Không có ghi chú'}\n🕒 ${timeStr}\n📍 ${data.location || 'N/A'}`;
+                tooltipText = ` ${data.note || 'Không có ghi chú'}\n ${timeStr}\n ${data.location || 'N/A'}`;
             }
 
             const cell = document.createElement('div');
@@ -172,8 +172,7 @@
         if(!name) { alert("Nhập tên buổi học"); return; }
 
         let sTime = "", eTime = "";
-        // Logic tách giờ đơn giản từ chuỗi ngày (Thực tế nên có input giờ riêng)
-        // Hiện tại chỉ gửi string date vào startTime để demo
+        
         sTime = timeVal; 
 
         saveToServer({
@@ -282,4 +281,4 @@
         return `${p[2]}/${p[1]}/${p[0]}`;
     }
 
-})(); // End IIFE
+})();

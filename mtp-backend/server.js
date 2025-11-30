@@ -17,7 +17,7 @@ const {
 const app = express();
 const PORT = 3001;
 let meetings = require("./data/meeting");
-let classes = require("./data/class"); // Giả sử bạn đã có file này như mô tả
+let classes = require("./data/class");
 let notifications = require("./data/notifications");
 // ==== middlewares ====
 app.use(
@@ -192,10 +192,6 @@ app.get("/api/student/sessions", requireRole("student"), (req, res) => {
   });
 
   const availableSessions = sessionsWithCount.filter(session => {
-    // Chỉ hiển thị sessions:
-    // 1. Đang open
-    // 2. Chưa đăng ký
-    // 3. Còn chỗ (currentStudents < maxStudents)
     return session.status === 'open' 
       && !registeredSessionIds.includes(session.id)
       && session.currentStudents < session.maxStudents;
@@ -406,10 +402,6 @@ app.post("/api/student/booking-request", requireRole("student"), (req, res) => {
     });
   }
 
-  // TODO: Tạo booking request trong database
-  // TODO: Gửi notification cho tutor
-  // Tạm thời return success với đầy đủ thông tin
-  
   res.json({
     success: true,
     message: "Gửi yêu cầu đặt lịch thành công! Tutor sẽ xác nhận trong thời gian sớm nhất.",
@@ -502,7 +494,6 @@ app.get(
   (req, res) => {
     const { sessionId } = req.params;
 
-    // TODO: Lấy từ database
     res.json({
       success: true,
       data: [
@@ -625,9 +616,6 @@ app.post("/api/tutor/availability", requireRole("tutor"), (req, res) => {
             tutorAvailability.splice(index, 1);
         }
     } else {
-        // Mapping status frontend sang backend status
-        // Frontend: 'free' (xanh), 'opened' (vàng), 'busy' (đen)
-        // Backend: 'available', 'class_opened', 'busy'
         let dbStatus = 'available';
         if (status === 'opened') dbStatus = 'class_opened';
         if (status === 'busy') dbStatus = 'busy';
@@ -647,10 +635,8 @@ app.post("/api/tutor/availability", requireRole("tutor"), (req, res) => {
         };
 
         if (index !== -1) {
-            // --- UPDATE ---
             tutorAvailability[index] = newItem;
         } else {
-            // --- CREATE ---
             tutorAvailability.push(newItem);
         }
     }
@@ -683,13 +669,11 @@ app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
     
     const idx = meetings.findIndex(m => m.id === id);
     if (idx !== -1) {
-        // Nếu là hủy -> Có thể xóa hoặc đổi status. Ở đây ta xóa cho đơn giản hoặc đổi status
         if (status === 'Đã hủy') {
             meetings.splice(idx, 1); // Xóa khỏi danh sách
         } else {
-            meetings[idx].status = status; // Cập nhật (VD: Chờ xác nhận -> Đã mở)
+            meetings[idx].status = status; // Cập nhật
             
-            // Nếu có format (khi xác nhận lịch hẹn) thì cập nhật
             if (format) {
                 meetings[idx].format = format;
                 
@@ -710,24 +694,24 @@ app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
 // 4. Tạo buổi gặp mới
 app.post("/api/tutor/meetings", requireRole("tutor"), (req, res) => {
     const user = req.session.user;
-    // Nhận thêm maxStudents và status từ body
+    
     const { subject, className, date, time, format, link, description, maxStudents, status } = req.body;
 
     const max = maxStudents || 16; // Mặc định 16 nếu không truyền
-    const meetingStatus = status || 'Đã mở'; // Mặc định "Đã mở"
+    const meetingStatus = status || 'Đã mở';
 
     const newMeeting = {
         id: Date.now(),
         mscb: user.mscb,
         subject: subject,
-        class: className || "Tư vấn", // Lưu tên lớp (VD: L01)
+        class: className || "L01",
         time: time,
         date: date,
-        count: `0/${max}`, // Dùng maxStudents động
-        status: meetingStatus, // Dùng status từ frontend
+        count: `0/${max}`,
+        status: meetingStatus,
         format: format,
         room: link || 'Chưa cập nhật',
-        maxStudents: max // Lưu thêm field để dùng sau
+        maxStudents: max
     };
     
     meetings.push(newMeeting);

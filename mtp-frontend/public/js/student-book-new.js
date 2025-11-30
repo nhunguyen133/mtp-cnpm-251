@@ -219,9 +219,9 @@ async function confirmBooking() {
         const response = await MTP_API.createBookingRequest(
             selectedSlot.id,
             subject,
-            '', // location - để trống
-            '', // type - để trống
-            ''  // note - để trống
+            '',
+            '',
+            ''
         );
 
         if (response.success) {
