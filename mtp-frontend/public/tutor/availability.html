@@ -61,7 +61,7 @@
         /* Các trạng thái màu */
         .status-free { background-color: #ccffcc; } /* Xanh lá nhạt - Lịch rảnh */
         .status-opened { background-color: #ffffcc; } /* Vàng nhạt - Đã mở */
-        .status-busy { background-color: #333; color: white; } /* Đen - Lịch trình */
+    /*   .status-busy { background-color: #333; color: white; }  Đen - Lịch trình */
 
         /* Context Menu (Menu chuột phải) */
         #context-menu {
@@ -151,9 +151,9 @@
                     <div class="legend-item">
                         <div class="color-box" style="background:#ccffcc"></div> Lịch rảnh
                     </div>
-                    <div class="legend-item">
+                    <!--div class="legend-item">
                         <div class="color-box" style="background:#333"></div> Lịch trình
-                    </div>
+                    </div-->
                 </div>
             </div>
         </main>
@@ -164,7 +164,7 @@
         <ul>
             <li onclick="setDayStatus('free')">🟢 Lịch rảnh (Xanh)</li>
             <li onclick="setDayStatus('opened')">🟡 Đã mở (Vàng)</li>
-            <li onclick="setDayStatus('busy')">⚫ Lịch trình (Đen)</li>
+            <!--li onclick="setDayStatus('busy')">⚫ Lịch trình (Đen)</li-->
             <li onclick="setDayStatus(null)">⚪ Xóa (None)</li>
         </ul>
     </div>
@@ -294,7 +294,7 @@
                     <input type="time" class="form-input" id="newScheduleEndTime" required>
                 </div>
                 
-                <div class="form-row">
+                <!--div class="form-row">
                     <label>Địa điểm (tùy chọn)</label>
                     <input type="text" class="form-input" id="newScheduleLocation" placeholder="VD: H1-101 hoặc Google Meet">
                 </div>
@@ -314,7 +314,7 @@
                 <div class="form-row">
                     <label>Ghi chú (tùy chọn)</label>
                     <textarea class="form-input" id="newScheduleNote" style="height:80px; resize:none;" placeholder="Ghi chú thêm về lịch rảnh này..."></textarea>
-                </div>
+                </div-->
 
                 <div style="display:flex; justify-content:space-between; margin-top:30px;">
                     <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
@@ -328,19 +328,19 @@
         </div>
     </div>
 
-   <div class="modal-overlay" id="scheduleConfirmModal">
+   <!--div class="modal-overlay" id="scheduleConfirmModal">
         <div class="modal-small-content">
             <div class="modal-small-title" style="color:#333;">Xác nhận lịch trình</div>
             <p class="modal-msg">Xác nhận đánh dấu ngày này là có Lịch trình (Bận)?</p>
             
             <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-                <!-- Nút Hủy: dùng closeModals() -->
+                < Nút Hủy: dùng closeModals() >
                 <button type="button" onclick="closeModals()" class="btn-cancel-gray">Hủy</button>
-                <!-- Nút Xác nhận: gọi hàm mới confirmSetBusy() -->
+                < Nút Xác nhận: gọi hàm mới confirmSetBusy() >
                 <button type="button" onclick="confirmSetBusy()" class="btn-confirm-black">Xác nhận</button>
             </div>
         </div>
-    </div>
+    </div-->
 
     <script src="../js/api-client.js"></script>
     <script src="../js/components-loader.js"></script>

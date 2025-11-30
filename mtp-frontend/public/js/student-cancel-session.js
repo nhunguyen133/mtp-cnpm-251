@@ -73,14 +73,16 @@ function renderTutorList() {
     // Group registrations by tutor
     const tutorMap = new Map();
     myRegistrations.forEach(reg => {
-        if (!tutorMap.has(reg.mscb)) {
-            tutorMap.set(reg.mscb, {
-                mscb: reg.mscb,
-                tutorName: reg.tutorName,
+        // Sử dụng tutorName làm key vì data không có mscb
+        const tutorKey = reg.tutorName || 'Tutor';
+        
+        if (!tutorMap.has(tutorKey)) {
+            tutorMap.set(tutorKey, {
+                tutorName: tutorKey,
                 sessions: []
             });
         }
-        tutorMap.get(reg.mscb).sessions.push(reg);
+        tutorMap.get(tutorKey).sessions.push(reg);
     });
 
     container.innerHTML = '';
@@ -98,8 +100,10 @@ function createTutorCard(tutorData) {
     const div = document.createElement('div');
     div.className = 'tutor-card';
     
-    // Lấy session đầu tiên để có thông tin tutor (email, khoa)
+    // Lấy session đầu tiên để có thông tin tutor
     const firstSession = tutorData.sessions[0];
+    const tutorEmail = firstSession.tutorEmail || 'email@hcmut.edu.vn';
+    const tutorFaculty = firstSession.faculty || 'Khoa học và Kỹ thuật máy tính';
     
     div.innerHTML = `
         <div class="tutor-header">
@@ -108,18 +112,17 @@ function createTutorCard(tutorData) {
             </div>
             <div class="tutor-info">
                 <h2 class="tutor-name">${tutorData.tutorName}</h2>
-                <a href="../student/personal-info.html" class="tutor-subtitle">Chi tiết người dùng</a>
             </div>
         </div>
 
         <div class="contact-info">
             <div class="info-field">
                 <label class="info-label">Email học vụ</label>
-                <div class="info-value">mdtrung@hcmut.edu.vn</div>
+                <div class="info-value">${tutorEmail}</div>
             </div>
             <div class="info-field">
                 <label class="info-label">Khoa</label>
-                <div class="info-value">Khoa học và Kỹ thuật máy tính</div>
+                <div class="info-value">${tutorFaculty}</div>
             </div>
         </div>
         
@@ -139,14 +142,14 @@ function createTutorCard(tutorData) {
                 <tbody>
                     ${tutorData.sessions.map(session => `
                         <tr>
-                            <td>${session.sessionName || session.id}</td>
+                            <td>${session.title || session.subject}</td>
                             <td>${formatDate(session.date)}</td>
                             <td>${session.startTime} - ${session.endTime}</td>
                             <td>${session.currentStudents || 0}/${session.maxStudents}</td>
                             <td>
                                 <button 
                                     class="btn-cancel-session" 
-                                    onclick="openCancelModal(${session.id}, '${session.sessionName || session.id}', '${session.date}', '${session.startTime}')"
+                                    onclick="openCancelModal(${session.id}, '${(session.title || session.subject).replace(/'/g, "\\'")}', '${session.date}', '${session.startTime}')"
                                 >
                                     Hủy
                                 </button>

@@ -40,12 +40,12 @@
                         <thead style="background:#224070; color:white;">
                             <tr>
                                 <th style="padding:10px; text-align:left;">Môn</th>
-                                <th style="padding:10px; text-align:left;">Lớp</th>
-                                <th style="padding:10px; text-align:left;">Ngày</th>
-                                <th style="padding:10px; text-align:left;">Giờ</th>
-                                <th style="padding:10px; text-align:left;">Sĩ số</th>
-                                <th style="padding:10px; text-align:left;">Trạng thái</th>
-                                <th style="padding:10px; text-align:center;">Thao tác</th>
+                                <th style="text-align:left;">Lớp</th>
+                                <th style="text-align:left;">Ngày</th>
+                                <th style="text-align:left;">Giờ</th>
+                                <th style="text-align:left;">Sĩ số</th>
+                                <th style="padding-left:15px; text-align:left;">Trạng thái</th>
+                                <th style="text-align:center;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody id="meeting-tbody">
@@ -91,8 +91,56 @@
         </div>
     </div>
 
+    <!-- MODAL: CHỌN HÌNH THỨC KHI XÁC NHẬN LỊCH HẸN -->
+    <div class="modal-overlay" id="formatSelectionModal">
+        <div class="form-modal" style="width:350px; text-align:center;">
+            <h3 style="margin-bottom:20px; text-transform:uppercase;">HÌNH THỨC</h3>
+            <div style="display:flex; justify-content:center; gap:30px; margin-bottom:30px;">
+                <label style="font-weight:normal; cursor:pointer; display:flex; align-items:center;">
+                    <input type="checkbox" id="offlineCheckbox" value="Offline" checked style="margin-right:8px; width:18px; height:18px;">
+                    Offline
+                </label>
+                <label style="font-weight:normal; cursor:pointer; display:flex; align-items:center;">
+                    <input type="checkbox" id="onlineCheckbox" value="Online" style="margin-right:8px; width:18px; height:18px;">
+                    Online
+                </label>
+            </div>
+            <div class="form-row" id="confirmLinkRow" style="display:none;">
+                <label>Link</label>
+                <textarea id="confirmLink" class="form-input" style="height:60px;" placeholder="Nhập link online"></textarea>
+            </div>
+            <div style="display:flex; justify-content:center; gap:20px;">
+                <button onclick="backToDetailFromFormat()" style="background:#d32f2f; color:white; border:none; padding:10px 25px; border-radius:4px; font-weight:bold; cursor:pointer;">Hủy</button>
+                <button onclick="confirmMeeting()" style="background:#3b5998; color:white; border:none; padding:10px 25px; border-radius:4px; font-weight:bold; cursor:pointer;">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logic cho checkbox hình thức (chỉ chọn 1)
+        const offlineCheckbox = document.getElementById('offlineCheckbox');
+        const onlineCheckbox = document.getElementById('onlineCheckbox');
+        const confirmLinkRow = document.getElementById('confirmLinkRow');
+        
+        if (offlineCheckbox && onlineCheckbox) {
+            offlineCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    onlineCheckbox.checked = false;
+                    if (confirmLinkRow) confirmLinkRow.style.display = 'none';
+                }
+            });
+            
+            onlineCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    offlineCheckbox.checked = false;
+                    if (confirmLinkRow) confirmLinkRow.style.display = 'block';
+                }
+            });
+        }
+    </script>
+
     <!-- MODAL 3: MỞ BUỔI GẶP MỚI -->
-     <div class="modal-overlay" id="newMeetingModal">
+    <div class="modal-overlay" id="newMeetingModal">
         <div class="form-modal" style="width:500px;">
             <h2>MỞ BUỔI GẶP</h2>
             
@@ -101,31 +149,36 @@
                 <input type="text" id="newSubject" class="form-input" placeholder="VD: Công nghệ phần mềm">
             </div>
 
-            <!-- MỚI THÊM: Dòng nhập Tên lớp -->
             <div class="form-row">
-                <label>Lớp</label>
-                <input type="text" id="newClassName" class="form-input" placeholder="VD: L01">
+                <label>Chọn ngày</label>
+                <input type="date" id="newDate" class="form-input" required>
             </div>
-            
-            <!-- Bảng chọn lịch rảnh -->
-            <label style="font-weight:bold; font-size:14px;">Chọn lịch (Từ thiết lập lịch rảnh):</label>
-            <div style="border:1px solid #ccc; max-height:150px; overflow-y:auto; margin-bottom:15px; margin-top:5px;">
-                <table style="width:100%; font-size:13px; border-collapse:collapse;">
-                    <thead style="background:#224070; color:white;">
-                        <tr><th>Ngày</th><th>Giờ</th><th>Chọn</th></tr>
-                    </thead>
-                    <tbody id="avail-tbody">
-                        <!-- JS Load availability -->
-                    </tbody>
-                </table>
+
+            <div class="form-row">
+                <label>Thời gian bắt đầu</label>
+                <input type="time" class="form-input" id="newScheduleStartTime" required>
+            </div>
+
+            <div class="form-row">
+                <label>Thời gian kết thúc</label>
+                <input type="time" class="form-input" id="newScheduleEndTime" required>
             </div>
 
             <div class="form-row">
                 <label>Hình thức</label>
                 <div class="checkbox-group">
-                    <label style="font-weight:normal"><input type="checkbox" name="format" value="Offline" checked> Offline</label>
-                    <label style="font-weight:normal"><input type="checkbox" name="format" value="Online"> Online</label>
+                    <label style="font-weight:normal">
+                        <input type="radio" name="format" value="Offline" checked> Offline
+                    </label>
+                    <label style="font-weight:normal">
+                        <input type="radio" name="format" value="Online"> Online
+                    </label>
                 </div>
+            </div>
+
+            <div class="form-row" id="linkRow" style="display:none;">
+                <label>Link</label>
+                <textarea id="newLink" class="form-input" style="height:60px;" placeholder="Link"></textarea>
             </div>
 
             <div class="form-row">
@@ -141,6 +194,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const formatRadios = document.querySelectorAll('input[name="format"]');
+        const linkRow = document.getElementById('linkRow');
+
+        formatRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'Online' && radio.checked) {
+                    linkRow.style.display = 'block';
+                } else if (radio.value === 'Offline' && radio.checked) {
+                    linkRow.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
 
     <div class="modal-overlay" id="notifyModal">
         <div class="form-modal" style="width:700px;">

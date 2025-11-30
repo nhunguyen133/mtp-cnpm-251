@@ -23,14 +23,14 @@ async function loadMeetings() {
         if (res.success && res.data.length > 0) {
             tbody.innerHTML = res.data.map(m => `
                 <tr style="border-bottom:1px solid #eee;">
-                    <td style="padding:10px;">${m.subject}</td>
-                    <td>${m.class}</td>
-                    <td>${m.date}</td>
-                    <td>${m.time}</td>
-                    <td>${m.count}</td>
-                    <td style="font-weight:bold;">${m.status}</td>
+                    <td style="width:300px; padding:10px; text-align:left;">${m.subject}</td>
+                    <td style="width:100px; text-align:left;">${m.class}</td>
+                    <td style="text-align:left;">${m.date}</td>
+                    <td style="text-align:left;">${m.time}</td>
+                    <td style="width:100px; text-align:left;">${m.count}</td>
+                    <td style="font-weight:bold; padding-left:15px; text-align:left;">${m.status}</td>
                     <td align="center">
-                        <button onclick="openDetail(${m.id})" style="background:#ccc; border:1px solid #999; padding:2px 10px; border-radius:3px; cursor:pointer; font-size:12px; font-weight:bold; display:flex; align-items:center; gap:3px;">
+                        <button onclick="openDetail(${m.id})" style="background:#ccc; border:1px solid #999; padding:2px 10px; border-radius:3px; cursor:pointer; font-size:12px; font-weight:bold; display:inline-flex; align-items:center; gap:3px;">
                             Chi tiết <span class="material-icons" style="font-size:14px">mouse</span>
                         </button>
                     </td>
@@ -54,31 +54,46 @@ async function openDetail(id) {
     const title = document.getElementById('detail-title');
 
     // Render thông tin vào lưới (Detail Grid)
-    content.innerHTML = `
-        <div class="detail-cell"><span class="detail-label">Môn</span><span class="detail-value">${m.subject}</span></div>
-        <div class="detail-cell"><span class="detail-label">Lớp</span><span class="detail-value">${m.class}</span></div>
-        
-        <div class="detail-cell"><span class="detail-label">Ngày</span><span class="detail-value">${m.date}</span></div>
-        <div class="detail-cell"><span class="detail-label">Giờ</span><span class="detail-value">${m.time}</span></div>
-        
-        <div class="detail-cell"><span class="detail-label">Hình thức</span><span class="detail-value">${m.format}</span></div>
-        <div class="detail-cell"><span class="detail-label">Phòng/Link</span><span class="detail-value">${m.room}</span></div>
-        
-        <div class="detail-cell"><span class="detail-label">Sĩ số</span><span class="detail-value">${m.count}</span></div>
-        <div class="detail-cell"><span class="detail-label">Trạng thái</span><span class="detail-value" style="font-weight:bold">${m.status}</span></div>
-    `;
+    // Nếu là "Chờ xác nhận" thì KHÔNG hiển thị Hình thức và Phòng/Link
+    if (m.status === 'Chờ xác nhận') {
+        content.innerHTML = `
+            <div class="detail-cell"><span class="detail-label">Môn</span><span class="detail-value">${m.subject}</span></div>
+            <div class="detail-cell"><span class="detail-label">Lớp</span><span class="detail-value">${m.class}</span></div>
+            
+            <div class="detail-cell"><span class="detail-label">Ngày</span><span class="detail-value">${m.date}</span></div>
+            <div class="detail-cell"><span class="detail-label">Giờ</span><span class="detail-value">${m.time}</span></div>
+            
+            <div class="detail-cell"><span class="detail-label">Sĩ số</span><span class="detail-value">${m.count}</span></div>
+            <div class="detail-cell"><span class="detail-label">Trạng thái</span><span class="detail-value" style="font-weight:bold">${m.status}</span></div>
+        `;
+    } else {
+        // Trạng thái khác thì hiển thị đầy đủ
+        content.innerHTML = `
+            <div class="detail-cell"><span class="detail-label">Môn</span><span class="detail-value">${m.subject}</span></div>
+            <div class="detail-cell"><span class="detail-label">Lớp</span><span class="detail-value">${m.class}</span></div>
+            
+            <div class="detail-cell"><span class="detail-label">Ngày</span><span class="detail-value">${m.date}</span></div>
+            <div class="detail-cell"><span class="detail-label">Giờ</span><span class="detail-value">${m.time}</span></div>
+            
+            <div class="detail-cell"><span class="detail-label">Hình thức</span><span class="detail-value">${m.format}</span></div>
+            <div class="detail-cell"><span class="detail-label">Phòng/Link</span><span class="detail-value">${m.room}</span></div>
+            
+            <div class="detail-cell"><span class="detail-label">Sĩ số</span><span class="detail-value">${m.count}</span></div>
+            <div class="detail-cell"><span class="detail-label">Trạng thái</span><span class="detail-value" style="font-weight:bold">${m.status}</span></div>
+        `;
+    }
 
     // Logic nút bấm dựa trên trạng thái
     if (m.status === 'Đã mở') {
-        // Chỉ nút Hủy
+        // Chỉ nút Hủy buổi gặp (cần lý do)
         title.innerText = "CHI TIẾT BUỔI GẶP";
         actions.innerHTML = `<button class="btn-red" onclick="openCancelReason()">Hủy buổi gặp</button>`;
     } else if (m.status === 'Chờ xác nhận') {
-        // Xác nhận / Hủy
+        // Xác nhận / Hủy lịch hẹn (không cần lý do)
         title.innerText = "CHI TIẾT LỊCH HẸN";
         actions.innerHTML = `
-            <button class="btn-red" onclick="openCancelReason()">Hủy</button>
-            <button class="btn-blue" onclick="confirmMeeting()">Xác nhận</button>
+            <button class="btn-red" onclick="cancelAppointmentDirectly()">Hủy</button>
+            <button class="btn-blue" onclick="openFormatSelection()">Xác nhận</button>
         `;
     } else {
         actions.innerHTML = `<button onclick="closeModals()">Đóng</button>`;
@@ -92,6 +107,19 @@ function openCancelReason() {
     document.getElementById('detailModal').classList.remove('active');
     document.getElementById('cancelReasonModal').classList.add('active');
     document.getElementById('cancelReasonInput').value = '';
+}
+
+// Hủy lịch hẹn trực tiếp (không cần lý do)
+async function cancelAppointmentDirectly() {
+    if (!confirm("Bạn có chắc chắn muốn hủy lịch hẹn này?")) {
+        return;
+    }
+    
+    // Gọi API cập nhật status -> Đã hủy (không cần lý do)
+    await MTP_API.updateMeetingStatus(currentMeetingId, 'Đã hủy');
+    closeModals();
+    loadMeetings();
+    alert("Đã hủy lịch hẹn.");
 }
 
 function backToDetail() {
@@ -108,72 +136,153 @@ async function confirmCancelSubmit() {
     alert("Đã hủy buổi gặp.");
 }
 
+// Mở modal chọn hình thức khi xác nhận lịch hẹn
+function openFormatSelection() {
+    document.getElementById('detailModal').classList.remove('active');
+    document.getElementById('formatSelectionModal').classList.add('active');
+}
+
+// Quay lại chi tiết từ modal chọn hình thức
+function backToDetailFromFormat() {
+    document.getElementById('formatSelectionModal').classList.remove('active');
+    document.getElementById('detailModal').classList.add('active');
+}
+
 async function confirmMeeting() {
-    // Gọi API cập nhật status -> Đã mở
-    await MTP_API.updateMeetingStatus(currentMeetingId, 'Đã mở');
+    const offlineCheckbox = document.getElementById('offlineCheckbox');
+    const onlineCheckbox = document.getElementById('onlineCheckbox');
+    const confirmLinkInput = document.getElementById('confirmLink');
+    
+    let format = '';
+    let link = '';
+    
+    if (offlineCheckbox && offlineCheckbox.checked) {
+        format = 'Offline';
+    } else if (onlineCheckbox && onlineCheckbox.checked) {
+        format = 'Online';
+        link = confirmLinkInput ? confirmLinkInput.value.trim() : '';
+        
+        // Nếu chọn Online nhưng không nhập link thì cảnh báo
+        if (!link) {
+            alert("Vui lòng nhập link cho buổi gặp online!");
+            return;
+        }
+    }
+    
+    if (!format) {
+        alert("Vui lòng chọn hình thức!");
+        return;
+    }
+    
+    // Gọi API cập nhật status -> Đã mở và cập nhật format, link
+    await MTP_API.updateMeetingStatus(currentMeetingId, 'Đã mở', null, format, link);
     closeModals();
+    
+    // Reset checkbox và link về mặc định
+    if (offlineCheckbox) offlineCheckbox.checked = true;
+    if (onlineCheckbox) onlineCheckbox.checked = false;
+    if (confirmLinkInput) confirmLinkInput.value = '';
+    
     loadMeetings();
     alert("Đã xác nhận buổi gặp.");
 }
 
 // --- MODAL MỞ MỚI ---
-async function openNewMeetingModal() {
-    // Load lịch rảnh từ API
-    const res = await MTP_API.getTutorSchedules();
-    const tbody = document.getElementById('avail-tbody');
-    tbody.innerHTML = '';
-
-    if (res.success) {
-        // Lọc các ngày 'free' hoặc 'available'
-        const freeSlots = res.data.filter(s => s.status === 'free' || s.status === 'available');
-        
-        freeSlots.forEach(slot => {
-            // Hiển thị ngày dạng DD/MM/YYYY cho đẹp
-            const dateParts = slot.date.split('-');
-            const dateDisplay = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-            
-            tbody.innerHTML += `
-                <tr>
-                    <td style="padding:5px;">${dateDisplay}</td>
-                    <td>${slot.time || slot.startTime + '-' + slot.endTime}</td>
-                    <td align="center"><input type="radio" name="selectedSlot" value="${slot.date}|${slot.time}"></td>
-                </tr>
-            `;
-        });
-    }
+function openNewMeetingModal() {
+    // Mở modal trực tiếp
     document.getElementById('newMeetingModal').classList.add('active');
 }
 
 async function submitNewMeeting() {
     const subject = document.getElementById('newSubject').value;
-    const className = document.getElementById('newClassName').value; // MỚI: Lấy tên lớp
-    const selected = document.querySelector('input[name="selectedSlot"]:checked');
+    const dateInput = document.getElementById('newDate').value; // YYYY-MM-DD
+    const startTime = document.getElementById('newScheduleStartTime').value;
+    const endTime = document.getElementById('newScheduleEndTime').value;
     const format = document.querySelector('input[name="format"]:checked')?.value || 'Offline';
+    const link = document.getElementById('newLink').value;
     const desc = document.getElementById('newDesc').value;
 
-    // Validate thêm tên lớp
-    if (!subject || !className || !selected) {
-        alert("Vui lòng nhập đầy đủ: Môn học, Tên lớp và Chọn lịch!");
+    // Validate
+    if (!subject || !dateInput || !startTime || !endTime) {
+        alert("Vui lòng nhập đầy đủ: Môn học, Ngày, và Thời gian!");
         return;
     }
 
-    const [date, time] = selected.value.split('|');
-    const dP = date.split('-');
-    const dateFormatted = `${dP[2]}/${dP[1]}/${dP[0]}`;
+    // Validate time
+    if (startTime >= endTime) {
+        alert('Giờ bắt đầu phải trước giờ kết thúc');
+        return;
+    }
 
-    // Gọi API tạo mới kèm className
-    await MTP_API.createNewMeeting({
-        subject,
-        className, // Gửi tên lớp lên server
-        date: dateFormatted,
-        time,
-        format,
-        description: desc
-    });
+    // Format ngày từ YYYY-MM-DD sang DD/MM/YYYY
+    const [year, month, day] = dateInput.split('-');
+    const date = `${day}/${month}/${year}`;
 
-    closeModals();
-    loadMeetings();
-    alert("Đã tạo buổi gặp mới (Chờ xác nhận).");
+    // Format thời gian
+    const time = `${startTime} - ${endTime}`;
+
+    // Tự động tạo tên lớp dựa trên môn hiện có
+    let className = 'L01'; // Mặc định
+    try {
+        const res = await MTP_API.getTutorMeetings();
+        if (res.success && res.data.length > 0) {
+            // Lọc các buổi cùng môn
+            const samSubjectMeetings = res.data.filter(m => m.subject === subject);
+            
+            if (samSubjectMeetings.length > 0) {
+                // Tìm số lớp cao nhất (L01, L02, L03...)
+                const classNumbers = samSubjectMeetings
+                    .map(m => {
+                        const match = m.class.match(/L(\d+)/);
+                        return match ? parseInt(match[1]) : 0;
+                    })
+                    .filter(num => num > 0);
+                
+                if (classNumbers.length > 0) {
+                    const maxNum = Math.max(...classNumbers);
+                    const nextNum = maxNum + 1;
+                    className = `L${String(nextNum).padStart(2, '0')}`; // L01, L02, L03...
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Error getting existing meetings:', e);
+        // Nếu lỗi, vẫn dùng L01 mặc định
+    }
+
+    // Gọi API tạo mới
+    try {
+        const res = await MTP_API.createNewMeeting({
+            subject,
+            className, // Tên lớp tự động
+            date,
+            time,
+            format,
+            link: format === 'Online' ? link : '',
+            description: desc,
+            maxStudents: 16, // Mặc định 16 sinh viên
+            status: 'Đã mở' // Trạng thái mặc định là "Đã mở"
+        });
+
+        if (res.success) {
+            closeModals();
+            // Reset form
+            document.getElementById('newSubject').value = '';
+            document.getElementById('newDate').value = '';
+            document.getElementById('newScheduleStartTime').value = '';
+            document.getElementById('newScheduleEndTime').value = '';
+            document.getElementById('newLink').value = '';
+            document.getElementById('newDesc').value = '';
+            
+            await loadMeetings();
+            alert(`Đã mở buổi gặp mới thành công! (Lớp: ${className})`);
+        } else {
+            alert("Lỗi: " + (res.message || "Không thể tạo buổi gặp"));
+        }
+    } catch (error) {
+        console.error('Error creating meeting:', error);
+        alert("Đã có lỗi xảy ra. Vui lòng thử lại.");
+    }
 }
 
 
