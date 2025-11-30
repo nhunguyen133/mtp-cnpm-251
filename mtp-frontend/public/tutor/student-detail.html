@@ -1,69 +1,95 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    // Lấy MSSV từ URL
-    const params = new URLSearchParams(window.location.search);
-    const mssv = params.get('mssv');
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sinh viên</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div style="background:#4A7FA7; color:white; padding:10px 40px;">
+                <span class="material-icons">bar_chart</span> Tiến độ sinh viên
+            </div>
+            
+            <div class="content">
+                <div class="breadcrumb-back">
+                    <span class="material-icons">reply</span>
+                    <a href="dashboard.html">Trở về trang trước</a>
+                </div>
 
-    if (!mssv) {
-        alert("Không tìm thấy sinh viên!");
-        window.location.href = 'student-progress.html';
-        return;
-    }
+                <!-- Header Info -->
+                <div class="student-detail-header">
+                    <div class="student-info-card">
+                        <div class="student-avatar"><span class="material-icons" style="font-size:50px">person</span></div>
+                        <div>
+                            <h3 style="color:#0f62ac; margin-bottom:5px;" id="std-name">Đang tải...</h3>
+                            <p><strong>MSSV:</strong> <span id="std-mssv">...</span></p>
+                            <p><strong>Ngành:</strong> <span id="std-major">...</span></p>
+                            <p><strong>Trạng thái:</strong> <span id="std-status">...</span></p>
+                            <p><strong>Email:</strong> <span id="std-email">...</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="student-stats-card">
+                        <div class="stats-score" id="mock-gpa">...</div>
+                        <div>Điểm trung bình tích lũy</div>
+                    </div>
+                </div>
 
-    // 1. Fetch Dữ liệu thật (Info)
-    try {
-        const res = await MTP_API.getStudentInfoByMSSV(mssv);
-        if (res.success) {
-            const u = res.data;
-            document.getElementById('std-name').innerText = u.name;
-            document.getElementById('std-mssv').innerText = u.mssv;
-            document.getElementById('std-major').innerText = u.major;
-            document.getElementById('std-email').innerText = u.email;
-            document.getElementById('std-status').innerText = u.status;
-        }
-    } catch (e) { console.error(e); }
+                <!-- Stats Grid -->
+                <div class="detail-grid" style="margin-bottom:20px;">
+                    <div class="detail-box" style="text-align:center;">
+                        <div style="font-size:24px; font-weight:bold; color:#0f62ac" id="mock-completed">0</div>
+                        <div>Buổi đã hoàn thành</div>
+                    </div>
+                    <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#d32f2f" id="mock-cancelled">0</div>
+                         <div>Buổi đã hủy</div>
+                    </div>
+                     <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#f1c40f" id="mock-rating">... <span class="material-icons" style="font-size:20px">star</span></div>
+                         <div>Đánh giá trung bình</div>
+                    </div>
+                </div>
 
-    // 2. Load Mock Data (Điểm số, Lịch sử)
-    loadMockData();
-});
+                <!-- Main Content Grid -->
+                <div class="detail-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="detail-box">
+                        <div class="detail-box-title"><span class="material-icons">calendar_today</span> Lịch sử Buổi gặp</div>
+                        <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                            <thead style="background:#eee;">
+                                <tr><th style="padding:5px">Môn</th><th>Ngày</th><th>Trạng thái</th></tr>
+                            </thead>
+                            <tbody id="history-tbody"></tbody>
+                        </table>
+                    </div>
 
-function loadMockData() {
-    // Random số liệu cho sinh động
-    const gpa = (Math.random() * (4.0 - 2.0) + 2.0).toFixed(1);
-    const completed = Math.floor(Math.random() * 15) + 5;
-    const cancelled = Math.floor(Math.random() * 3);
-    const rating = (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">book</span> Các môn học liên quan</div>
+                            <ul style="padding-left:20px; font-size:14px; line-height:1.6;" id="subject-list"></ul>
+                        </div>
 
-    document.getElementById('mock-gpa').innerText = gpa;
-    document.getElementById('mock-completed').innerText = completed;
-    document.getElementById('mock-cancelled').innerText = cancelled;
-    document.getElementById('mock-rating').innerHTML = `${rating} / 5 <span class="material-icons" style="font-size:20px">star</span>`;
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">chat</span> Phản hồi từ sinh viên</div>
+                            <div id="feedback-list"></div>
+                        </div>
+                    </div>
+                </div>
 
-    // Mock Lịch sử
-    const historyBody = document.getElementById('history-tbody');
-    historyBody.innerHTML = `
-        <tr><td style="padding:8px">Công nghệ phần mềm</td><td>28/10/2025</td><td><span style="background:#d4edda; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hoàn thành</span></td></tr>
-        <tr><td style="padding:8px">Lập trình nâng cao</td><td>21/10/2025</td><td><span style="background:#d4edda; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hoàn thành</span></td></tr>
-        <tr><td style="padding:8px">Công nghệ phần mềm</td><td>15/10/2025</td><td><span style="background:#f8d7da; padding:2px 5px; border-radius:4px; font-size:11px;">Đã hủy</span></td></tr>
-    `;
-
-    // Mock Môn học
-    const subList = document.getElementById('subject-list');
-    subList.innerHTML = `
-        <li>Cấu trúc Dữ liệu & Giải thuật (Điểm: <span style="color:blue">${(Math.random()*3+6).toFixed(1)}</span>)</li>
-        <li>Lập trình Hướng đối tượng (Điểm: <span style="color:blue">${(Math.random()*3+6).toFixed(1)}</span>)</li>
-        <li>Hệ điều hành (Điểm: <span style="color:blue">${(Math.random()*3+6).toFixed(1)}</span>)</li>
-    `;
-
-    // Mock Feedback
-    const fbList = document.getElementById('feedback-list');
-    fbList.innerHTML = `
-        <div style="font-size:13px; margin-bottom:10px;">
-            <strong>Buổi ngày 28/10 (5/5 <span class="material-icons" style="font-size:12px; color:#f1c40f">star</span>)</strong>
-            <p style="font-style:italic; color:#555; margin-top:2px;">"Tutor giải thích dễ hiểu, tài liệu rất hữu ích."</p>
-        </div>
-        <div style="font-size:13px;">
-            <strong>Buổi ngày 21/10 (4.5/5 <span class="material-icons" style="font-size:12px; color:#f1c40f">star</span>)</strong>
-            <p style="font-style:italic; color:#555; margin-top:2px;">"Buổi học tốt, nhưng đôi khi nói hơi nhanh."</p>
-        </div>
-    `;
-}
+            </div>
+        </main>
+    </div>
+    
+    <!-- QUAN TRỌNG: LIÊN KẾT FILE JS Ở ĐÂY -->
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/student-detail.js"></script>
+</body>
+</html>

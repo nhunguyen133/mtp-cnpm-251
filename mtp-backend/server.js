@@ -320,9 +320,16 @@ app.get("/api/student/my-sessions", requireRole("student"), (req, res) => {
         r => r.sessionId === session.id && r.status === 'confirmed'
       ).length;
       
+      // Tìm email của tutor từ users
+      const tutor = users.find(u => u.mscb === session.mscb);
+      const tutorEmail = tutor ? tutor.email : '';
+      const tutorFaculty = tutor ? tutor.faculty : '';
+      
       return {
         id: session.id,
         tutorName: session.tutorName,
+        tutorEmail: tutorEmail,
+        faculty: tutorFaculty,
         subject: session.subject,
         title: session.title,
         description: session.description,
@@ -672,7 +679,7 @@ app.get("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
 // 3. Cập nhật trạng thái buổi gặp (Xác nhận / Hủy)
 app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
     const id = parseInt(req.params.id);
-    const { status, reason } = req.body;
+    const { status, reason, format, link } = req.body;
     
     const idx = meetings.findIndex(m => m.id === id);
     if (idx !== -1) {
@@ -681,6 +688,18 @@ app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
             meetings.splice(idx, 1); // Xóa khỏi danh sách
         } else {
             meetings[idx].status = status; // Cập nhật (VD: Chờ xác nhận -> Đã mở)
+            
+            // Nếu có format (khi xác nhận lịch hẹn) thì cập nhật
+            if (format) {
+                meetings[idx].format = format;
+                
+                // Nếu có link được truyền vào thì dùng, nếu không thì dùng giá trị mặc định
+                if (format === 'Online') {
+                    meetings[idx].room = link || 'Chưa cập nhật link';
+                } else {
+                    meetings[idx].room = 'Chưa cập nhật phòng';
+                }
+            }
         }
         res.json({ success: true, message: "Cập nhật thành công" });
     } else {
@@ -691,8 +710,11 @@ app.put("/api/tutor/meetings/:id", requireRole("tutor"), (req, res) => {
 // 4. Tạo buổi gặp mới
 app.post("/api/tutor/meetings", requireRole("tutor"), (req, res) => {
     const user = req.session.user;
-    // Nhận thêm className từ body
-    const { subject, className, date, time, format, link, description } = req.body;
+    // Nhận thêm maxStudents và status từ body
+    const { subject, className, date, time, format, link, description, maxStudents, status } = req.body;
+
+    const max = maxStudents || 16; // Mặc định 16 nếu không truyền
+    const meetingStatus = status || 'Đã mở'; // Mặc định "Đã mở"
 
     const newMeeting = {
         id: Date.now(),
@@ -701,10 +723,11 @@ app.post("/api/tutor/meetings", requireRole("tutor"), (req, res) => {
         class: className || "Tư vấn", // Lưu tên lớp (VD: L01)
         time: time,
         date: date,
-        count: '0/20',
-        status: 'Chờ xác nhận',
+        count: `0/${max}`, // Dùng maxStudents động
+        status: meetingStatus, // Dùng status từ frontend
         format: format,
-        room: link || 'Chưa cập nhật'
+        room: link || 'Chưa cập nhật',
+        maxStudents: max // Lưu thêm field để dùng sau
     };
     
     meetings.push(newMeeting);

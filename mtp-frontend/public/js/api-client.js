@@ -57,8 +57,8 @@ async function getNotifications() { return apiCall('/notifications'); }
 // MEETING MANAGEMENT
 async function getTutorMeetings() { return apiCall('/tutor/meetings'); }
 async function getMeetingDetail(id) { return apiCall(`/tutor/meetings/${id}`); }
-async function updateMeetingStatus(id, status, reason="") { 
-    return apiCall(`/tutor/meetings/${id}`, { method: 'PUT', body: JSON.stringify({ status, reason }) }); 
+async function updateMeetingStatus(id, status, reason="", format="", link="") { 
+    return apiCall(`/tutor/meetings/${id}`, { method: 'PUT', body: JSON.stringify({ status, reason, format, link }) }); 
 }
 async function createNewMeeting(data) { 
     return apiCall('/tutor/meetings', { method: 'POST', body: JSON.stringify(data) }); 

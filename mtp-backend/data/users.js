@@ -86,7 +86,7 @@ const users = [
         sex: 'Nam',
         faculty: 'Khoa Khoa học và Kỹ thuật Máy tính',
         major: 'Công nghệ phần mềm',
-        email: 'ndthuan@hcmut.edu.vn',
+        email: 'ldthuan@hcmut.edu.vn',
         phone: '0902000001'
     },
     {

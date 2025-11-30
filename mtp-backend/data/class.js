@@ -2,7 +2,7 @@ const classes = [
     {
         id: 1,
         mscb: 'CB001',
-        tutorName: 'Nguyễn Đình Thuận',
+        tutorName: 'Lê Đình Thuận',
         title: 'Công nghệ phần mềm - L01',
         subject: 'Công nghệ phần mềm',
         students: ['2313384', '2312535', '2312022', '2312256'],
