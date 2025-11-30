@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thiết lập lịch rảnh</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+    
+    <!-- CSS Riêng cho Calendar -->
+    <style>
+        .calendar-wrapper {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+            user-select: none; /* Ngăn bôi đen text khi click nhiều */
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #eee;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-left: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+        }
+
+        .cal-cell {
+            min-height: 100px;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            position: relative;
+            cursor: context-menu; /* Icon chuột phải */
+        }
+
+        .cal-head {
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .date-num {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Các trạng thái màu */
+        .status-free { background-color: #ccffcc; } /* Xanh lá nhạt - Lịch rảnh */
+        .status-opened { background-color: #ffffcc; } /* Vàng nhạt - Đã mở */
+    /*   .status-busy { background-color: #333; color: white; }  Đen - Lịch trình */
+
+        /* Context Menu (Menu chuột phải) */
+        #context-menu {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            width: 150px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+
+        #context-menu ul { list-style: none; padding: 0; margin: 0; }
+        #context-menu li {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        #context-menu li:hover { background-color: #f0f0f0; }
+        #context-menu li:last-child { border-bottom: none; }
+
+        .legend-box {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #fff;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+        .color-box { width: 30px; height: 15px; border: 1px solid #999; }
+    </style>
+</head>
+<body>
+    <div class="app" style="height: 100%;">
+        <!-- Sidebar -->
+        <div id="sidebar-container"></div>
+
+        <main class="main">
+            <!-- Topbar -->
+            <div id="topbar-container"></div>
+
+            <div class="breadcrumb-bar">
+                <span class="material-icons">edit_calendar</span>
+                <span>Thiết lập lịch rảnh</span>
+            </div>
+            
+            <div class="content">
+                <div class="breadcrumb-back" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: -15px;">
+                        <span class="material-icons">reply</span>
+                        <a href="dashboard.html">Trở về trang trước</a>
+                    </div>
+                    <button onclick="openAddScheduleModal()" style="background: #4A7FA7; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <span class="material-icons" style="font-size: 20px; color: white;">add_circle</span>
+                        Thêm lịch rảnh
+                    </button>
+                </div>
+
+                <!-- CALENDAR UI -->
+                <div class="calendar-wrapper">
+                    <!-- Header -->
+                    <div class="calendar-header">
+                        <span class="material-icons" style="cursor:pointer" onclick="changeMonth(-1)">arrow_left</span>
+                        <span id="current-month-year">December 2025</span>
+                        <span class="material-icons" style="cursor:pointer" onclick="changeMonth(1)">arrow_right</span>
+                    </div>
+
+                    <!-- Grid -->
+                    <div class="calendar-grid" id="calendar-body">
+                        <!-- JS sẽ render ô ngày vào đây -->
+                    </div>
+                </div>
+
+                <!-- Chú thích -->
+                <div class="legend-box">
+                    <span style="font-weight:bold; margin-right:10px;">Chú thích:</span>
+                    <div class="legend-item">
+                        <div class="color-box" style="background:#ffffcc"></div> Đã mở
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background:#ccffcc"></div> Lịch rảnh
+                    </div>
+                    <!--div class="legend-item">
+                        <div class="color-box" style="background:#333"></div> Lịch trình
+                    </div-->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- CUSTOM CONTEXT MENU (Menu chuột phải) -->
+    <div id="context-menu">
+        <ul>
+            <li onclick="setDayStatus('free')">🟢 Lịch rảnh (Xanh)</li>
+            <li onclick="setDayStatus('opened')">🟡 Đã mở (Vàng)</li>
+            <!--li onclick="setDayStatus('busy')">⚫ Lịch trình (Đen)</li-->
+            <li onclick="setDayStatus(null)">⚪ Xóa (None)</li>
+        </ul>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/tutor-availability.js"></script>
+    <!-- <div class="modal-overlay" id="openSessionModal">
+        <div class="modal-form-content">
+            <div class="modal-title">MỞ BUỔI HỌC HOẶC TƯ VẤN</div>
+            
+            <form id="sessionForm">
+                <div class="form-row">
+                    <label>Tên buổi học/tư vấn</label>
+                    <input type="text" class="form-input" id="sessionName" placeholder="Tên">
+                </div>
+                
+                <div class="form-row">
+                    <label>Thời gian</label>
+                    <input type="text" class="form-input" id="sessionTime" placeholder="Thời gian">
+                </div>
+                
+                <div class="form-row">
+                    <label>Hình thức</label>
+                    <div class="checkbox-group" style="margin-top:5px;">
+                        <label style="display:flex; align-items:center; font-weight:normal; margin-right:30px;">
+                            <input type="checkbox" class="custom-checkbox"> Offline
+                        </label>
+                        <label style="display:flex; align-items:center; font-weight:normal;">
+                            <input type="checkbox" class="custom-checkbox"> Online
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Link (tùy chọn)</label>
+                    <input type="text" class="form-input" placeholder="Link">
+                </div>
+
+                <div class="form-row">
+                    <label>Mô tả buổi học/tư vấn</label>
+                    <textarea class="form-input" style="height:100px; resize:none;" placeholder="Mô tả"></textarea>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                    <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
+                    
+                    <button type="button" onclick="confirmOpenSession()" class="btn-open-session">
+                        <span class="material-icons">open_in_new</span> Mở buổi học
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div> -->
+
+<!-- <div class="modal-form-content">
+            <div class="modal-title">MỞ BUỔI HỌC HOẶC TƯ VẤN</div>
+            <form id="sessionForm"> -->
+                <!-- ... các input cũ ... -->
+                <!-- <div class="form-row">
+                    <label>Tên buổi học/tư vấn</label>
+                    <input type="text" class="form-input" id="sessionName" placeholder="Tên">
+                </div>
+                <div class="form-row">
+                    <label>Thời gian</label>
+                    <input type="text" class="form-input" id="sessionTime" placeholder="Thời gian">
+                </div> -->
+                <!-- ... -->
+                <!-- <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                    <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
+                    <button type="button" onclick="confirmOpenSession()" class="btn-open-session">
+                        <span class="material-icons">open_in_new</span> Mở buổi học
+                    </button>
+                </div>
+            </form>
+        </div> -->
+    </div>
+
+    <!-- 2. MODAL NHẬP GIỜ (CHO LỊCH RẢNH - MÀU XANH) -->
+    <div class="modal-overlay" id="freeTimeModal">
+        <div class="modal-small-content">
+            <div class="modal-small-title">Thiết lập lịch rảnh</div>
+            <p class="modal-msg">Vui lòng nhập khung giờ bạn rảnh:</p>
+            
+            <div class="form-row">
+                <input type="text" id="inputFreeTime" class="form-input" placeholder="VD: 08:00 - 11:30" style="text-align: center;">
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                <button onclick="closeModals()" class="btn-cancel-gray">Hủy</button>
+                <button onclick="confirmSetFree()" class="btn-confirm-blue">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MODAL XÁC NHẬN XÓA (CLEAR) -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-small-content">
+            <div class="modal-small-title" style="color:#d32f2f;">Xác nhận xóa</div>
+            <p class="modal-msg">Bạn có chắc chắn muốn xóa trạng thái của ngày này?</p>
+            
+            <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                <button onclick="closeModals()" class="btn-cancel-gray">Hủy</button>
+                <button onclick="confirmDelete()" class="btn-confirm-red">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL THÊM LỊCH RẢNH MỚI -->
+    <div class="modal-overlay" id="addScheduleModal">
+        <div class="modal-form-content" style="width: 500px;">
+            <div class="modal-title">THÊM LỊCH RẢNH</div>
+            
+            <form id="addScheduleForm">
+                <div class="form-row">
+                    <label>Chọn ngày</label>
+                    <input type="date" class="form-input" id="newScheduleDate" required>
+                </div>
+                
+                <div class="form-row">
+                    <label>Thời gian bắt đầu</label>
+                    <input type="time" class="form-input" id="newScheduleStartTime" required>
+                </div>
+                
+                <div class="form-row">
+                    <label>Thời gian kết thúc</label>
+                    <input type="time" class="form-input" id="newScheduleEndTime" required>
+                </div>
+                
+                <!--div class="form-row">
+                    <label>Địa điểm (tùy chọn)</label>
+                    <input type="text" class="form-input" id="newScheduleLocation" placeholder="VD: H1-101 hoặc Google Meet">
+                </div>
+                
+                <div class="form-row">
+                    <label>Loại</label>
+                    <div class="checkbox-group" style="margin-top:5px;">
+                        <label style="display:flex; align-items:center; font-weight:normal; margin-right:30px;">
+                            <input type="radio" name="scheduleType" value="offline" checked> Offline
+                        </label>
+                        <label style="display:flex; align-items:center; font-weight:normal;">
+                            <input type="radio" name="scheduleType" value="online"> Online
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label>Ghi chú (tùy chọn)</label>
+                    <textarea class="form-input" id="newScheduleNote" style="height:80px; resize:none;" placeholder="Ghi chú thêm về lịch rảnh này..."></textarea>
+                </div-->
+
+                <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                    <button type="button" onclick="closeModals()" style="padding:10px 40px; border:1px solid #ccc; background:#eee; cursor:pointer; font-weight:600;">Hủy</button>
+                    
+                    <button type="button" onclick="submitNewSchedule()" style="padding:10px 30px; border:none; background:#4A7FA7; color:white; cursor:pointer; font-weight:600; border-radius:4px; display:flex; align-items:center; gap:8px;">
+                        <span class="material-icons" style="font-size:20px;">check_circle</span>
+                        Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   <!--div class="modal-overlay" id="scheduleConfirmModal">
+        <div class="modal-small-content">
+            <div class="modal-small-title" style="color:#333;">Xác nhận lịch trình</div>
+            <p class="modal-msg">Xác nhận đánh dấu ngày này là có Lịch trình (Bận)?</p>
+            
+            <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                < Nút Hủy: dùng closeModals() >
+                <button type="button" onclick="closeModals()" class="btn-cancel-gray">Hủy</button>
+                < Nút Xác nhận: gọi hàm mới confirmSetBusy() >
+                <button type="button" onclick="confirmSetBusy()" class="btn-confirm-black">Xác nhận</button>
+            </div>
+        </div>
+    </div-->
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/tutor-availability.js"></script>
+</body>
+</html>

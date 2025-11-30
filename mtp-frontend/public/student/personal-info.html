@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Thông tin cá nhân - MTP</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/student-personal-info.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+</head>
+
+<body>
+<div class="app">
+
+    <!-- SIDEBAR - Loaded dynamically -->
+    <div id="sidebar-container"></div>
+
+    <!-- MAIN -->
+    <main class="main">
+        
+        <!-- TOPBAR - Loaded dynamically -->
+        <div id="topbar-container"></div>
+
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb-bar">
+            <span class="material-icons">person</span>
+            <span>Thông tin cá nhân</span>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <div class="breadcrumb-back">
+                <span class="material-icons">reply</span>
+                <a href="dashboard.html">Trở về trang trước</a>
+            </div>
+
+            <!-- PROFILE HEADER -->
+            <section class="profile-header">
+                <div class="profile-avatar"></div>
+                <div class="profile-name">Ngô Minh Thư</div>
+
+                <div class="profile-icons">
+                    <span class="material-icons">chat</span>
+                    <span class="material-icons">group</span>
+                </div>
+            </section>
+
+            <!-- PROFILE CONTENT -->
+            <section class="profile-content">
+
+                <div class="role-box">Sinh viên</div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Mã số sinh viên</label>
+                        <input type="text" name="mssv" data-field="mssv" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <input type="text" name="gender" data-field="gender" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <input type="text" name="dob" data-field="dob" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số CMND/CCCD</label>
+                        <input type="text" name="cccd" data-field="cccd" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" name="phone" data-field="phone" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ngành</label>
+                        <input type="text" name="major" data-field="major" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Khoa</label>
+                        <input type="text" name="faculty" data-field="faculty" readonly>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Email học vụ</label>
+                        <input type="text" name="email" data-field="email" readonly>
+                    </div>
+
+                </div>
+
+
+            </section>
+        </div>
+    </main>
+
+</div>
+
+<!-- Scripts -->
+<script src="../js/components-loader.js"></script>
+<script src="../js/student-personal-info.js"></script>
+</body>
+</html>

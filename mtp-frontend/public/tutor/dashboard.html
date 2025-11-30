@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutor Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css"> <!-- Tái sử dụng CSS -->
+    <link rel="stylesheet" href="../css/tutor-dashboard.css"> <!-- CSS riêng cho tutor -->
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div class="breadcrumb-bar">
+                <span class="material-icons">home</span>
+                <span>Home</span>
+            </div>
+            <div class="content">
+                <!-- Thống kê -->
+                <div class="manage-tutor-dashboard">
+                    <div class="cal-card">
+                        <h2 id="total-sessions">0</h2>
+                        <p>Lớp đang quản lý</p>
+                    </div>
+                </div>
+                <h2>Danh sách lớp học</h2>
+                <div class="session-list" id="tutor-session-list">Loading...</div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/tutor-dashboard.js"></script>
+</body>
+</html>

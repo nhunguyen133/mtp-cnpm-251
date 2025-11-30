@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sinh viên</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div style="background:#4A7FA7; color:white; padding:10px 40px;">
+                <span class="material-icons">bar_chart</span> Tiến độ sinh viên
+            </div>
+            
+            <div class="content">
+                <div style="margin-bottom:15px; cursor:pointer;" onclick="history.back()"> &larr; Trở về trang trước</div>
+
+                <!-- Header Info -->
+                <div class="student-detail-header">
+                    <div class="student-info-card">
+                        <div class="student-avatar"><span class="material-icons" style="font-size:50px">person</span></div>
+                        <div>
+                            <h3 style="color:#0f62ac; margin-bottom:5px;" id="std-name">Đang tải...</h3>
+                            <p><strong>MSSV:</strong> <span id="std-mssv">...</span></p>
+                            <p><strong>Ngành:</strong> <span id="std-major">...</span></p>
+                            <p><strong>Trạng thái:</strong> <span id="std-status">...</span></p>
+                            <p><strong>Email:</strong> <span id="std-email">...</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="student-stats-card">
+                        <div class="stats-score" id="mock-gpa">...</div>
+                        <div>Điểm trung bình tích lũy</div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="detail-grid" style="margin-bottom:20px;">
+                    <div class="detail-box" style="text-align:center;">
+                        <div style="font-size:24px; font-weight:bold; color:#0f62ac" id="mock-completed">0</div>
+                        <div>Buổi đã hoàn thành</div>
+                    </div>
+                    <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#d32f2f" id="mock-cancelled">0</div>
+                         <div>Buổi đã hủy</div>
+                    </div>
+                     <div class="detail-box" style="text-align:center;">
+                         <div style="font-size:24px; font-weight:bold; color:#f1c40f" id="mock-rating">... <span class="material-icons" style="font-size:20px">star</span></div>
+                         <div>Đánh giá trung bình</div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="detail-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="detail-box">
+                        <div class="detail-box-title"><span class="material-icons">calendar_today</span> Lịch sử Buổi gặp</div>
+                        <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                            <thead style="background:#eee;">
+                                <tr><th style="padding:5px">Môn</th><th>Ngày</th><th>Trạng thái</th></tr>
+                            </thead>
+                            <tbody id="history-tbody"></tbody>
+                        </table>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">book</span> Các môn học liên quan</div>
+                            <ul style="padding-left:20px; font-size:14px; line-height:1.6;" id="subject-list"></ul>
+                        </div>
+
+                        <div class="detail-box">
+                            <div class="detail-box-title"><span class="material-icons">chat</span> Phản hồi từ sinh viên</div>
+                            <div id="feedback-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <!-- QUAN TRỌNG: LIÊN KẾT FILE JS Ở ĐÂY -->
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/student-detail.js"></script>
+</body>
+</html>

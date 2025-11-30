@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>DEMO – DỊCH VỤ XÁC THỰC TẬP TRUNG</title>
+  <link type="text/css" rel="stylesheet" href="/css/cas.css">
+</head>
+<body id="cas" class="fl-theme-iphone">
+  <div class="flc-screenNavigator-view-container">
+    <div class="fl-screenNavigator-view">
+      <!-- Header -->
+      <div id="header" class="flc-screenNavigator-navbar fl-navbar fl-table">
+        <div id="app-name" class="fl-table-cell">
+          <img src="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1757472925/logoBK.png" alt="logo">
+          <h1>DỊCH VỤ XÁC THỰC TẬP TRUNG (SSO_CAS)</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div id="content" class="fl-screenNavigator-scroll-container">
+        
+        <!-- Error Message -->
+        <% if (error) { %>
+          <div id="msg" class="box fl-panel errors">
+            <h2>Lỗi đăng nhập</h2>
+            <p><%= error %></p>
+          </div>
+        <% } %>
+
+        <!-- Login Box -->
+        <div class="box fl-panel" id="login">
+          <form id="fm1" class="fm-v clearfix" action="/cas/login" method="post">
+            <h2>Nhập thông tin tài khoản của bạn</h2>
+            
+            <input type="hidden" name="service" value="<%= service %>">
+            
+            <!-- Username -->
+            <div class="row fl-controls-left">
+              <label for="username" class="fl-label">
+                <span class="accesskey">T</span>ên tài khoản
+              </label>
+              <input id="username" name="username" class="required" 
+                     tabindex="1" accesskey="t" type="text" 
+                     autocomplete="off" required>
+            </div>
+            
+            <!-- Password -->
+            <div class="row fl-controls-left">
+              <label for="password" class="fl-label">
+                <span class="accesskey">M</span>ật khẩu
+              </label>
+              <input id="password" name="password" class="required" 
+                     tabindex="2" accesskey="m" type="password" 
+                     autocomplete="off" required>
+            </div>
+            
+            <!-- Warning Checkbox -->
+            <div class="row check">
+              <input id="warn" name="warn" value="true" 
+                     tabindex="3" accesskey="c" type="checkbox">
+              <label for="warn">
+                <span class="accesskey">C</span>ảnh báo trước khi tôi đăng nhập vào các trang web khác.
+              </label>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="row btn-row">
+              <input class="btn-submit" name="submit" accesskey="l" 
+                     value="Đăng nhập" tabindex="4" type="submit">
+              <input class="btn-reset" name="reset" accesskey="c" 
+                     value="Xóa" tabindex="5" type="reset">
+            </div>
+            
+            <!-- Support Links -->
+            <div class="row support">
+              <ul>
+                <li class="first">
+                  <a href="#">Thay đổi mật khẩu?</a> 
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+          <div class="sidebar-content">
+
+            <!-- Notes -->
+            <div id="list-notes" class="fl-panel">
+              <h3>Lưu ý</h3>
+              <p class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+                <strong>Demo:</strong> Đây là máy chủ CAS giả lập dùng cho mục đích demo đồ án MTP. 
+                Tài khoản không phải là HCMUT thật. Vui lòng không sử dụng tài khoản HCMUT để đăng nhập.
+              </p>
+              <p class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+                Vì lý do an ninh, bạn hãy Thoát khỏi trình duyệt Web khi bạn kết thúc việc truy cập các dịch vụ đòi hỏi xác thực!
+              </p>
+            </div>
+            
+            <!-- Support -->
+            <div id="list-supports" class="fl-panel">
+              <h3>Hỗ trợ kỹ thuật</h3>
+              <ul>
+                <li class="first">
+                  E-mail: <a href="mailto:support@hcmut.edu.vn">support@hcmut.edu.vn</a>
+                </li>
+                <li>
+                  ĐT: (84-8) 38647256 - 7211
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div id="footer" class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+        <div id="copyright">
+          <p>Bản quyền © 2011 - 2025 Trường Đại học Bách khoa - ĐHQG-HCM.</p>
+          <p>Được hỗ trợ bởi <a href="http://www.jasig.org/cas">Jasig CAS 3.5.1</a></p>
+          <p><em>(Demo version for MTP Project)</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

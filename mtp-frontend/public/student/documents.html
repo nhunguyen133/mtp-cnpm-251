@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tài liệu - M-T-P</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            
+            <div style="background:#4A7FA7; color:white; padding:10px 40px; display:flex; align-items:center; gap:10px;">
+                <span class="material-icons">description</span> Tài liệu
+            </div>
+            
+            <div class="content">
+                <div class="breadcrumb-back">
+                    <span class="material-icons">reply</span>
+                    <a href="dashboard.html">Trở về trang trước</a>
+                </div>
+
+                <!-- VIEW 1: SELECTION (2 Cards) -->
+                <div id="view-selection" class="doc-selection-container">
+                    <div class="doc-option-card" onclick="showSharedDocs()">
+                        <span class="material-icons doc-icon">attachment</span>
+                        <div class="doc-text">Tài liệu được chia sẻ</div>
+                    </div>
+                    <div class="doc-option-card" onclick="showLibrary()">
+                        <span class="material-icons doc-icon">library_books</span>
+                        <div class="doc-text">Truy cập thư viện</div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: SHARED DOCS LIST -->
+                <div id="view-list" class="doc-list-section" style="display:none;">
+                    <h3 style="margin-bottom:20px; color:#333;">Danh sách các tài liệu được chia sẻ</h3>
+                    <input type="text" class="search-bar-doc" placeholder="Tìm theo Tên môn học, Tên tài liệu, Chủ đề hoặc Tên tác giả">
+                    
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Môn</th>
+                                <th>Tên tài liệu</th>
+                                <th>Chủ đề</th>
+                                <th>Tác giả</th>
+                                <th>Năm xuất bản</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="doc-table-body">
+                            <!-- JS render -->
+                        </tbody>
+                    </table>
+                    
+                    <div style="margin-top:20px; display:flex; justify-content:center;">
+                         <!-- Pagination mock -->
+                         <button style="padding:5px 10px; margin:0 2px; background:#264574; color:white; border:none;">1</button>
+                         <button style="padding:5px 10px; margin:0 2px; background:#eee; border:none;">2</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/documents.js"></script>
+</body>
+</html>

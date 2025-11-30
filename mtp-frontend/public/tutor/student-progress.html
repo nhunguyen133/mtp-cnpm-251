@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiến độ sinh viên</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/tutor-custom.css">
+    <style>
+        .blue-header-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .blue-header-table thead th { background-color: #224070; color: white; padding: 12px; text-align: left; }
+        .blue-header-table tbody td { border-bottom: 1px solid #ddd; padding: 10px; background: white; }
+        .btn-view { background: #0f62ac; color: white; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; }
+        .btn-view:hover { background: #0b4d8a; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div class="breadcrumb-bar">
+                <span class="material-icons">bar_chart</span>
+                <span>Tiến độ sinh viên</span>
+            </div>
+            
+            <div class="content">
+                <div style="margin-bottom:15px; cursor:pointer;" onclick="history.back()"> &larr; Trở về trang trước</div>
+
+                <!-- BẢNG 1: Danh sách Lớp (Data thật từ Server) -->
+                <div style="background:#cceeff; padding:20px; border-radius:8px; margin-bottom:30px;">
+                    <h3 style="margin-bottom:15px;">Danh sách các lớp phụ trách</h3>
+                    <table class="blue-header-table">
+                        <thead>
+                            <tr><th>Môn</th><th>Lớp</th><th>Lịch học</th><th>Sĩ số</th><th>Danh sách sinh viên</th></tr>
+                        </thead>
+                        <tbody id="class-tbody">
+                            <tr><td colspan="5" align="center">Đang tải...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- BẢNG 2: Danh sách sinh viên (Data thật từ Server) -->
+                <div id="student-list-section" style="display:none;">
+                    <h3 style="margin-bottom:15px;" id="selected-class-title">Danh sách sinh viên</h3>
+                    <table class="blue-header-table">
+                        <thead>
+                            <tr><th>STT</th><th>Họ và Tên</th><th>MSSV</th><th>Email</th><th>Xem tiến độ</th></tr>
+                        </thead>
+                        <tbody id="student-tbody">
+                            <!-- JS Render -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/student-progress.js"></script>
+</body>
+</html>

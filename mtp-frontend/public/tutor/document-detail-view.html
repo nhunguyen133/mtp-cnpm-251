@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết tài liệu - Thư viện Trung tâm</title>
+    <!-- Import Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        body { margin:0; padding:0; font-family: 'Roboto', sans-serif; background: #f4f4f4; height: 100vh; display: flex; flex-direction: column; }
+        /* ... (Giữ nguyên các style cũ của trang này) ... */
+        .browser-mockup { background: #fff; width: 100%; flex: 1; display: flex; flex-direction: column; }
+        .url-bar { background: #ddd; padding: 10px; border-bottom: 1px solid #ccc; font-size: 14px; color: #555; display: flex; gap: 10px; align-items: center; }
+        .lib-header { padding: 15px 50px; border-bottom: 3px solid #1f8e3d; background: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .lib-logo { font-weight: bold; font-size: 24px; color: #003399; display: flex; align-items: center; gap: 10px; }
+        
+        .main-content { padding: 30px 10%; background: #fff; flex: 1; position: relative; }
+        .book-detail { display: flex; gap: 30px; }
+        .book-cover { width: 200px; height: 280px; background: #a00; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-weight: bold; padding: 10px; }
+        .book-info h1 { margin-top: 0; color: #333; }
+        .book-desc { color: #555; line-height: 1.6; font-size: 14px; margin-bottom: 20px; }
+        .tag-box { background: #eee; padding: 5px 10px; font-size: 12px; margin-right: 5px; border-radius: 4px; }
+
+        /* Style cho nút chia sẻ */
+        .btn-share-lib {
+            background-color: #0056b3; 
+            color: white; 
+            border: none; 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+        }
+        .btn-share-lib:hover { background-color: #004494; }
+    </style>
+</head>
+<body>
+
+        <div class="lib-header">
+            <div class="lib-logo">
+                <div style="width:40px; height:40px; background:#003399;"></div>
+                <div>ĐẠI HỌC QUỐC GIA TP.HCM<br>THƯ VIỆN TRUNG TÂM</div>
+            </div>
+            <div style="font-size:14px; color:#0056b3;">Bộ sưu tập | Thực thể | Trợ giúp</div>
+        </div>
+
+        <div class="main-content">
+            
+            <!-- HEADER CỦA NỘI DUNG: Gồm Breadcrumb và Nút Chia sẻ -->
+            <div style="display:flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div style="color:#1f8e3d; font-weight:bold;">DUYỆT > Giáo trình hệ điều hành Linux</div>
+                
+                <!-- NÚT CHIA SẺ TÀI LIỆU (Dẫn sang share-document.html) -->
+                <button class="btn-share-lib" onclick="window.location.href='../tutor/share-document.html'">
+                    <i class="material-icons" style="font-size: 18px;">share</i> Chia sẻ tài liệu
+                </button>
+            </div>
+            
+            <div class="book-detail">
+                <div class="book-cover">
+                    <div style="font-size:18px;">HỆ ĐIỀU HÀNH</div>
+                    <div style="font-size:32px; margin:10px 0;">LINUX</div>
+                    <div style="font-size:12px;">NXB ĐHQG-HCM</div>
+                </div>
+                <div class="book-info">
+                    <h1>Giáo trình hệ điều hành Linux</h1>
+                    <p class="book-desc">
+                        <strong>Tóm tắt:</strong><br>
+                        Kiến thức hệ điều hành Linux được xem là kiến thức quan trọng và nền tảng cho độc giả muốn tiến sâu hơn, vững chắc hơn trong ngành CNTT nói chung hay các lĩnh vực liên quan như khoa học máy tính, an ninh thông tin...
+                    </p>
+                    <p style="color:#0056b3; font-size:14px;">Xem thêm v</p>
+
+                    <div style="margin-top:20px;">
+                        <p><strong>Mô tả:</strong> 286 trang</p>
+                        <p><strong>Tác giả:</strong> Nguyễn, Anh Tuấn</p>
+                        <p><strong>Năm xuất bản:</strong> 2012</p>
+                        <p><strong>Bộ sưu tập:</strong> Khoa học Tự nhiên & Công nghệ</p>
+                        <div style="margin-top:10px;">
+                            <span class="tag-box">Linux</span>
+                            <span class="tag-box">Operating Systems</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,591 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background: #F3F3F3;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 230px;
+    min-height: 100vh;
+    height: 100%;
+    background: #264574;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    position: relative;
+    transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: visible;
+}
+.sidebar-header {
+    padding: 16px 24px;
+    overflow: hidden;
+}
+
+.sidebar-logo-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(243, 243, 243, 0.26);
+    border-radius: 17px;
+    padding: 10px 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: hidden;
+}
+
+.logo-circle {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.sidebar-logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.sidebar-nav {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.nav-item {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 30px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    opacity: 0.64;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.nav-label {
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+}
+
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 70%;
+    background: #FFFFFF;
+    border-radius: 0 8px 8px 0;
+}
+
+.divider {
+    width: 80%;
+    opacity: 0.7;
+    margin: 16px 0;
+    margin-left: 8%;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 16px 30px;
+    opacity: 0.64;
+    overflow: hidden;
+}
+
+.logout-btn {
+    font-weight: 400;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.logout-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* MAIN AREA */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* TOPBAR */
+.topbar {
+    height: 72px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    padding-right: 60px;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+}
+
+.time-text {
+    font-size: 30px;
+    font-weight: 600;
+    opacity: 0.62;
+}
+
+.date-text {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.bell-icon {
+    font-size: 22px;
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    width: 22px;
+    height: 22px;
+    background: #264574;
+    color: #FFFFFF;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* BREADCRUMB BAR */
+.breadcrumb-bar {
+    background: #4A7FA7;
+    color: #FFFFFF;
+    padding: 8px 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* CONTENT */
+.content {
+    flex: 1;
+    padding: 15px 40px;
+}
+
+.breadcrumb {
+    color: #616161;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 8px;
+}
+
+.back-link {
+    margin-top: 0;
+    color: #616161;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* SESSION LIST */
+.session-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 8px;
+}
+
+.session-card {
+    margin-top: 0;
+    flex: 0 0 380px;
+    width: 380px;
+    background: #B9D5FF;
+    border-radius: 34px;
+    padding: 20px 24px;
+}
+
+.session-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.last-row {
+    margin-top: 16px;
+}
+
+.session-icon-box {
+    width: 60px;
+    height: 50px;
+    border-radius: 16px;
+    background: #EBEBEB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.session-icon-box .material-icons {
+    font-size: 36px;
+    color: #000000;
+}
+
+.session-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.course-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.lecturer {
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+.session-divider {
+    margin: 16px 0;
+    border: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.7);
+    width: 100%;
+}
+
+.session-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.session-label,
+.session-date {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.session-time {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.rate-btn {
+    padding: 6px 18px;
+    background: #446CA9;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.icon-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    background: rgb(255, 254, 254);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.session-empty-state {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #8d8d8d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+}
+
+/* TRẠNG THÁI THU GỌN */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .sidebar-header {
+    padding: 16px 0;
+}
+
+.sidebar.collapsed .nav-label {
+    display: none;
+    opacity: 0.64;
+}
+
+.sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar.collapsed .sidebar-logo-card {
+    justify-content: center;
+    background: none;
+    padding: 0;
+}
+
+.sidebar.collapsed .sidebar-logo-card .logo-circle {
+    margin-right: 0;
+}
+
+.sidebar.collapsed .logout-btn {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    padding: 16px 0 !important;
+}
+
+.sidebar.collapsed .divider {
+    width: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* NÚT TOGGLE */
+.sidebar-toggle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #264574;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.sidebar-toggle:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.sidebar.collapsed .sidebar-toggle {
+    right: -15px;
+}
+
+.breadcrumb-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.breadcrumb-back a {
+    color: #616161;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.breadcrumb-back .material-icons {
+    font-size: 20px;
+    color: #616161;
+}
+
+.breadcrumb-back:hover a {
+    text-decoration: underline;
+}
+
+
+/* --- CSS CHO TRANG TÀI LIỆU (DOCUMENTS) --- */
+
+/* Màn hình chọn (2 thẻ to) */
+.doc-selection-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.doc-option-card {
+    background: #fff;
+    border: 1px solid #cceeff;
+    border-radius: 8px;
+    width: 350px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.doc-option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #264574;
+}
+
+.doc-icon {
+    font-size: 40px;
+    color: #264574;
+    margin-bottom: 15px;
+}
+
+.doc-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f62ac;
+}
+
+/* Màn hình danh sách tài liệu */
+.doc-list-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.search-bar-doc {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doc-table th {
+    background: #eee;
+    padding: 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.doc-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.btn-view-doc {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* --- MODAL CONFIRM (Dùng chung) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

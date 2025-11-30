@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>M-T-P - Home</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+</head>
+<body>
+    <div class="app">
+
+        <!-- SIDEBAR - Loaded dynamically -->
+        <div id="sidebar-container"></div>
+
+        <!-- MAIN AREA -->
+        <div class="main">
+
+            <!-- TOPBAR - Loaded dynamically -->
+            <div id="topbar-container"></div>
+
+            <!-- BREADCRUMB BAR -->
+            <div class="breadcrumb-bar">
+                <span class="material-icons">home</span>
+                <span>Home</span>
+            </div>
+
+            <!-- CONTENT -->
+            <main class="content">
+                <div class="breadcrumb">
+                    <h2>Các lịch học của tôi</h2>
+                </div>
+
+                <div class="session-list">
+                    <!-- Sessions sẽ được load động bằng JavaScript -->
+                    <div class="loading-sessions" style="text-align: center; padding: 40px;">
+                        <p>Đang tải dữ liệu...</p>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+    </div>
+    
+    <!-- Load Component Loader -->
+    <script src="../js/components-loader.js"></script>
+    <!-- Load API Client -->
+    <script src="../js/api-client.js"></script>
+    <!-- Load Dashboard Logic -->
+    <script src="../js/student-dashboard.js"></script>
+    
+</body>
+</html>

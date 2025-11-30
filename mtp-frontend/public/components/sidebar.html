@@ -1,0 +1,45 @@
+<!-- SIDEBAR COMPONENT -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo-card">
+            <img src="../assets/images/logoBK.png" alt="logoBK" class="logo-circle">
+            <span class="sidebar-logo-text nav-label">M-T-P</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-page="home">
+            <span class="material-icons">home</span>
+            <span class="nav-label">Home</span>
+        </a>
+        <hr class="divider">
+        <a href="personal-info.html" class="nav-item" data-page="personal-info">
+            <span class="material-icons">person</span>
+            <span class="nav-label">Thông tin cá nhân</span>
+        </a>
+        <a href="register-session.html" class="nav-item" data-page="register-session">
+            <span class="material-icons">event_available</span>
+            <span class="nav-label">Đăng ký lịch</span>
+        </a>
+        <a href="cancel-session.html" class="nav-item" data-page="cancel">
+            <span class="material-icons">event_busy</span>
+            <span class="nav-label">Hủy lịch</span>
+        </a>
+        <a href="documents.html" class="nav-item" data-page="documents">
+            <span class="material-icons">description</span>
+            <span class="nav-label">Tài liệu</span>
+        </a>
+        <hr class="divider">
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="logout-btn" onclick="location.href='http://localhost:3001/api/auth/logout'">
+            <span class="material-icons">logout</span>
+            <span class="nav-label">Đăng xuất</span>
+        </button>
+    </div>
+
+    <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar">
+        &lsaquo;
+    </button>
+</aside>

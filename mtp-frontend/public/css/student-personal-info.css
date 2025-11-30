@@ -1,0 +1,237 @@
+/**
+ * PERSONAL INFO PAGE - Specific Styles
+ * Layout chung (sidebar, topbar, breadcrumb) được kế thừa từ dashboard.css
+ */
+
+/* ========================================
+   BREADCRUMB BACK LINK
+   ======================================== */
+
+.breadcrumb-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.breadcrumb-back a {
+    color: #616161;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.breadcrumb-back .material-icons {
+    font-size: 20px;
+    color: #616161;
+}
+
+.breadcrumb-back:hover a {
+    text-decoration: underline;
+}
+
+/* ========================================
+   PROFILE HEADER
+   ======================================== */
+.profile-header {
+    background: #758BA5;
+    border: 1px solid #000;
+    border-radius: 2px;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid #444444;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-avatar.has-initial {
+    background: #4a6fa5;
+}
+
+.profile-avatar .avatar-text {
+    font-size: 40px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+}
+
+.profile-name {
+    font-size: 30px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-left: 20px;
+    flex: 1;
+}
+
+.profile-icons {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.profile-icons .material-icons {
+    font-size: 32px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile-icons .material-icons:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* ========================================
+   PROFILE CONTENT
+   ======================================== */
+.profile-content {
+    background: #FFFFFF;
+    padding: 20px 40px;
+    margin-bottom: 24px;
+}
+
+.role-box {
+    display: inline-block;
+    background: #758BA5;
+    color: #FFFFFF;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* ========================================
+   FORM GRID
+   ======================================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 40px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full {
+    grid-column: span 2;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.form-group input {
+    height: 42px;
+    padding: 6px 10px;
+    border: 1px solid #999999;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    background: #FFFFFF;
+    color: #333333;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #264574;
+}
+
+.form-group input[readonly] {
+    background: #F9F9F9;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 24px;
+    }
+    
+    /* .form-group.full {
+        grid-column: span 2;
+    } */
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px;
+        min-height: auto;
+    }
+
+    .profile-name {
+        margin-left: 0;
+        margin-top: 16px;
+        font-size: 24px;
+    }
+
+    .profile-icons {
+        position: static;
+        margin-top: 16px;
+        justify-content: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .form-group.full {
+        grid-column: 1;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-header {
+        padding: 16px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .profile-icons .material-icons {
+        font-size: 28px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+    }
+
+    .form-group input {
+        font-size: 14px;
+        height: 38px;
+    }
+}

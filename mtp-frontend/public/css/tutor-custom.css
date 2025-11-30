@@ -1,0 +1,417 @@
+/* public/css/tutor-custom.css */
+
+/* --- Meeting Management (Img 9) --- */
+.meeting-table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.meeting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #eee;
+}
+
+/* --- Student Detail (Img 2) --- */
+.student-detail-header {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.student-info-card {
+    flex: 2;
+    background: #cceeff; /* Màu xanh nhạt giống ảnh */
+    border: 1px solid #b3d9f2;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.student-avatar {
+    width: 80px; height: 80px;
+    background: #555;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: white; font-size: 40px;
+}
+
+.student-stats-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.stats-score { font-size: 32px; color: #0f62ac; font-weight: bold; }
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.detail-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.detail-box-title {
+    color: #0f62ac;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px;
+}
+
+/* --- Modal Form (Img 6) --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.active { display: flex; }
+
+.form-modal {
+    background: white;
+    width: 500px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.form-modal h2 { text-align: center; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; }
+
+.form-row { margin-bottom: 15px; }
+.form-row label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
+.form-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+.checkbox-group { display: flex; gap: 20px; }
+
+.modal-form-content {
+    background: white;
+    width: 600px; /* Rộng hơn chút cho đẹp */
+    padding: 40px;
+    border-radius: 4px; /* Bo góc ít như ảnh */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid #ccc;
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.custom-checkbox {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 8px;
+    border: 2px solid #333;
+}
+
+.btn-open-session {
+    background-color: #4A7FA7; /* Màu xanh của nút Mở buổi học trong ảnh */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    cursor: pointer;
+}
+
+/* --- Document Page Styles --- */
+
+/* 2 Thẻ lớn phía trên */
+.doc-card-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.doc-big-card {
+    width: 380px;
+    height: 180px;
+    background: #e1f3fa; /* Màu xanh nhạt nền thẻ */
+    border: 1px solid #b3d9f2;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.doc-big-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.doc-big-card h3 {
+    color: #0f62ac;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Phần danh sách bên dưới */
+.doc-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #0f62ac;
+    padding-bottom: 10px;
+}
+
+.doc-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Nút Chia sẻ tài liệu (Màu xanh đậm, icon trắng) */
+.btn-share-doc {
+    background-color: #0f62ac;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-share-doc:hover { background-color: #0b4d8a; }
+
+/* Thanh tìm kiếm */
+.search-bar-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.search-input-doc {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.btn-search-doc {
+    background-color: #b3d6f9; /* Màu xanh nhạt */
+    color: #000;
+    border: 1px solid #99c2e8;
+    padding: 0 25px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Modal Form - Tinh chỉnh lại input */
+.form-input-line {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.modal-small-content {
+    background: white;
+    width: 400px;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.modal-small-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #224070;
+    text-transform: uppercase;
+}
+
+.modal-msg {
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 15px;
+}
+
+.btn-confirm-red {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-confirm-blue {
+    background-color: #0f62ac;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancel-gray {
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+}
+
+.btn-confirm-black {
+    background-color: #333; /* Màu đen */
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-confirm-black:hover {
+    background-color: #000;
+}
+
+.cal-cell {
+    position: relative; /* Để định vị tooltip */
+}
+
+/* Tooltip container */
+.cal-cell[data-tooltip]:hover::after {
+    content: attr(data-tooltip); /* Lấy nội dung từ attribute */
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: pre-wrap; /* Cho phép xuống dòng */
+    z-index: 1000;
+    min-width: 180px;
+    text-align: left;
+    pointer-events: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-bottom: 5px;
+}
+
+/* Mũi tên nhỏ dưới tooltip */
+.cal-cell[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+    margin-bottom: -7px; /* Đẩy mũi tên xuống */
+    z-index: 1000;
+}
+
+/* Style Modal Chi Tiết Buổi Gặp*/
+.detail-grid-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+.detail-cell {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.detail-cell:nth-child(2n) { border-right: none; } /* Cột phải không border phải */
+.detail-label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 14px; }
+.detail-value { font-size: 15px; color: #333; }
+
+/* Nút trạng thái trong Modal */
+.btn-red { background: #d32f2f; color: white; padding: 10px 30px; border:none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+.btn-blue { background: #0f62ac; color: white; padding: 10px 30px; border:none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+/* Modal Lý do hủy*/
+.reason-box {
+    width: 100%; height: 100px; padding: 10px;
+    border: 1px solid #999; border-radius: 4px;
+    margin: 15px 0; font-family: inherit;
+}
+
+/* Bảng chọn lớp*/
+.class-select-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.class-select-table th { background: #224070; color: white; padding: 10px; text-align: left; }
+.class-select-table td { border: 1px solid #ddd; padding: 10px; }
+.big-check { width: 20px; height: 20px; cursor: pointer; }
+
+.notify-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    font-family: inherit;
+    margin-top: 5px;
+}
+
+.notify-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.notify-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-top: 15px;
+}

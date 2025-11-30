@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo lớp học</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+    <link rel="stylesheet" href="../css/register-session.css">
+    <style>
+        .form-box { background:#fff; padding:30px; border-radius:8px; max-width:600px; }
+        .form-group { margin-bottom:15px; }
+        .form-group label { display:block; font-weight:600; margin-bottom:5px; }
+        .form-group input { width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main">
+            <div id="topbar-container"></div>
+            <div class="breadcrumb-bar"><span>Tạo lớp học mới</span></div>
+            <div class="content">
+                <div class="form-box">
+                    <form id="createForm">
+                        <div class="form-group"><label>Môn học</label><input id="subject" required></div>
+                        <div class="form-group"><label>Ngày</label><input type="date" id="date" required></div>
+                        <div class="form-group"><label>Giờ (VD: 13:00 - 15:00)</label><input id="time" required></div>
+                        <div class="form-group"><label>Địa điểm</label><input id="location" required></div>
+                        <div class="form-group"><label>Số lượng tối đa</label><input type="number" id="maxStudents" value="20"></div>
+                        <button type="submit" class="btn btn-choose" style="background:#264574; color:#fff;">Tạo lớp</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/api-client.js"></script>
+    <script src="../js/components-loader.js"></script>
+    <script src="../js/tutor-create-session.js"></script>
+</body>
+</html>
