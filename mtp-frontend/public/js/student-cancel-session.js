@@ -112,21 +112,18 @@ function createTutorCard(tutorData) {
             </div>
             <div class="tutor-info">
                 <h2 class="tutor-name">${tutorData.tutorName}</h2>
+                <div class="contact-info-inline">
+                    <div class="info-field-inline">
+                        <label class="info-label-inline">Email học vụ</label>
+                        <div class="info-value-inline">${tutorEmail}</div>
+                    </div>
+                    <div class="info-field-inline">
+                        <label class="info-label-inline">Khoa</label>
+                        <div class="info-value-inline">${tutorFaculty}</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="contact-info">
-            <div class="info-field">
-                <label class="info-label">Email học vụ</label>
-                <div class="info-value">${tutorEmail}</div>
-            </div>
-            <div class="info-field">
-                <label class="info-label">Khoa</label>
-                <div class="info-value">${tutorFaculty}</div>
-            </div>
-        </div>
-        
-        <hr class="divider-can">
         
         <div class="sessions-style">
             <table class="sessions-table">
@@ -159,6 +156,8 @@ function createTutorCard(tutorData) {
                 </tbody>
             </table>
         </div>
+        
+        <hr class="divider-can">
     `;
     
     return div;

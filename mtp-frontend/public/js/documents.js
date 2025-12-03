@@ -14,9 +14,6 @@ function showSharedDocs() {
 }
 
 function showLibrary() {
-    // Mở trang thư viện (Mockup: hiển thị random sách hoặc chuyển tab mới)
-    // Theo yêu cầu ảnh 4: "khi chọn truy cập thư viện (mock up vài sách random)"
-    // Ở đây tôi redirect sang một trang html khác để giả lập iframe thư viện
     window.location.href = 'document-library-mock.html'; 
 }
 
@@ -27,7 +24,6 @@ function goBack() {
         list.style.display = 'none';
         document.getElementById('view-selection').style.display = 'flex';
     } else {
-        // Nếu đang ở selection -> về dashboard (hoặc tùy ý)
         window.history.back();
     }
 }

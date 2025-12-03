@@ -1,6 +1,5 @@
 /* public/css/admin-dashboard.css */
 
-/* Kế thừa layout chung */
 .admin-content-wrapper {
     padding: 20px;
     background-color: #f5f7fa;
@@ -74,12 +73,12 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-left: auto; /* Đẩy nút sang phải nếu muốn, hoặc bỏ để dính liền */
+    margin-left: auto;
     transition: background 0.2s;
 }
 .btn-search:hover { background-color: #0d5494; }
 
-/* --- STATS CARDS (4 ô thống kê) --- */
+/* --- STATS CARDS --- */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

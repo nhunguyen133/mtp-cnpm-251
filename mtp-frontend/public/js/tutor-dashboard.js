@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sessions = res.data || [];
     
     // Update Stats
-    document.getElementById('total-sessions').textContent = sessions.length;
+    // document.getElementById('total-sessions').textContent = sessions.length;
 
     // Render list
     const container = document.getElementById('tutor-session-list');
