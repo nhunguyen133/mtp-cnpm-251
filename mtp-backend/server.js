@@ -210,7 +210,7 @@ app.post(
   (req, res) => {
     const { sessions, registrations } = require("./data");
     const sessionId = parseInt(req.params.sessionId);
-    const studentMSSV = req.session.user.mssv;
+    const studentMSSV = req.session.user.id;
 
     // Kiểm tra session tồn tại
     const session = sessions.find(s => s.id === sessionId);
