@@ -285,14 +285,30 @@ app.delete(
   "/api/student/sessions/:sessionId/register",
   requireRole("student"),
   (req, res) => {
-    const { sessionId } = req.params;
-    const studentId = req.session.user.id;
+    const { registrations } = require("./data");
+    const sessionId = parseInt(req.params.sessionId);
+    const studentMSSV = req.session.user.mssv;
 
-    console.log(`Student ${studentId} hủy session ${sessionId}`);
+    // Tìm registration cần xóa
+    const registrationIndex = registrations.findIndex(
+      r => r.sessionId === sessionId && r.mssv === studentMSSV
+    );
+
+    if (registrationIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đăng ký này"
+      });
+    }
+
+    // Xóa registration khỏi mảng
+    registrations.splice(registrationIndex, 1);
+
+    console.log(`Student ${studentMSSV} đã hủy session ${sessionId}`);
 
     res.json({
       success: true,
-      message: "Hủy session thành công",
+      message: "Hủy đăng ký buổi học thành công",
     });
   }
 );

@@ -16,7 +16,7 @@ const registrations = [
         sessionId: 2,
         mssv: '2313384',
         status: 'confirmed',
-        registeredAt: '2025-11-20T11:00:00'
+        registeredAt: '2025-12-20T11:00:00'
     },
     {
         id: 3,
