@@ -45,7 +45,7 @@ function createSessionCard(session) {
                 <div class="session-icon-box">
                     <span class="material-icons">event</span>
                 </div>
-                <div class="session-title">${session.subject || session.title}</div>
+                <div class="session-title">${session.title || 'L0' + session.id}</div>
             </div>
 
             <hr class="session-divider">
@@ -70,7 +70,7 @@ function createSessionCard(session) {
                 </div>
                 <div class="session-info-item">
                     <span class="material-icons">people_alt</span>
-                    <span class="session-detail-text">${session.registeredStudents || session.currentStudents || 0}/${session.maxStudents}</span>
+                    <span class="session-detail-text">${session.currentStudents || 0}/${session.maxStudents}</span>
                 </div>
             </div>
         </div>

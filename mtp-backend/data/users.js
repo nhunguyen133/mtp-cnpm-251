@@ -97,7 +97,7 @@ const users = [
         mscb: 'CB002',
         sex: 'Nam',
         faculty: 'Khoa Khoa học và Kỹ thuật Máy tính',
-        major: 'Lập trình C/C++',
+        major: 'Công nghệ phần mềm',
         email: 'mdtrung@hcmut.edu.vn',
         phone: '0902000002'
     },
@@ -109,7 +109,7 @@ const users = [
         mscb: 'CB003',
         sex: 'Nam',
         faculty: 'Khoa Khoa học và Kỹ thuật Máy tính',
-        major: 'Lập trình Java',
+        major: 'Công nghệ phần mềm',
         email: 'bctuan@hcmut.edu.vn',
         phone: '0902000003'
     },

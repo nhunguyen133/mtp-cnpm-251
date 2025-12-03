@@ -42,7 +42,7 @@ async function getSessionById(id) { return apiCall(`/sessions/${id}`); }
 async function getStudentSessions() { return apiCall('/student/my-sessions'); }
 async function getAvailableSessions() { return apiCall('/student/sessions'); }
 async function registerSession(id) { return apiCall(`/student/sessions/${id}/register`, { method: 'POST' }); }
-async function unregisterSession(id) { return apiCall(`/sessions/${id}/register`, { method: 'DELETE' }); }
+async function unregisterSession(id) { return apiCall(`/student/sessions/${id}/register`, { method: 'DELETE' }); }
 
 // ========== TUTOR MANAGEMENT ==========
 async function getTutorCreatedSessions() { return apiCall('/tutor/sessions'); }
