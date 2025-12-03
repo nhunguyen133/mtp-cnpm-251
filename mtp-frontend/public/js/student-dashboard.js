@@ -88,7 +88,7 @@ function createSessionCard(session) {
         </div>
         
         <div class="session-main-info">
-          <div class="course-name">${session.subject || session.title}</div>
+          <div class="course-name">${session.title || 'L0' + session.id}</div>
           <div class="lecturer">${session.tutorName}</div>
         </div>
       </div>
