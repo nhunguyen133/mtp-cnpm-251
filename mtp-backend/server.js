@@ -3,6 +3,8 @@ const axios = require("axios");
 const xml2js = require("xml2js");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 
 // Import data từ data layer (đã refactor)
 const { users } = require("./data");
@@ -19,6 +21,28 @@ const PORT = 3001;
 let meetings = require("./data/meeting");
 let classes = require("./data/class");
 let notifications = require("./data/notifications");
+
+// Helper function để lưu registrations vào file
+function saveRegistrationsToFile(registrations) {
+  const filePath = path.join(__dirname, 'data', 'registrations.js');
+  const content = `// // ================== REGISTERED SESSIONS ==================
+// ================== REGISTERED SESSIONS ==================
+// Quan hệ giữa students và sessions (đăng ký buổi học)
+// Tham chiếu student bằng mssv
+
+const registrations = ${JSON.stringify(registrations, null, 4)};
+
+module.exports = registrations;
+`;
+  
+  try {
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log('✅ Saved registrations to file');
+  } catch (error) {
+    console.error('❌ Error saving registrations:', error);
+  }
+}
+
 // ==== middlewares ====
 app.use(
   cors({
@@ -210,7 +234,7 @@ app.post(
   (req, res) => {
     const { sessions, registrations } = require("./data");
     const sessionId = parseInt(req.params.sessionId);
-    const studentMSSV = req.session.user.id;
+    const studentMSSV = req.session.user.mssv;
 
     // Kiểm tra session tồn tại
     const session = sessions.find(s => s.id === sessionId);
@@ -263,6 +287,9 @@ app.post(
     };
 
     registrations.push(newRegistration);
+    
+    // Lưu vào file để persist data
+    saveRegistrationsToFile(registrations);
 
     console.log(`Student ${studentMSSV} đăng ký session ${sessionId}`);
 
@@ -303,6 +330,9 @@ app.delete(
 
     // Xóa registration khỏi mảng
     registrations.splice(registrationIndex, 1);
+    
+    // Lưu vào file để persist data
+    saveRegistrationsToFile(registrations);
 
     console.log(`Student ${studentMSSV} đã hủy session ${sessionId}`);
 

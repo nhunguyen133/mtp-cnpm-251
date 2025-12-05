@@ -5,132 +5,130 @@
 
 const registrations = [
     {
-        id: 1,
-        sessionId: 1,
-        mssv: '2313384',
-        status: 'confirmed',
-        registeredAt: '2025-10-10T10:30:00'
+        "id": 1,
+        "sessionId": 1,
+        "mssv": "2313384",
+        "status": "confirmed",
+        "registeredAt": "2025-10-10T10:30:00"
     },
     {
-        id: 2,
-        sessionId: 2,
-        mssv: '2312535',
-        status: 'confirmed',
-        registeredAt: '2025-12-20T11:00:00'
+        "id": 3,
+        "sessionId": 2,
+        "mssv": "2312022",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:00:00"
     },
     {
-        id: 3,
-        sessionId: 2,
-        mssv: '2312022',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:00:00'
+        "id": 4,
+        "sessionId": 2,
+        "mssv": "2312256",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:00:00"
     },
     {
-        id: 4,
-        sessionId: 2,
-        mssv: '2312256',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:00:00'
+        "id": 6,
+        "sessionId": 2,
+        "mssv": "2312303",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:00:00"
     },
     {
-        id: 5,
-        sessionId: 2,
-        mssv: '2313384',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:00:00'
+        "id": 7,
+        "sessionId": 3,
+        "mssv": "2312535",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:30:00"
     },
     {
-        id: 6,
-        sessionId: 2,
-        mssv: '2312303',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:00:00'
+        "id": 8,
+        "sessionId": 3,
+        "mssv": "2312022",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:30:00"
     },
     {
-        id: 7,
-        sessionId: 3,
-        mssv: '2312535',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:30:00'
+        "id": 9,
+        "sessionId": 3,
+        "mssv": "2312256",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T11:30:00"
     },
     {
-        id: 8,
-        sessionId: 3,
-        mssv: '2312022',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:30:00'
+        "id": 11,
+        "sessionId": 4,
+        "mssv": "2312256",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T12:00:00"
     },
     {
-        id: 9,
-        sessionId: 3,
-        mssv: '2312256',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:30:00'
+        "id": 12,
+        "sessionId": 4,
+        "mssv": "2312303",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T12:00:00"
     },
     {
-        id: 11,
-        sessionId: 4,
-        mssv: '2312256',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T12:00:00'
+        "id": 14,
+        "sessionId": 5,
+        "mssv": "2312535",
+        "status": "confirmed",
+        "registeredAt": "2025-11-20T12:30:00"
     },
     {
-        id: 12,
-        sessionId: 4,
-        mssv: '2312303',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T12:00:00'
+        "id": 15,
+        "sessionId": 5,
+        "mssv": "2313384",
+        "status": "confirmed",
+        "registeredAt": "2025-11-21T09:30:00"
     },
     {
-        id: 14,
-        sessionId: 5,
-        mssv: '2312535',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T12:30:00'
+        "id": 16,
+        "sessionId": 6,
+        "mssv": "2312535",
+        "status": "confirmed",
+        "registeredAt": "2025-12-01T10:00:00"
     },
     {
-        id: 15,
-        sessionId: 5,
-        mssv: '2313384',
-        status: 'confirmed',
-        registeredAt: '2025-11-21T09:30:00'
-    },
-    // Session 6 - Công nghệ phần mềm L02
-    {
-        id: 16,
-        sessionId: 6,
-        mssv: '2312535',
-        status: 'confirmed',
-        registeredAt: '2025-12-01T10:00:00'
+        "id": 17,
+        "sessionId": 6,
+        "mssv": "2312022",
+        "status": "confirmed",
+        "registeredAt": "2025-12-01T10:15:00"
     },
     {
-        id: 17,
-        sessionId: 6,
-        mssv: '2312022',
-        status: 'confirmed',
-        registeredAt: '2025-12-01T10:15:00'
+        "id": 18,
+        "sessionId": 6,
+        "mssv": "2312256",
+        "status": "confirmed",
+        "registeredAt": "2025-12-01T10:30:00"
     },
     {
-        id: 18,
-        sessionId: 6,
-        mssv: '2312256',
-        status: 'confirmed',
-        registeredAt: '2025-12-01T10:30:00'
+        "id": 19,
+        "sessionId": 6,
+        "mssv": "2312303",
+        "status": "confirmed",
+        "registeredAt": "2025-12-01T10:45:00"
     },
     {
-        id: 19,
-        sessionId: 6,
-        mssv: '2312303',
-        status: 'confirmed',
-        registeredAt: '2025-12-01T10:45:00'
+        "id": 20,
+        "sessionId": 8,
+        "mssv": "2312022",
+        "status": "confirmed",
+        "registeredAt": "2025-12-09T14:00:00"
     },
-    // 
     {
-        id: 20,
-        sessionId: 8,
-        mssv: '2312022',
-        status: 'confirmed',
-        registeredAt: '2025-12-09T14:00:00'
+        "id": 19,
+        "sessionId": 11,
+        "mssv": "2312535",
+        "status": "confirmed",
+        "registeredAt": "2025-12-05T08:38:49.008Z"
+    },
+    {
+        "id": 19,
+        "sessionId": 4,
+        "mssv": "2313384",
+        "status": "confirmed",
+        "registeredAt": "2025-12-05T08:30:03.273Z"
     }
 ];
 
