@@ -68,13 +68,6 @@ const registrations = [
         registeredAt: '2025-11-20T11:30:00'
     },
     {
-        id: 10,
-        sessionId: 3,
-        mssv: '2313384',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T11:30:00'
-    },
-    {
         id: 11,
         sessionId: 4,
         mssv: '2312256',
@@ -85,13 +78,6 @@ const registrations = [
         id: 12,
         sessionId: 4,
         mssv: '2312303',
-        status: 'confirmed',
-        registeredAt: '2025-11-20T12:00:00'
-    },
-    {
-        id: 13,
-        sessionId: 4,
-        mssv: '2313384',
         status: 'confirmed',
         registeredAt: '2025-11-20T12:00:00'
     },
@@ -108,6 +94,43 @@ const registrations = [
         mssv: '2313384',
         status: 'confirmed',
         registeredAt: '2025-11-21T09:30:00'
+    },
+    // Session 6 - Công nghệ phần mềm L02
+    {
+        id: 16,
+        sessionId: 6,
+        mssv: '2312535',
+        status: 'confirmed',
+        registeredAt: '2025-12-01T10:00:00'
+    },
+    {
+        id: 17,
+        sessionId: 6,
+        mssv: '2312022',
+        status: 'confirmed',
+        registeredAt: '2025-12-01T10:15:00'
+    },
+    {
+        id: 18,
+        sessionId: 6,
+        mssv: '2312256',
+        status: 'confirmed',
+        registeredAt: '2025-12-01T10:30:00'
+    },
+    {
+        id: 19,
+        sessionId: 6,
+        mssv: '2312303',
+        status: 'confirmed',
+        registeredAt: '2025-12-01T10:45:00'
+    },
+    // 
+    {
+        id: 20,
+        sessionId: 8,
+        mssv: '2312022',
+        status: 'confirmed',
+        registeredAt: '2025-12-09T14:00:00'
     }
 ];
 
